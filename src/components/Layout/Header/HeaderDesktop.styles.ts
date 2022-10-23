@@ -11,10 +11,10 @@ export default createStyles((theme) => ({
     zIndex: 6,
     position: "fixed",
     backgroundColor: "#f3f7ff",
-    boxShadow: "none",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.08)",
     padding: "0 80px",
     [theme.fn.smallerThan("md")]: {
       display: "none",
@@ -49,8 +49,8 @@ export default createStyles((theme) => ({
     padding: "0 34px",
     fontSize: "16px",
     lineHeight: "20px",
-    height: '40px',
-    fontFamily: 'ale-general',
+    height: "40px",
+    fontFamily: "ale-general",
     "&:hover": {
       color: "#fcf7f7",
       backgroundColor: "#f3546a",
@@ -62,8 +62,8 @@ export default createStyles((theme) => ({
     padding: "0 34px",
     fontSize: "16px",
     lineHeight: "20px",
-    height: '40px',
-    fontFamily: 'ale-general',
+    height: "40px",
+    fontFamily: "ale-general",
     "&:hover": {
       color: "#fcf7f7",
       backgroundColor: "#f3546a",

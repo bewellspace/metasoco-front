@@ -8,10 +8,18 @@ import { GlobalStyles } from "src/components/GlobalStyles";
 import Header from "src/components/Layout/Header";
 import Footer from "src/components/Layout/Footer";
 import { chains, wagmiClient } from "src/connectors";
-import { WagmiConfig, useContractRead, useContract } from "wagmi";
+import { WagmiConfig, useContract, useSigner } from "wagmi";
+import abi from "src/abi/abi.json";
 
 function AppContent(props: AppProps) {
   const { Component, pageProps } = props;
+  const { data: signer } = useSigner();
+
+  const contract = useContract({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    signerOrProvider: signer,
+  });
 
   return (
     <>
@@ -26,7 +34,7 @@ function AppContent(props: AppProps) {
       <RainbowKitProvider
         modalSize="compact"
         chains={chains}
-        initialChain={420}
+        initialChain={5}
         theme={lightTheme({
           borderRadius: "small",
           accentColor: "#2ab0f5",
@@ -37,7 +45,7 @@ function AppContent(props: AppProps) {
         <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
           <GlobalStyles />
           <Header navbarOpened={false} toggleNavbar={console.log} />
-          <Component {...pageProps} />
+          <Component {...pageProps} contract={contract} />
           <Footer />
         </MantineProvider>
       </RainbowKitProvider>

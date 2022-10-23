@@ -6,7 +6,7 @@ import {
   TwitterPaginatedResponse,
   TwitterResponse,
 } from 'twitter-api-sdk/dist/types'
-import { Tweet } from 'src/types'
+// import { Tweet } from 'src/types'
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -63,7 +63,7 @@ const sync = async (pages = 100) => {
 const processSearchResult = (result: TwitterResponse<tweetsRecentSearch>) => {
   const { data, includes, meta } = result
 
-  const output: Tweet[] = []
+  const output = []
   data?.forEach(tweet => {
     const { author_id, text, created_at } = tweet
     const author = includes?.users?.find(author => author.id === author_id)

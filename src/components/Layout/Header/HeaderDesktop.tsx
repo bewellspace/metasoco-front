@@ -78,11 +78,11 @@ export function HeaderDesktop() {
         >
           Vote
         </Button>
-        <Link href="/about">
+        <Link href="/nft">
           <Button
             onClick={() => setActive('')}
             className={
-              router.pathname === "/about"
+              router.pathname === "/nft"
                 ? classes.menuItemSelected
                 : classes.menuItem
             }

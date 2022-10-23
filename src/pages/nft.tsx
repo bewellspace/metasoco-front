@@ -1,5 +1,5 @@
 import { NextPageContext } from 'next'
-import About from 'src/components/about'
+import NFT from 'src/components/nft'
 
 export const getServerSideProps = async ({ res }: NextPageContext) => {
   res.setHeader(
@@ -12,4 +12,4 @@ export const getServerSideProps = async ({ res }: NextPageContext) => {
   }
 }
 
-export default About
+export default NFT

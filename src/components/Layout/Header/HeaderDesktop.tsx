@@ -21,7 +21,9 @@ export function HeaderDesktop() {
         router.push("/");
       }
     };
-    customLink();
+    if (active) {
+      customLink();
+    }
   }, [active]);
 
   return (
@@ -80,7 +82,7 @@ export function HeaderDesktop() {
         </Button>
         <Link href="/nft">
           <Button
-            onClick={() => setActive('')}
+            onClick={() => setActive("")}
             className={
               router.pathname === "/nft"
                 ? classes.menuItemSelected
@@ -93,11 +95,11 @@ export function HeaderDesktop() {
       </Group>
 
       <Group spacing="lg">
-        <ConnectButton
+        {/* <ConnectButton
           accountStatus="address"
           chainStatus="icon"
           showBalance={false}
-        ></ConnectButton>
+        ></ConnectButton> */}
       </Group>
     </div>
   );

@@ -15,11 +15,12 @@ function AppContent(props: AppProps) {
   const { Component, pageProps } = props;
   const { data: signer } = useSigner();
 
-  const contract = useContract({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    signerOrProvider: signer,
-  });
+  let contract = null;
+  // const contract = useContract({
+  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+  //   abi: abi,
+  //   signerOrProvider: signer,
+  // });
 
   return (
     <>

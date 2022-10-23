@@ -22,15 +22,15 @@ import { useState, useRef, useEffect } from "react";
 import { useSiteStyles } from "src/theme";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconPlus, IconMinus } from "@tabler/icons";
-import {
-  useContractRead,
-  useAccount,
-  usePrepareContractWrite,
-  useContractWrite,
-  useWaitForTransaction,
-} from "wagmi";
-import abi from "src/abi/abi.json";
-import { ethers } from "ethers";
+// import {
+//   useContractRead,
+//   useAccount,
+//   usePrepareContractWrite,
+//   useContractWrite,
+//   useWaitForTransaction,
+// } from "wagmi";
+// import abi from "src/abi/abi.json";
+// import { ethers } from "ethers";
 
 const Hero = () => {
   const { classes } = useSiteStyles();
@@ -149,72 +149,72 @@ const Hero = () => {
 };
 
 const Mint = ({ contract }) => {
-  const { address } = useAccount();
+  // const { address } = useAccount();
   const { classes } = useSiteStyles();
   const [value, setValue] = useState(1);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(0.05);
   const [isActive, setIsActive] = useState(false);
   const [totalNumber, setTotalNumber] = useState("0");
   const handlers = useRef<NumberInputHandlers>();
 
-  useEffect(() => {
-    if (contract.signer) {
-      init();
-    }
-  }, [contract]);
+  // useEffect(() => {
+  //   if (contract.signer) {
+  //     init();
+  //   }
+  // }, [contract]);
 
-  const init = async () => {
-    const nftPrice = await contract.PRICE();
-    setPrice(nftPrice.toString() / Math.pow(10, 18));
-    checkActive();
-  };
+  // const init = async () => {
+  //   const nftPrice = await contract.PRICE();
+  //   setPrice(nftPrice.toString() / Math.pow(10, 18));
+  //   checkActive();
+  // };
 
-  useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "totalSupply",
-    watch: true,
-    onSuccess: (data) => {
-      setTotalNumber(data.toString());
-    },
-  });
+  // useContractRead({
+  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+  //   abi: abi,
+  //   functionName: "totalSupply",
+  //   watch: true,
+  //   onSuccess: (data) => {
+  //     setTotalNumber(data.toString());
+  //   },
+  // });
 
-  const checkActive = async () => {
-    const isActive = await contract.saleIsActive();
-    setIsActive(isActive);
-    return isActive;
-  };
+  // const checkActive = async () => {
+  //   const isActive = await contract.saleIsActive();
+  //   setIsActive(isActive);
+  //   return isActive;
+  // };
 
-  const mintBox = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "mintFifaNftBox",
-    enabled: !!value && !!price && isActive,
-    args: [value, "0x0000000000000000000000000000000000000000"],
-    overrides: {
-      from: address,
-      value: ethers.utils.parseEther((value * price).toString()),
-    },
-  });
-  const mintWrite = useContractWrite(mintBox.config);
+  // const mintBox = usePrepareContractWrite({
+  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+  //   abi: abi,
+  //   functionName: "mintFifaNftBox",
+  //   enabled: !!value && !!price && isActive,
+  //   args: [value, "0x0000000000000000000000000000000000000000"],
+  //   overrides: {
+  //     from: address,
+  //     value: ethers.utils.parseEther((value * price).toString()),
+  //   },
+  // });
+  // const mintWrite = useContractWrite(mintBox.config);
 
-  useWaitForTransaction({
-    hash: mintWrite.data?.hash,
-    onSuccess: (data) => {
-      console.log("data", data);
-    },
-  });
+  // useWaitForTransaction({
+  //   hash: mintWrite.data?.hash,
+  //   onSuccess: (data) => {
+  //     console.log("data", data);
+  //   },
+  // });
 
   const triggerMint = async () => {
-    if (isActive) {
-      mintWrite?.write();
-    } else {
-      const active = await checkActive();
-      if (active) {
-        mintWrite?.write();
-      } else {
-      }
-    }
+    // if (isActive) {
+    //   mintWrite?.write();
+    // } else {
+    //   const active = await checkActive();
+    //   if (active) {
+    //     mintWrite?.write();
+    //   } else {
+    //   }
+    // }
   };
 
   return (
@@ -417,15 +417,15 @@ const Mechanism = ({ contract, fifaInfo }) => {
 
   const [totalRewardPool, setTotalRewardPool] = useState(0);
 
-  useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "totalRewardPool",
-    watch: true,
-    onSuccess: (data) => {
-      setTotalRewardPool(Number(data.toString()) / Math.pow(10, 18));
-    },
-  });
+  // useContractRead({
+  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+  //   abi: abi,
+  //   functionName: "totalRewardPool",
+  //   watch: true,
+  //   onSuccess: (data) => {
+  //     setTotalRewardPool(Number(data.toString()) / Math.pow(10, 18));
+  //   },
+  // });
 
   return (
     <Stack
@@ -660,7 +660,7 @@ const elements = [
 ];
 let timer: any = null;
 const Claim = ({ contract, fifaInfo }) => {
-  const { address } = useAccount();
+  // const { address } = useAccount();
 
   const [nftNumber, setNftNumber] = useState(0);
   const [userTotalReward, setUserTotalReward] = useState(0);
@@ -678,11 +678,11 @@ const Claim = ({ contract, fifaInfo }) => {
     </tr>
   ));
 
-  useEffect(() => {
-    if (contract.signer) {
-      init();
-    }
-  }, [contract]);
+  // useEffect(() => {
+  //   if (contract.signer) {
+  //     init();
+  //   }
+  // }, [contract]);
 
   const init = async () => {
     const myNft = await contract.userTokenIds();
@@ -881,17 +881,17 @@ const Claim = ({ contract, fifaInfo }) => {
                     border: "1px solid #555555",
                   })}
                 >
-                  {address ? (
+                  {/* {address ? (
                     <>
                       {nftNumber > 0
                         ? `${window.location.href}${address}`
                         : "There is no token in your wallet"}
                     </>
-                  ) : (
+                  ) : ( */}
                     <UnstyledButton>connect wallect</UnstyledButton>
-                  )}
+                  {/* )} */}
                 </Box>
-                {!!address && nftNumber > 0 && (
+                {/* {!!address && nftNumber > 0 && (
                   <CopyButton value="https://mantine.dev">
                     {({ copied, copy }) => (
                       <UnstyledButton
@@ -913,7 +913,7 @@ const Claim = ({ contract, fifaInfo }) => {
                       </UnstyledButton>
                     )}
                   </CopyButton>
-                )}
+                )} */}
               </Group>
             </Stack>
           </Stack>

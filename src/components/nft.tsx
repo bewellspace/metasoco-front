@@ -16,11 +16,11 @@ export default function AboutPage({ contract }) {
   const [nftList, setNftList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (contract.signer) {
-      init();
-    }
-  }, [contract]);
+  // useEffect(() => {
+  //   if (contract.signer) {
+  //     init();
+  //   }
+  // }, [contract]);
 
   const init = async () => {
     setNftList([]);

@@ -32,14 +32,14 @@ export const useSiteStyles = createStyles((theme) => {
         fontSize: "12px",
       },
     },
-    sponsorImg: {
-      width: "160px",
-      margin: "auto",
-      flex: 1,
-
+    teamPic: {
+      width: "150px",
       [theme.fn.smallerThan("md")]: {
         width: "80px",
       },
+      [theme.fn.largerThan("lg")]: {
+        width: '300px !important'
+      }
     },
     underLine: {
       fontSize: "12px",

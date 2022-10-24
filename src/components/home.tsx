@@ -18,7 +18,7 @@ import Image from "next/image";
 import { NextPage } from "next";
 import { FifaInfo } from "src/types";
 import { Parallax } from "rc-scroll-anim";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSiteStyles } from "src/theme";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconPlus, IconMinus } from "@tabler/icons";
@@ -35,6 +35,8 @@ import { IconPlus, IconMinus } from "@tabler/icons";
 const Hero = () => {
   const { classes } = useSiteStyles();
   const [windowWidth, setWidth] = useState(0);
+
+  const isBreakpointLg = useMediaQuery("(min-width: 1201px)");
   useEffect(() => {
     setWidth(document.body.clientWidth);
   }, []);
@@ -78,14 +80,20 @@ const Hero = () => {
             win the final prize pool!
           </Text>
         </Stack>
-        {/* TODO NFT滚动展示*/}
-        <div
-          style={{
+        <Box
+          sx={(theme) => ({
             height: "650px",
             padding: "70px 0",
             width: "100%",
             overflow: "hidden",
-          }}
+            [theme.fn.smallerThan("md")]: {
+              padding: "20px 0",
+              height: "550px",
+            },
+            [theme.fn.largerThan("lg")]: {
+              height: "750px",
+            },
+          })}
         >
           <Parallax
             animation={{ x: 0, rotate: -5 }}
@@ -100,18 +108,50 @@ const Hero = () => {
                 flexWrap: "nowrap",
               })}
             >
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/ARG.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/AUS.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/BEL.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/BRA.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/CAN.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/CRC.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/DEN.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/ECU.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/FRA.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/POL.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/URU.png"
+              ></MImage>
             </Group>
           </Parallax>
           <Parallax
@@ -127,22 +167,53 @@ const Hero = () => {
                 flexWrap: "nowrap",
               })}
             >
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
-              <MImage width={150} src="/1.png"></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/ARG.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/AUS.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/BEL.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/BRA.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/CAN.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/CRC.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/DEN.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/ECU.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/FRA.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/POL.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/URU.png"
+              ></MImage>
             </Group>
           </Parallax>
-        </div>
+        </Box>
       </Stack>
     </Stack>
   );
@@ -266,7 +337,7 @@ const Mint = ({ contract }) => {
           </Group>
           <Group>
             <span>PRICE</span>
-            <span>{price}ETH</span>
+            <span>{(price * 100 * value) / 100}ETH</span>
           </Group>
           <Group>
             <span>AMOUNT</span>
@@ -289,7 +360,7 @@ const Mint = ({ contract }) => {
                 value={value}
                 onChange={(val) => setValue(val)}
                 handlersRef={handlers}
-                max={5}
+                max={10}
                 min={1}
                 step={1}
                 styles={{
@@ -342,7 +413,7 @@ const Mint = ({ contract }) => {
               Mint Your Team
             </UnstyledButton>
             <Text align="center" style={{ fontFamily: "ale-general" }}>
-              (Max mint 5x per wallet)
+              (Max mint 10x per wallet)
             </Text>
           </Stack>
           <Text align="center" size={12} style={{ fontFamily: "ale-general" }}>
@@ -360,7 +431,7 @@ const Mint = ({ contract }) => {
         </Stack>
       </Group>
       <UnstyledButton
-        sx={() => ({
+        sx={(theme) => ({
           position: "absolute",
           right: "60px",
           bottom: "60px",
@@ -369,6 +440,10 @@ const Mint = ({ contract }) => {
           "&:hover": {
             transform: "scale(1.06)",
             transition: "transform 0.1s linear 0s",
+          },
+          [theme.fn.smallerThan("md")]: {
+            bottom: "10px",
+            right: "20px",
           },
         })}
       >
@@ -383,31 +458,36 @@ const mechanismList = [
     name: "16 teams",
     pool: 5,
     iconScale: 1,
-    active: 0,
+    active: false,
+    key: 16,
   },
   {
     name: "8 teams",
     pool: 10,
     iconScale: 1.15,
-    active: 0,
+    active: false,
+    key: 8,
   },
   {
     name: "1/4",
     pool: 15,
     iconScale: 1.35,
-    active: 0,
+    active: false,
+    key: 4,
   },
   {
     name: "1/2",
     pool: 20,
     iconScale: 1.45,
-    active: 0,
+    active: false,
+    key: 1,
   },
   {
     name: "winner",
     pool: 50,
     iconScale: 1.65,
-    active: 0,
+    active: false,
+    key: 0,
   },
 ];
 
@@ -416,6 +496,17 @@ const Mechanism = ({ contract, fifaInfo }) => {
   const isBreakpointMd = useMediaQuery("(min-width: 992px)");
 
   const [totalRewardPool, setTotalRewardPool] = useState(0);
+
+  useEffect(() => {
+    if (fifaInfo) {
+      mechanismList.map((item) => {
+        if (item.key >= fifaInfo.type) {
+          item.active = true;
+        }
+        return item;
+      });
+    }
+  }, []);
 
   // useContractRead({
   //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
@@ -438,8 +529,8 @@ const Mechanism = ({ contract, fifaInfo }) => {
         overflow: "hidden",
         background: "url('/mechanism-bg.png') no-repeat #d8e2f7",
         backgroundPosition: "left bottom",
-        [theme.fn.largerThan("md")]: {
-          // padding: "50px 0px 80px",
+        [theme.fn.smallerThan("md")]: {
+          padding: "60px 20px 40px",
         },
       })}
     >
@@ -462,8 +553,22 @@ const Mechanism = ({ contract, fifaInfo }) => {
           Current pool: {totalRewardPool}ETH
         </Center>
       </Stack>
-      <SimpleGrid cols={2} spacing={45}>
-        <Stack align={"center"} spacing={25} px={35}>
+      <SimpleGrid
+        pt={20}
+        cols={2}
+        spacing={45}
+        breakpoints={[{ maxWidth: 860, cols: 1, spacing: 45 }]}
+      >
+        <Stack
+          align={"center"}
+          spacing={25}
+          sx={(theme) => ({
+            padding: "0 35px",
+            [theme.fn.smallerThan("md")]: {
+              padding: "0",
+            },
+          })}
+        >
           <Text align="center" className={classes.heroTitle}>
             How to play?
           </Text>
@@ -503,19 +608,25 @@ const Mechanism = ({ contract, fifaInfo }) => {
         <Stack
           spacing={25}
           align="center"
-          sx={() => ({
+          sx={(theme) => ({
             width: "450px",
             padding: "25px 0 30px",
             backgroundColor: "#c3d2ef",
             borderRadius: "25px",
+            [theme.fn.smallerThan("md")]: {
+              width: "100%",
+            },
           })}
         >
           <Group spacing={40} sx={() => ({})}>
             <Center
-              sx={() => ({
+              sx={(theme) => ({
                 width: "120px",
                 height: "33px",
                 opacity: 0,
+                [theme.fn.smallerThan("xs")]: {
+                  width: "100px",
+                },
               })}
             >
               0% in the pool
@@ -575,13 +686,16 @@ const Mechanism = ({ contract, fifaInfo }) => {
             return (
               <Group spacing={40} key={`item_${index}`} sx={() => ({})}>
                 <Center
-                  sx={() => ({
+                  sx={(theme) => ({
                     width: "120px",
                     height: "33px",
                     backgroundColor: "#bb9ce9",
                     color: "#fdfcfc",
                     fontSize: "13px",
                     boxShadow: "2px 2px 2px rgba(161, 181, 226, 0.75)",
+                    [theme.fn.smallerThan("xs")]: {
+                      width: "100px",
+                    },
                   })}
                 >
                   {item.pool}% in the pool
@@ -618,8 +732,7 @@ const Mechanism = ({ contract, fifaInfo }) => {
                       borderRadius: "28px",
                       fontSize: "13px",
                       color: "#fdfcfc",
-                      backgroundColor:
-                        item.active === 0 ? "#bb9ce9" : "#f7b04d",
+                      backgroundColor: !item.active ? "#bb9ce9" : "#f7b04d",
                       border: "1px solid #ad8edc",
                       boxShadow: "2px 2px 2px rgba(161, 181, 226, 0.75)",
                     })}
@@ -633,7 +746,7 @@ const Mechanism = ({ contract, fifaInfo }) => {
                         top: "34px",
                       })}
                       src={
-                        item.active === 0
+                        !item.active
                           ? "/icon/icon-down2.png"
                           : "/icon/icon-down1.png"
                       }
@@ -652,11 +765,11 @@ const Mechanism = ({ contract, fifaInfo }) => {
 };
 
 const elements = [
-  { position: 6, mass: 12.011, symbol: "C", name: "Carbon" },
-  { position: 7, mass: 14.007, symbol: "N", name: "Nitrogen" },
-  { position: 39, mass: 88.906, symbol: "Y", name: "Yttrium" },
-  { position: 56, mass: 137.33, symbol: "Ba", name: "Barium" },
-  { position: 58, mass: 140.12, symbol: "Ce", name: "Cerium" },
+  { address: "", tokenId: "", claimed: "", id: "1" },
+  { address: "", tokenId: "", claimed: "", id: "2" },
+  { address: "", tokenId: "", claimed: "", id: "3" },
+  { address: "", tokenId: "", claimed: "", id: "4" },
+  { address: "", tokenId: "", claimed: "", id: "5" },
 ];
 let timer: any = null;
 const Claim = ({ contract, fifaInfo }) => {
@@ -667,14 +780,15 @@ const Claim = ({ contract, fifaInfo }) => {
   const [recommenderReward, setRecommenderReward] = useState(0);
   const [countDownString, setCountDown] = useState([0, 0, 0]);
 
+  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
   const isPC = useMediaQuery("(min-width: 992px)");
   const { classes } = useSiteStyles();
 
   const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td style={{ borderColor: "#ccdaf6" }}>{element.position}</td>
-      <td style={{ borderColor: "#ccdaf6" }}>{element.name}</td>
-      <td style={{ borderColor: "#ccdaf6" }}>{element.symbol}</td>
+    <tr key={element.id}>
+      <td style={{ borderColor: "#ccdaf6" }}>{element.address}</td>
+      <td style={{ borderColor: "#ccdaf6" }}>{element.tokenId}</td>
+      <td style={{ borderColor: "#ccdaf6" }}>{element.claimed}</td>
     </tr>
   ));
 
@@ -738,16 +852,17 @@ const Claim = ({ contract, fifaInfo }) => {
     <div id="claim">
       <Stack
         align={"center"}
-        spacing={40}
+        spacing={isBreakpointXs ? 15 : 40}
         sx={(theme) => ({
           padding: "65px 0",
           background: "url('/claim-bg.png') no-repeat #e3e9f5",
+          backgroundSize: isBreakpointXs ? "cover" : "contain",
           backgroundPositionY: "60px",
         })}
       >
         <Stack align="center">
           <Text className={classes.heroTitle}>GET YOUR REWARD</Text>
-          <Text className={classes.heroTitle}>
+          <Text className={classes.heroTitle} align="center" px={10}>
             If your team wins the match, you can claim the reward from pool
           </Text>
         </Stack>
@@ -768,37 +883,52 @@ const Claim = ({ contract, fifaInfo }) => {
             Countdown to next reward
           </Text>
           <Group
-            spacing={50}
-            sx={() => ({
+            spacing={isBreakpointXs ? 20 : 50}
+            sx={(theme) => ({
               fontSize: "24px",
+              [theme.fn.smallerThan("xs")]: {
+                fontSize: "16px",
+              },
             })}
           >
             <Center
-              sx={() => ({
+              sx={(theme) => ({
                 width: "160px",
                 height: "160px",
                 background: "url('/countdown.png') no-repeat",
                 backgroundSize: "contain",
+                [theme.fn.smallerThan("xs")]: {
+                  width: "100px",
+                  height: "100px",
+                },
               })}
             >
               {countDownString[0]}day
             </Center>
             <Center
-              sx={() => ({
+              sx={(theme) => ({
                 width: "160px",
                 height: "160px",
                 background: "url('/countdown.png') no-repeat",
                 backgroundSize: "contain",
+                [theme.fn.smallerThan("xs")]: {
+                  width: "100px",
+                  height: "100px",
+                },
               })}
             >
               {countDownString[1]}h
             </Center>
             <Center
-              sx={() => ({
+              sx={(theme) => ({
                 width: "160px",
                 height: "160px",
                 background: "url('/countdown.png') no-repeat",
                 backgroundSize: "contain",
+                [theme.fn.smallerThan("xs")]: {
+                  width: "100px",
+                  height: "100px",
+                },
               })}
             >
               {countDownString[2]}min
@@ -838,18 +968,31 @@ const Claim = ({ contract, fifaInfo }) => {
             </UnstyledButton>
           </Group>
         </Stack>
-        <Group spacing={0} mt={30}>
+        <Group
+          spacing={0}
+          mt={30}
+          sx={(theme) => ({
+            [theme.fn.smallerThan("xs")]: {
+              width: "100%",
+              padding: "0 10px",
+            },
+          })}
+        >
           <Stack
             align="center"
             justify="center"
-            sx={() => ({
+            sx={(theme) => ({
               zIndex: 2,
               width: "440px",
               height: "175px",
               padding: "0 28px",
               color: "#fff",
               background: "url('/card-bg.png') no-repeat",
-              backgroundSize: "contain",
+              backgroundSize: "100% 100%",
+              [theme.fn.smallerThan("xs")]: {
+                width: "100vw",
+                height: "160px",
+              },
             })}
           >
             <Text align="center" className={classes.modelTips}>
@@ -888,7 +1031,7 @@ const Claim = ({ contract, fifaInfo }) => {
                         : "There is no token in your wallet"}
                     </>
                   ) : ( */}
-                    <UnstyledButton>connect wallect</UnstyledButton>
+                  <UnstyledButton>connect wallect</UnstyledButton>
                   {/* )} */}
                 </Box>
                 {/* {!!address && nftNumber > 0 && (
@@ -918,13 +1061,18 @@ const Claim = ({ contract, fifaInfo }) => {
             </Stack>
           </Stack>
           <Center
-            sx={() => ({
+            sx={(theme) => ({
               width: "390px",
               height: "160px",
               backgroundColor: "#becbe6",
               position: "relative",
               left: "-20px",
               zIndex: 1,
+              [theme.fn.smallerThan("xs")]: {
+                width: "100%",
+                left: 0,
+                marginTop: "10px",
+              },
             })}
           >
             <Text
@@ -987,24 +1135,27 @@ const Claim = ({ contract, fifaInfo }) => {
       <Stack
         align="center"
         spacing={20}
-        sx={() => ({
+        sx={(theme) => ({
           background: "url('/board-bg.png') no-repeat #ccdaf6",
           backgroundPosition: "left bottom",
-          padding: "50px 0",
+          padding: "50px 10px",
         })}
       >
         <Text className={classes.heroTitle}>LEARDERBOARD</Text>
         <Box
-          sx={() => ({
+          sx={(theme) => ({
             padding: "20px",
             borderRadius: "25px",
-            minWidth: "735px",
+            width: "735px",
             backgroundColor: "rgba(255, 255, 255, 0.5)",
+            [theme.fn.smallerThan("xs")]: {
+              width: "100%",
+            },
           })}
         >
           <Table
             horizontalSpacing="xl"
-            verticalSpacing="sm"
+            verticalSpacing="xl"
             sx={() => ({
               color: "#000",
               fontFamily: "ale-general",
@@ -1047,16 +1198,23 @@ const Claim = ({ contract, fifaInfo }) => {
   );
 };
 
+const voteList = ["FRA", "BEL", "URU", "BRA"];
+
 const Vote = () => {
   const { classes } = useSiteStyles();
+  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
+  const isBreakpointLg = useMediaQuery("(min-width: 1201px)");
   return (
     <Stack
       id="vote"
       align="center"
       spacing={25}
-      sx={() => ({
+      sx={(theme) => ({
         padding: "60px 110px 100px",
         background: "#e3e9f5",
+        [theme.fn.smallerThan("md")]: {
+          padding: "60px 10px 100px",
+        },
       })}
     >
       <Text align="center" className={classes.heroTitle}>
@@ -1065,6 +1223,7 @@ const Vote = () => {
       <Text color="#555555" align="center" className={classes.modelTips}>
         Top 4 hot team
       </Text>
+
       <Group
         align="center"
         sx={() => ({
@@ -1073,106 +1232,79 @@ const Vote = () => {
         })}
       >
         <SimpleGrid
-          cols={2}
-          spacing={30}
-          sx={() => ({
+          cols={isBreakpointXs ? 1 : 2}
+          spacing={isBreakpointXs ? 10 : isBreakpointLg ? 60 : 30}
+          sx={(theme) => ({
             width: "50%",
+            [theme.fn.smallerThan("md")]: {
+              width: "80%",
+            },
           })}
         >
-          <Group spacing={10}>
-            <Box
-              sx={() => ({
-                border: "2px solid #f7b04d",
-                padding: "2px",
-              })}
-            >
-              <Box
-                sx={() => ({
-                  border: "2px solid #f3546a",
-                  padding: "2px",
-                })}
+          {voteList.map((item, index) => {
+            return (
+              <Group
+                spacing={10}
+                style={{
+                  position: "relative",
+                  top: isBreakpointXs ? 0 : index === 1 || index === 3 ? "40px" : "0px",
+                }}
               >
-                <MImage
-                  width={200}
-                  height={260}
-                  src="https://cloudinary.fifa.com/transform/89f905e3-ebcd-439b-a99f-0c8a9288c50d/Japan-v-Ecuador-International-Friendly"
-                ></MImage>
-              </Box>
-            </Box>
-            <Image src="/icon/icon-top1.png" width={45} height={58}></Image>
-          </Group>
-          <Group spacing={10} style={{ position: "relative", top: "40px" }}>
-            <Box
-              sx={() => ({
-                border: "2px solid #f7b04d",
-                padding: "2px",
-              })}
-            >
-              <Box
-                sx={() => ({
-                  border: "2px solid #f3546a",
-                  padding: "2px",
-                })}
-              >
-                <MImage
-                  width={200}
-                  height={260}
-                  src="https://cloudinary.fifa.com/transform/89f905e3-ebcd-439b-a99f-0c8a9288c50d/Japan-v-Ecuador-International-Friendly"
-                ></MImage>
-              </Box>
-            </Box>
-            <Image src="/icon/icon-top1.png" width={45} height={58}></Image>
-          </Group>
-          <Group spacing={10}>
-            <Box
-              sx={() => ({
-                border: "2px solid #f7b04d",
-                padding: "2px",
-              })}
-            >
-              <Box
-                sx={() => ({
-                  border: "2px solid #f3546a",
-                  padding: "2px",
-                })}
-              >
-                <MImage
-                  width={200}
-                  height={260}
-                  src="https://cloudinary.fifa.com/transform/89f905e3-ebcd-439b-a99f-0c8a9288c50d/Japan-v-Ecuador-International-Friendly"
-                ></MImage>
-              </Box>
-            </Box>
-            <Image src="/icon/icon-top1.png" width={45} height={58}></Image>
-          </Group>
-          <Group spacing={10} style={{ position: "relative", top: "40px" }}>
-            <Box
-              sx={() => ({
-                border: "2px solid #f7b04d",
-                padding: "2px",
-              })}
-            >
-              <Box
-                sx={() => ({
-                  border: "2px solid #f3546a",
-                  padding: "2px",
-                })}
-              >
-                <MImage
-                  width={200}
-                  height={260}
-                  src="https://cloudinary.fifa.com/transform/89f905e3-ebcd-439b-a99f-0c8a9288c50d/Japan-v-Ecuador-International-Friendly"
-                ></MImage>
-              </Box>
-            </Box>
-            <Image src="/icon/icon-top1.png" width={45} height={58}></Image>
-          </Group>
+                <Box
+                  sx={() => ({
+                    border: `2px solid ${
+                      index === 0 ? "#f7b04d" : "transparent"
+                    }`,
+                    padding: "2px",
+                  })}
+                >
+                  <Box
+                    sx={() => ({
+                      border: `2px solid ${
+                        index < 2 ? "#f3546a" : "transparent"
+                      }`,
+                      padding: "2px",
+                    })}
+                  >
+                    <div
+                      className="fc-wrapper"
+                      style={{
+                        width: isBreakpointLg ? "240px" : "200px",
+                        height: isBreakpointLg ? "312px" : "260px",
+                      }}
+                    >
+                      <div className="fc-inner">
+                        <div className="fc-front">
+                          <img
+                            className="fc-image"
+                            src={`/team/${item}.png`}
+                          ></img>
+                        </div>
+                        <div className="fc-back">
+                          <img
+                            className="fc-image"
+                            src={`/team/${item}.png`}
+                          ></img>
+                        </div>
+                      </div>
+                    </div>
+                  </Box>
+                </Box>
+                <Image
+                  src={`/icon/icon-top${index + 1}.png`}
+                  width={index === 3 ? 21 : 45}
+                  height={index > 1 ? 25 : 58}
+                ></Image>
+              </Group>
+            );
+          })}
         </SimpleGrid>
         <Stack align="center" spacing={8}>
           <Text size={12} style={{ fontFamily: "ale-general" }}>
             Vote from our commutity
           </Text>
           <UnstyledButton
+            onClick={() => window.open("http://t.me/theaetheroffic")}
             sx={(theme) => ({
               backgroundColor: "#f3546a",
               width: "164px",
@@ -1208,85 +1340,110 @@ const About = () => {
       id="about"
       align="center"
       spacing={60}
-      sx={() => ({
+      sx={(theme) => ({
         padding: "60px 130px",
         background: "url('/about-bg.png') no-repeat #d9e2f5",
         backgroundPosition: "center bottom",
+        [theme.fn.smallerThan("xs")]: {
+          padding: "60px 10px",
+        },
       })}
     >
       <Text align="center" className={classes.heroTitle}>
         About
       </Text>
-      <SimpleGrid cols={2} spacing={25}>
-        <Stack align="center" spacing={30}>
-          <Text className={classes.heroTitle}>Aether</Text>
-          <div
-            style={{
-              width: "335px",
-              height: "210px",
-              border: "1px solid #94acda",
-              boxShadow: "2px 2px 2px rgba(191, 205, 235, 0.75)",
-            }}
-          ></div>
-        </Stack>
-        <Stack align="center" spacing={30}>
-          <Text className={classes.heroTitle}>Metasoco</Text>
-          <div
-            style={{
-              width: "335px",
-              height: "210px",
-              border: "1px solid #94acda",
-              boxShadow: "2px 2px 2px rgba(191, 205, 235, 0.75)",
-            }}
-          ></div>
-        </Stack>
-      </SimpleGrid>
+      <Stack
+        sx={(theme) => ({
+          width: "50%",
+          [theme.fn.smallerThan("xs")]: {
+            width: "100%",
+          },
+        })}
+      >
+        <Text
+          sx={() => ({
+            fontFamily: "ale-general",
+          })}
+        >
+          The Aether is a decentralized, open metasomatic virtual world built
+          using blockchain technology, where users can build, trade, interact
+          socially, and generate economic revenue. Each user is given free
+          access to celestial space, where they are given a unique virtual ID.
+          In Aether, players can Play, Create, Own, Govern, Social, Earn.
+        </Text>
+        <Text
+          sx={() => ({
+            fontFamily: "ale-general",
+          })}
+        >
+          Meta-Soco, a metaverse platform for football fans under the Aether,
+          provides a web3 metaverse platform for global football fans to
+          socialize and play games. Meta-Soco is the bridge between soccer
+          lovers and crypto users. There will also be more games and
+          crypto-related features that engage our users. We are building a
+          full-stack Metaverse that enables players to enter our ecosystem and
+          be rewarded from their NFTs with play-to-earn games.
+        </Text>
+      </Stack>
     </Stack>
   );
 };
 
 const Partner = () => {
   const { classes } = useSiteStyles();
+  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
   return (
     <Stack
       id="partner"
       align="center"
       spacing={60}
-      sx={() => ({
+      sx={(theme) => ({
         padding: "60px 130px",
         backgroundColor: "#e3e9f5",
+        [theme.fn.smallerThan("xs")]: {
+          padding: "60px 10px",
+        },
       })}
     >
       <Text align="center" className={classes.heroTitle}>
         Partners ＆Supporters
       </Text>
-      <SimpleGrid cols={3} spacing={25}>
-        <MImage src="/1.png"></MImage>
-        <MImage src="/1.png"></MImage>
-        <MImage src="/1.png"></MImage>
+      <SimpleGrid cols={3} spacing={isBreakpointXs ? 10 : 25}>
+        <MImage src="/partner1.png"></MImage>
+        <MImage src="/partner2.png"></MImage>
+        <MImage src="/partner3.png"></MImage>
       </SimpleGrid>
       <Stack
         spacing={33}
         align="center"
         justify="center"
-        sx={() => ({
+        sx={(theme) => ({
           borderRadius: "20px",
           width: "500px",
           height: "170px",
           background: "linear-gradient(62deg, #761D67 0%, #F45268 81%)",
+          [theme.fn.smallerThan("xs")]: {
+            width: "100%",
+          },
         })}
       >
         <Text color="#fdfbfd" align="center" className={classes.heroTitle}>
           Join our Community
         </Text>
         <Group spacing={50}>
-          <UnstyledButton>
+          <UnstyledButton
+            onClick={() => window.open("https://twitter.com/TheAether_io")}
+          >
             <Image src="/icon/icon-twitter.png" width={37} height={30}></Image>
           </UnstyledButton>
-          <UnstyledButton>
+          <UnstyledButton
+            onClick={() => window.open("https://discord.gg/JqVbvfwmre")}
+          >
             <Image src="/icon/icon-discord.png" width={42} height={40}></Image>
           </UnstyledButton>
-          <UnstyledButton>
+          <UnstyledButton
+            onClick={() => window.open("http://t.me/theaetheroffic")}
+          >
             <Image src="/icon/icon-telegram.png" width={40} height={39}></Image>
           </UnstyledButton>
         </Group>
@@ -1327,7 +1484,7 @@ const HomePage: NextPage<{
       <Partner />
       <style jsx>{`
         .container {
-          padding-top: 60px;
+          padding-top: 80px;
           width: 100%;
           height: 100%;
           line-height: 24px;

@@ -9,8 +9,8 @@ export default createStyles(theme => ({
     height: HEADER_HEIGHT,
     zIndex: 6,
     position: 'fixed',
-    backgroundColor: theme.colors.bg[0],
-    boxShadow: '0px 1px 0px #2E2A53',
+    backgroundColor: "#f3f7ff",
+    boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.08)",
     paddingRight: 'var(--removed-scroll-width, 0px)',
 
     [theme.fn.largerThan('md')]: {
@@ -74,7 +74,7 @@ export default createStyles(theme => ({
     fontWeight: 700,
     fontSize: '16px',
     lineHeight: '24px',
-    color: '#ffffff',
+    color: "#555555",
   }
 
 }))

@@ -11,6 +11,8 @@ import { chains, wagmiClient } from "src/connectors";
 import { WagmiConfig, useContract, useSigner } from "wagmi";
 import abi from "src/abi/abi.json";
 
+import "../global.css";
+
 function AppContent(props: AppProps) {
   const { Component, pageProps } = props;
   const { data: signer } = useSigner();
@@ -25,7 +27,7 @@ function AppContent(props: AppProps) {
   return (
     <>
       <Head>
-        <title>ETHMergeArt</title>
+        <title>Metasoco</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

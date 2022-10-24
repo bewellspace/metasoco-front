@@ -14,7 +14,7 @@ export default function AboutPage({ contract }) {
   const [nftNumber, setNftNumber] = useState(0);
   const [userTotalReward, setUserTotalReward] = useState(0);
   const [nftList, setNftList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // useEffect(() => {
   //   if (contract.signer) {
@@ -50,13 +50,11 @@ export default function AboutPage({ contract }) {
       sx={(theme) => ({
         padding: "150px 80px 80px",
         background: "url('/nft-bg.png') no-repeat #d8e2f7",
-        backgroundPositionX: 0,
-        backgroundPositionY: "100px",
+        backgroundPositionX: 'right',
+        backgroundPositionY: "bottom",
         backgroundSize: "370px 410px",
         [theme.fn.smallerThan("md")]: {
-          padding: "0 1rem",
-          paddingTop: "87px",
-          paddingBottom: "87px",
+          padding: "120px 10px"
         },
       })}
     >
@@ -91,7 +89,7 @@ export default function AboutPage({ contract }) {
           minHeight: "500px",
           borderRadius: "4px",
           marginTop: "30px",
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
         })}
       >
         <Skeleton

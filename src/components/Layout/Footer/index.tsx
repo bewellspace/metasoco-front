@@ -18,7 +18,7 @@ const Footer = () => {
           [theme.fn.smallerThan("md")]: {
             padding: "3rem 2rem",
             width: "100%",
-            flexDirection: "column",
+            flexDirection: "row",
           },
         })}
       >
@@ -30,8 +30,8 @@ const Footer = () => {
         >
           <Image
             src="/logo2.png"
-            height={isPC ? 86 : 20}
-            width={isPC ? 140 : 86}
+            height={isPC ? 86 : 56}
+            width={isPC ? 140 : 100}
           />
         </Box>
 
@@ -46,21 +46,27 @@ const Footer = () => {
           })}
         >
           <Group spacing={10}>
-            <UnstyledButton>
+            <UnstyledButton
+              onClick={() => window.open("https://twitter.com/TheAether_io")}
+            >
               <Image
                 src="/icon/icon-twitter.png"
                 width={27}
                 height={22}
               ></Image>
             </UnstyledButton>
-            <UnstyledButton>
+            <UnstyledButton
+              onClick={() => window.open("https://discord.gg/JqVbvfwmre")}
+            >
               <Image
                 src="/icon/icon-discord.png"
                 width={30}
                 height={28}
               ></Image>
             </UnstyledButton>
-            <UnstyledButton>
+            <UnstyledButton
+              onClick={() => window.open("http://t.me/theaetheroffic")}
+            >
               <Image
                 src="/icon/icon-telegram.png"
                 width={30}

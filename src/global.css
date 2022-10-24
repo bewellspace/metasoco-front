@@ -1,0 +1,44 @@
+.fc-wrapper{
+  width: 200px;
+  height: 260px;
+  box-sizing:border-box;
+  perspective:1000px;
+}
+.fc-wrapper:hover .fc-inner{
+  transform: rotateY(-180deg) translateZ(0);
+}
+.fc-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform-origin: center center;
+  transition:transform 0.8s;
+}
+.fc-front{
+  position:absolute;
+  z-index: 4;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+}
+.fc-back{
+  position:absolute;
+  z-index: 2;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  transform-origin: center center;
+  transform: rotateY(180deg);
+}
+.fc-image {
+  width:100%;
+  height:100%;
+}
+
+.fc-wrapper:hover .fc-inner{
+  transform: rotateY(-180deg) translateZ(0);
+}

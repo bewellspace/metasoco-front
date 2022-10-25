@@ -314,8 +314,6 @@ const Mint = ({ contract }) => {
           <Center
             sx={(theme) => ({
               position: "relative",
-              borderRadius: "40px",
-              boxShadow: "6px 6px 9px rgba(9, 2, 4, 0.5)"
             })}
           >
             <Center
@@ -330,11 +328,23 @@ const Mint = ({ contract }) => {
               <Center
                 sx={() => ({
                   position: "absolute",
-                  width: "90%",
+                  top: "30%",
+                  width: "50%",
+                  zIndex: 2,
                   animation: "bounce-down 1.5s linear infinite",
                 })}
               >
                 <MImage src="/box.png"></MImage>
+              </Center>
+              <Center
+                sx={() => ({
+                  position: "absolute",
+                  bottom: "20%",
+                  width: "50%",
+                  animation: "scale-scale 1.5s linear infinite",
+                })}
+              >
+                <MImage src="/box-shadow.png"></MImage>
               </Center>
             </Center>
           </Center>

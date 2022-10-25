@@ -130,6 +130,10 @@ const Hero = () => {
               ></MImage>
               <MImage
                 width={isBreakpointLg ? 180 : 150}
+                src="/team/CMR.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
                 src="/team/CRC.png"
               ></MImage>
               <MImage
@@ -142,15 +146,11 @@ const Hero = () => {
               ></MImage>
               <MImage
                 width={isBreakpointLg ? 180 : 150}
-                src="/team/FRA.png"
+                src="/team/ENG.png"
               ></MImage>
               <MImage
                 width={isBreakpointLg ? 180 : 150}
-                src="/team/POL.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/URU.png"
+                src="/team/ESP.png"
               ></MImage>
             </Group>
           </Parallax>
@@ -169,39 +169,39 @@ const Hero = () => {
             >
               <MImage
                 width={isBreakpointLg ? 180 : 150}
-                src="/team/ARG.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/AUS.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/BEL.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/BRA.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/CAN.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/CRC.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/DEN.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/ECU.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
                 src="/team/FRA.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/GHA.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/IRN.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/JPN.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/KOR.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/KSA.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/MAR.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/MEX.png"
+              ></MImage>
+              <MImage
+                width={isBreakpointLg ? 180 : 150}
+                src="/team/NED.png"
               ></MImage>
               <MImage
                 width={isBreakpointLg ? 180 : 150}
@@ -209,7 +209,7 @@ const Hero = () => {
               ></MImage>
               <MImage
                 width={isBreakpointLg ? 180 : 150}
-                src="/team/URU.png"
+                src="/team/POR.png"
               ></MImage>
             </Group>
           </Parallax>
@@ -312,12 +312,31 @@ const Mint = ({ contract }) => {
       >
         <Stack align="center" spacing={30}>
           <Center
-            sx={() => ({
+            sx={(theme) => ({
+              position: "relative",
               borderRadius: "40px",
-              boxShadow: "6px 6px 9px rgba(9, 2, 4, 0.5)",
+              boxShadow: "6px 6px 9px rgba(9, 2, 4, 0.5)"
             })}
           >
-            <Image src="/blind-box-bg.png" width={300} height={470}></Image>
+            <Center
+              sx={(theme) => ({
+                width: "300px",
+                [theme.fn.smallerThan("xs")]: {
+                  width: "200px",
+                },
+              })}
+            >
+              <MImage src="/blind-box-bg.png"></MImage>
+              <Center
+                sx={() => ({
+                  position: "absolute",
+                  width: "90%",
+                  animation: "bounce-down 1.5s linear infinite",
+                })}
+              >
+                <MImage src="/box.png"></MImage>
+              </Center>
+            </Center>
           </Center>
           <Text size={12} style={{ fontFamily: "ale-general" }}>
             NETWORK ETHEREUM
@@ -972,6 +991,9 @@ const Claim = ({ contract, fifaInfo }) => {
           spacing={0}
           mt={30}
           sx={(theme) => ({
+            [theme.fn.smallerThan("md")]: {
+              justifyContent: "center",
+            },
             [theme.fn.smallerThan("xs")]: {
               width: "100%",
               padding: "0 10px",
@@ -1068,6 +1090,10 @@ const Claim = ({ contract, fifaInfo }) => {
               position: "relative",
               left: "-20px",
               zIndex: 1,
+              [theme.fn.smallerThan("md")]: {
+                left: 0,
+                marginTop: "10px",
+              },
               [theme.fn.smallerThan("xs")]: {
                 width: "100%",
                 left: 0,
@@ -1198,7 +1224,7 @@ const Claim = ({ contract, fifaInfo }) => {
   );
 };
 
-const voteList = ["FRA", "BEL", "URU", "BRA"];
+const voteList = ["FRA", "BEL", "ENG", "URU"];
 
 const Vote = () => {
   const { classes } = useSiteStyles();
@@ -1213,7 +1239,7 @@ const Vote = () => {
         padding: "60px 110px 100px",
         background: "#e3e9f5",
         [theme.fn.smallerThan("md")]: {
-          padding: "60px 10px 100px",
+          padding: "60px 10px",
         },
       })}
     >
@@ -1247,7 +1273,11 @@ const Vote = () => {
                 spacing={10}
                 style={{
                   position: "relative",
-                  top: isBreakpointXs ? 0 : index === 1 || index === 3 ? "40px" : "0px",
+                  top: isBreakpointXs
+                    ? 0
+                    : index === 1 || index === 3
+                    ? "40px"
+                    : "0px",
                 }}
               >
                 <Box
@@ -1299,7 +1329,15 @@ const Vote = () => {
             );
           })}
         </SimpleGrid>
-        <Stack align="center" spacing={8}>
+        <Stack
+          align="center"
+          spacing={8}
+          sx={(theme) => ({
+            [theme.fn.smallerThan("md")]: {
+              marginTop: "30px",
+            },
+          })}
+        >
           <Text size={12} style={{ fontFamily: "ale-general" }}>
             Vote from our commutity
           </Text>
@@ -1344,7 +1382,7 @@ const About = () => {
         padding: "60px 130px",
         background: "url('/about-bg.png') no-repeat #d9e2f5",
         backgroundPosition: "center bottom",
-        [theme.fn.smallerThan("xs")]: {
+        [theme.fn.smallerThan("md")]: {
           padding: "60px 10px",
         },
       })}
@@ -1355,7 +1393,7 @@ const About = () => {
       <Stack
         sx={(theme) => ({
           width: "50%",
-          [theme.fn.smallerThan("xs")]: {
+          [theme.fn.smallerThan("md")]: {
             width: "100%",
           },
         })}

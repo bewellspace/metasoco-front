@@ -1270,6 +1270,7 @@ const Vote = () => {
           {voteList.map((item, index) => {
             return (
               <Group
+                key={`item_${index}`}
                 spacing={10}
                 style={{
                   position: "relative",

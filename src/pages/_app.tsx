@@ -34,7 +34,7 @@ function AppContent(props: AppProps) {
         />
       </Head>
 
-      <RainbowKitProvider
+      {/* <RainbowKitProvider
         modalSize="compact"
         chains={chains}
         initialChain={5}
@@ -44,14 +44,14 @@ function AppContent(props: AppProps) {
           accentColorForeground: "white",
           fontStack: "system",
         })}
-      >
-        <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-          <GlobalStyles />
-          <Header navbarOpened={false} toggleNavbar={console.log} />
-          <Component {...pageProps} contract={contract} />
-          <Footer />
-        </MantineProvider>
-      </RainbowKitProvider>
+      > */}
+      <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
+        <GlobalStyles />
+        <Header navbarOpened={false} toggleNavbar={console.log} />
+        <Component {...pageProps} contract={contract} />
+        <Footer />
+      </MantineProvider>
+      {/* </RainbowKitProvider> */}
     </>
   );
 }

@@ -75,6 +75,7 @@ export default createStyles(theme => ({
     fontSize: '16px',
     lineHeight: '24px',
     color: "#555555",
+    fontFamily: "Balthazar-Regular"
   }
 
 }))

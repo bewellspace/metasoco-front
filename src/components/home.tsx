@@ -43,18 +43,34 @@ const Hero = () => {
 
   return (
     <Stack
+      id="home"
       align="center"
       spacing={0}
       sx={(theme) => ({
-        padding: "0",
         width: "100%",
-        backgroundColor: "#fff",
+        background: "url('/banner-bg.png') no-repeat #fff",
+        backgroundSize: '100% 100%'
       })}
     >
-      <MImage src="/banner.png"></MImage>
+      <Center
+        sx={(theme) => ({
+          padding: '50px 0 0',
+          width: "60vw",
+          [theme.fn.largerThan('lg')]: {
+            width: '40vw'
+          },
+          [theme.fn.largerThan('md')]: {
+            width: '43vw'
+          },
+          [theme.fn.smallerThan('xs')]: {
+            width: '80vw'
+          }
+        })}
+      >
+        <MImage src="/banner.png"></MImage>
+      </Center>
+
       <Stack
-        pt={22}
-        pb={65}
         sx={(theme) => ({
           width: "100%",
           background: "url('/hero-bg.png') no-repeat #f3f7ff",
@@ -62,6 +78,8 @@ const Hero = () => {
           minHeight: "700px",
           backgroundPosition: "bottom right",
           position: "relative",
+          paddingTop: '50px',
+          paddingBottom: '65px'
         })}
       >
         <Stack align="center">
@@ -72,7 +90,7 @@ const Hero = () => {
             win the final prize pool!
           </Text>
         </Stack>
-        <Stack align="center" pt={10} pb={25}>
+        <Stack align="center" pt={10}>
           <Text align="center" className={classes.modelTips}>
             Meta-soco is a bridge between football fans and crypto users，
           </Text>
@@ -296,7 +314,7 @@ const Mint = ({ contract }) => {
         padding: "70px 0",
         width: "100%",
         backgroundColor: "#e3e9f5",
-        fontFamily: "ale-general",
+        fontFamily: "Balthazar-Regular",
         position: "relative",
         [theme.fn.smallerThan("lg")]: {
           // padding: "30px",
@@ -304,7 +322,7 @@ const Mint = ({ contract }) => {
       })}
     >
       <Group
-        spacing={40}
+        spacing={20}
         position="center"
         sx={() => ({
           alignItems: "flex-start",
@@ -348,13 +366,13 @@ const Mint = ({ contract }) => {
               </Center>
             </Center>
           </Center>
-          <Text size={12} style={{ fontFamily: "ale-general" }}>
+          <Text size={12} style={{ fontFamily: "Balthazar-Regular" }}>
             NETWORK ETHEREUM
           </Text>
         </Stack>
         <Stack
           align="center"
-          pt={30}
+          pt={40}
           sx={() => ({
             maxWidth: "360px",
           })}
@@ -401,7 +419,7 @@ const Mint = ({ contract }) => {
                     border: "none",
                     color: "#000",
                     fontSize: "18px",
-                    fontFamily: "ale-general",
+                    fontFamily: "Balthazar-Regular",
                   },
                 }}
               />
@@ -441,15 +459,23 @@ const Mint = ({ contract }) => {
             >
               Mint Your Team
             </UnstyledButton>
-            <Text align="center" style={{ fontFamily: "ale-general" }}>
+            <Text align="center" style={{ fontFamily: "Balthazar-Regular" }}>
               (Max mint 10x per wallet)
             </Text>
           </Stack>
-          <Text align="center" size={12} style={{ fontFamily: "ale-general" }}>
+          <Text
+            align="center"
+            size={14}
+            style={{ fontFamily: "Balthazar-Regular" }}
+          >
             The NFTS of 32 teams will appear with equal probability, 100 for
             each team, for a total of 3200 issued.
           </Text>
-          <Text align="center" size={12} style={{ fontFamily: "ale-general" }}>
+          <Text
+            align="center"
+            size={14}
+            style={{ fontFamily: "Balthazar-Regular" }}
+          >
             The holders of NFTS are rewarded according to the actual performance
             of each team during the World Cup 2022. The NFT values of all
             players and teams will fluctuate in real time with each game's
@@ -577,9 +603,12 @@ const Mechanism = ({ contract, fifaInfo }) => {
             backgroundColor: "#f3546a",
             color: "#fbf9f9",
             boxShadow: "3px 3px 2px rgba(3, 127, 204, 0.5)",
+            [theme.fn.largerThan("md")]: {
+              fontSize: "20px",
+            },
           })}
         >
-          Current pool: {totalRewardPool}ETH
+          Current pool: {totalRewardPool} ETH
         </Center>
       </Stack>
       <SimpleGrid
@@ -601,13 +630,31 @@ const Mechanism = ({ contract, fifaInfo }) => {
           <Text align="center" className={classes.heroTitle}>
             How to play?
           </Text>
-          <Text align="center" size={12}>
+          <Text
+            align="center"
+            sx={(theme) => ({
+              fontSize: "14px",
+              [theme.fn.largerThan("lg")]: {
+                fontSize: "16px",
+              },
+            })}
+            style={{ fontFamily: "Balthazar-Regular" }}
+          >
             The project party retains 20% of the sales revenue as
             <br />
             operating expenses, and 80% of the total revenue is
             <br /> returned to NFT holders in the form of rewards.
           </Text>
-          <Text align="center" size={12}>
+          <Text
+            align="center"
+            sx={(theme) => ({
+              fontSize: "14px",
+              [theme.fn.largerThan("lg")]: {
+                fontSize: "16px",
+              },
+            })}
+            style={{ fontFamily: "Balthazar-Regular" }}
+          >
             There are five stages of the season: 32 into 16,
             <br />
             16 into 8,8 into 4,4 into 2, the finals. <br />
@@ -615,11 +662,20 @@ const Mechanism = ({ contract, fifaInfo }) => {
             <br />
             round of the rewards pool, which will be awarded
             <br /> 5%, 10%, 15%, and 20% of the total bonus pool, respectively.
-            <Text color={"#eb3f3f"}>
+            <Text color={"#eb3f3f"} style={{ fontFamily: "Balthazar-Regular" }}>
               The champion team NFT will receive 50% of the total sales revenue.
             </Text>
           </Text>
-          <Text size={12} align="center">
+          <Text
+            sx={(theme) => ({
+              fontSize: "14px",
+              [theme.fn.largerThan("lg")]: {
+                fontSize: "16px",
+              },
+            })}
+            align="center"
+            style={{ fontFamily: "Balthazar-Regular" }}
+          >
             <Text color="#f6b35c">As a member of NFT holder you recieve:</Text>
             NFT sales revenue awards
             <br />
@@ -899,7 +955,11 @@ const Claim = ({ contract, fifaInfo }) => {
           href="https://www.fifa.com/fifaplus/en/tournaments/mens/worldcup/qatar2022/countdown-to-qatar-2022"
           target="_blank"
         >
-          <Text underline color="#9d9d9d" style={{ fontFamily: "ale-general" }}>
+          <Text
+            underline
+            color="#9d9d9d"
+            style={{ fontFamily: "Balthazar-Regular" }}
+          >
             Click here to check the match information
           </Text>
         </Anchor>
@@ -907,7 +967,10 @@ const Claim = ({ contract, fifaInfo }) => {
           <Text
             align="center"
             color="#de3e3e"
-            style={{ fontFamily: "ale-general" }}
+            sx={() => ({
+              fontSize: "25px",
+            })}
+            style={{ fontFamily: "Balthazar-Regular" }}
           >
             Countdown to next reward
           </Text>
@@ -916,7 +979,7 @@ const Claim = ({ contract, fifaInfo }) => {
             sx={(theme) => ({
               fontSize: "24px",
               [theme.fn.smallerThan("xs")]: {
-                fontSize: "16px",
+                fontSize: "18px",
               },
             })}
           >
@@ -932,7 +995,18 @@ const Claim = ({ contract, fifaInfo }) => {
                 },
               })}
             >
-              {countDownString[0]}day
+              <Text
+                sx={(theme) => ({
+                  fontFamily: "Saira-Black",
+                  fontSize: "32px",
+                  [theme.fn.smallerThan("xs")]: {
+                    fontSize: "24px",
+                  },
+                })}
+              >
+                {countDownString[0]}
+              </Text>
+              day
             </Center>
             <Center
               sx={(theme) => ({
@@ -946,7 +1020,18 @@ const Claim = ({ contract, fifaInfo }) => {
                 },
               })}
             >
-              {countDownString[1]}h
+              <Text
+                sx={(theme) => ({
+                  fontFamily: "Saira-Black",
+                  fontSize: "32px",
+                  [theme.fn.smallerThan("xs")]: {
+                    fontSize: "24px",
+                  },
+                })}
+              >
+                {countDownString[1]}
+              </Text>
+              h
             </Center>
             <Center
               sx={(theme) => ({
@@ -960,7 +1045,18 @@ const Claim = ({ contract, fifaInfo }) => {
                 },
               })}
             >
-              {countDownString[2]}min
+              <Text
+                sx={(theme) => ({
+                  fontFamily: "Saira-Black",
+                  fontSize: "32px",
+                  [theme.fn.smallerThan("xs")]: {
+                    fontSize: "24px",
+                  },
+                })}
+              >
+                {countDownString[2]}
+              </Text>
+              min
             </Center>
           </Group>
         </Stack>
@@ -989,7 +1085,8 @@ const Claim = ({ contract, fifaInfo }) => {
           <Group>
             <Center>
               <Text className={classes.underLine}>
-                My NFT reward: {userTotalReward}ETH
+                My NFT reward:{" "}
+                <span style={{ color: "#f3261f" }}>{userTotalReward}</span> ETH
               </Text>
             </Center>
             <UnstyledButton className={classes.claimButton}>
@@ -1045,7 +1142,31 @@ const Claim = ({ contract, fifaInfo }) => {
                 Your invite link:
               </Text>
               <Group position="center" spacing={8}>
-                <Box
+                <UnstyledButton
+                  sx={(theme) => ({
+                    padding: "10px 12px",
+                    color: "#fff",
+                    borderRadius: "6px",
+                    background: "linear-gradient(#f97184, #F55b71)",
+                    fontSize: "16px",
+                    transform: "scale(1)",
+                    transition: "transform 0.1s linear 0s",
+                    "&:hover": {
+                      transform: "scale(0.98)",
+                      transition: "transform 0.1s linear 0s",
+                    },
+                    [theme.fn.largerThan("md")]: {
+                      padding: "12px 14px",
+                      borderRadius: "8px",
+                    },
+                    [theme.fn.smallerThan("md")]: {
+                      fontSize: "14px",
+                    },
+                  })}
+                >
+                  Connect Wallect
+                </UnstyledButton>
+                {/* <Box
                   sx={() => ({
                     width: "280px",
                     wordBreak: "break-all",
@@ -1055,17 +1176,17 @@ const Claim = ({ contract, fifaInfo }) => {
                     textAlign: "center",
                     border: "1px solid #555555",
                   })}
-                >
-                  {/* {address ? (
+                > */}
+                {/* {address ? (
                     <>
                       {nftNumber > 0
                         ? `${window.location.href}${address}`
                         : "There is no token in your wallet"}
                     </>
                   ) : ( */}
-                  <UnstyledButton>connect wallect</UnstyledButton>
-                  {/* )} */}
-                </Box>
+
+                {/* )} */}
+                {/* </Box> */}
                 {/* {!!address && nftNumber > 0 && (
                   <CopyButton value="https://mantine.dev">
                     {({ copied, copy }) => (
@@ -1073,7 +1194,7 @@ const Claim = ({ contract, fifaInfo }) => {
                         onClick={copy}
                         sx={() => ({
                           transition: "transform 0.1s linear 0s",
-                          fontFamily: "ale-general",
+                          fontFamily: "Balthazar-Regular",
                           "&:hover": {
                             transform: "scale(0.96)",
                             transition: "transform 0.1s linear 0s",
@@ -1113,8 +1234,14 @@ const Claim = ({ contract, fifaInfo }) => {
           >
             <Text
               align="center"
-              size={13}
-              style={{ lineHeight: "28px", fontFamily: "ale-general" }}
+              sx={(theme) => ({
+                fontFamily: "Balthazar-Regular",
+                lineHeight: "28px",
+                fontSize: "14px",
+                [theme.fn.largerThan("lg")]: {
+                  fontSize: "16px",
+                },
+              })}
             >
               If the invitee's NFT team wins, the inviter
               <br />
@@ -1132,22 +1259,32 @@ const Claim = ({ contract, fifaInfo }) => {
         </Group>
         <Stack align="center" spacing={14}>
           <Text
-            size={13}
             color="#010101"
+            sx={(theme) => ({
+              fontSize: "14px",
+              [theme.fn.largerThan("lg")]: {
+                fontSize: "16px",
+              },
+            })}
             style={{
               lineHeight: "25px",
-              fontFamily: "ale-general",
+              fontFamily: "Balthazar-Regular",
               borderBottom: "1px solid #010101",
             }}
           >
             Awards for invitations already received : {recommenderReward} ETH
           </Text>
           <Text
-            size={12}
             color="#8e8e8d"
+            sx={(theme) => ({
+              fontSize: "14px",
+              [theme.fn.largerThan("lg")]: {
+                fontSize: "16px",
+              },
+            })}
             style={{
               lineHeight: 1,
-              fontFamily: "ale-general",
+              fontFamily: "Balthazar-Regular",
             }}
           >
             Automatically transferred to wallet, check on{" "}
@@ -1158,9 +1295,9 @@ const Claim = ({ contract, fifaInfo }) => {
                 );
               }}
               sx={() => ({
-                fontSize: "12px",
+                fontSize: "14px",
                 color: "#0e32b6",
-                fontFamily: "ale-general",
+                fontFamily: "Balthazar-Regular",
               })}
             >
               ETHSCAN
@@ -1194,7 +1331,7 @@ const Claim = ({ contract, fifaInfo }) => {
             verticalSpacing="xl"
             sx={() => ({
               color: "#000",
-              fontFamily: "ale-general",
+              fontFamily: "Balthazar-Regular",
             })}
           >
             <thead>
@@ -1291,46 +1428,23 @@ const Vote = () => {
                     : "0px",
                 }}
               >
-                <Box
-                  sx={() => ({
-                    border: `2px solid ${
-                      index === 0 ? "#f7b04d" : "transparent"
-                    }`,
-                    padding: "2px",
-                  })}
+                <div
+                  className="fc-wrapper"
+                  style={{
+                    width: isBreakpointLg ? "240px" : "200px",
+                    height: isBreakpointLg ? "312px" : "260px",
+                  }}
                 >
-                  <Box
-                    sx={() => ({
-                      border: `2px solid ${
-                        index < 2 ? "#f3546a" : "transparent"
-                      }`,
-                      padding: "2px",
-                    })}
-                  >
-                    <div
-                      className="fc-wrapper"
-                      style={{
-                        width: isBreakpointLg ? "240px" : "200px",
-                        height: isBreakpointLg ? "312px" : "260px",
-                      }}
-                    >
-                      <div className="fc-inner">
-                        <div className="fc-front">
-                          <img
-                            className="fc-image"
-                            src={`/team/${item}.png`}
-                          ></img>
-                        </div>
-                        <div className="fc-back">
-                          <img
-                            className="fc-image"
-                            src={`/team/${item}.png`}
-                          ></img>
-                        </div>
-                      </div>
+                  <div className="fc-inner">
+                    <div className="fc-front">
+                      <img className="fc-image" src={`/team/${item}.png`}></img>
                     </div>
-                  </Box>
-                </Box>
+                    <div className="fc-back">
+                      <img className="fc-image" src={`/team/${item}.png`}></img>
+                    </div>
+                  </div>
+                </div>
+
                 <Image
                   src={`/icon/icon-top${index + 1}.png`}
                   width={index === 3 ? 21 : 45}
@@ -1349,7 +1463,15 @@ const Vote = () => {
             },
           })}
         >
-          <Text size={12} style={{ fontFamily: "ale-general" }}>
+          <Text
+            sx={(theme) => ({
+              fontSize: "12px",
+              [theme.fn.largerThan("md")]: {
+                fontSize: "16px",
+              },
+            })}
+            style={{ fontFamily: "Balthazar-Regular" }}
+          >
             Vote from our commutity
           </Text>
           <UnstyledButton
@@ -1362,7 +1484,7 @@ const Vote = () => {
               position: "relative",
               textAlign: "center",
               color: "#fdfafa",
-              fontFamily: "ale-general",
+              fontFamily: "Balthazar-Regular",
               "&:hover": {
                 boxShadow: "5px 5px 2px rgba(9, 2, 4, 0.5)",
               },
@@ -1411,7 +1533,7 @@ const About = () => {
       >
         <Text
           sx={() => ({
-            fontFamily: "ale-general",
+            fontFamily: "Balthazar-Regular",
           })}
         >
           The Aether is a decentralized, open metasomatic virtual world built
@@ -1422,7 +1544,7 @@ const About = () => {
         </Text>
         <Text
           sx={() => ({
-            fontFamily: "ale-general",
+            fontFamily: "Balthazar-Regular",
           })}
         >
           Meta-Soco, a metaverse platform for football fans under the Aether,
@@ -1447,7 +1569,7 @@ const Partner = () => {
       align="center"
       spacing={60}
       sx={(theme) => ({
-        padding: "60px 130px",
+        padding: "60px 130px 100px",
         backgroundColor: "#e3e9f5",
         [theme.fn.smallerThan("xs")]: {
           padding: "60px 10px",
@@ -1462,41 +1584,6 @@ const Partner = () => {
         <MImage src="/partner2.png"></MImage>
         <MImage src="/partner3.png"></MImage>
       </SimpleGrid>
-      <Stack
-        spacing={33}
-        align="center"
-        justify="center"
-        sx={(theme) => ({
-          borderRadius: "20px",
-          width: "500px",
-          height: "170px",
-          background: "linear-gradient(62deg, #761D67 0%, #F45268 81%)",
-          [theme.fn.smallerThan("xs")]: {
-            width: "100%",
-          },
-        })}
-      >
-        <Text color="#fdfbfd" align="center" className={classes.heroTitle}>
-          Join our Community
-        </Text>
-        <Group spacing={50}>
-          <UnstyledButton
-            onClick={() => window.open("https://twitter.com/TheAether_io")}
-          >
-            <Image src="/icon/icon-twitter.png" width={37} height={30}></Image>
-          </UnstyledButton>
-          <UnstyledButton
-            onClick={() => window.open("https://discord.gg/JqVbvfwmre")}
-          >
-            <Image src="/icon/icon-discord.png" width={42} height={40}></Image>
-          </UnstyledButton>
-          <UnstyledButton
-            onClick={() => window.open("http://t.me/theaetheroffic")}
-          >
-            <Image src="/icon/icon-telegram.png" width={40} height={39}></Image>
-          </UnstyledButton>
-        </Group>
-      </Stack>
     </Stack>
   );
 };

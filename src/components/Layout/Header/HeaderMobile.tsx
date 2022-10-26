@@ -1,11 +1,10 @@
-import { Burger, Drawer, Group, Divider, UnstyledButton } from "@mantine/core";
-import { IconArrowRight } from "@tabler/icons";
 import { Logo } from "../../Logo/Logo";
-import useStyles from "./HeaderMobile.styles";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import useStyles from "./HeaderMobile.styles";
+import { IconArrowRight } from "@tabler/icons";
 import { scrollToAnchor } from "src/common/utils";
+import React, { useState, useEffect } from "react";
+import { Burger, Drawer, Group, Divider, UnstyledButton } from "@mantine/core";
 
 interface HeaderProps {
   navbarOpened: boolean;
@@ -63,7 +62,7 @@ export function HeaderMobile({ navbarOpened, toggleNavbar }: HeaderProps) {
             onClick={() => {
               setActive("");
               setDrawerStatus(false);
-              router.push("/nft")
+              router.push("/nft");
             }}
           >
             <UnstyledButton>

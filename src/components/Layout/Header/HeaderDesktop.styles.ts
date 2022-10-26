@@ -27,6 +27,7 @@ export default createStyles((theme) => ({
     height: HEADER_HEIGHT,
     display: "flex",
     alignItems: "center",
+    cursor: 'pointer'
   },
 
   mainSection: {
@@ -50,7 +51,7 @@ export default createStyles((theme) => ({
     fontSize: "16px",
     lineHeight: "20px",
     height: "40px",
-    fontFamily: "ale-general",
+    fontFamily: "Balthazar-Regular",
     "&:hover": {
       color: "#fcf7f7",
       backgroundColor: "#f3546a",
@@ -63,7 +64,7 @@ export default createStyles((theme) => ({
     fontSize: "16px",
     lineHeight: "20px",
     height: "40px",
-    fontFamily: "ale-general",
+    fontFamily: "Balthazar-Regular",
     "&:hover": {
       color: "#fcf7f7",
       backgroundColor: "#f3546a",

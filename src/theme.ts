@@ -27,9 +27,12 @@ export const useSiteStyles = createStyles((theme) => {
     modelTips: {
       fontSize: "16px",
       fontFamily: "inherit",
-      lineHeight: "1",
+      lineHeight: 1,
       [theme.fn.smallerThan("md")]: {
-        fontSize: "12px",
+        fontSize: "14px",
+      },
+      [theme.fn.largerThan("lg")]: {
+        fontSize: "18px",
       },
     },
     teamPic: {
@@ -42,11 +45,14 @@ export const useSiteStyles = createStyles((theme) => {
       }
     },
     underLine: {
-      fontSize: "12px",
+      fontSize: "14px",
       lineHeight: 1,
       padding: "5px 0",
       borderBottom: "1px solid #000",
-      fontFamily: "ale-general",
+      fontFamily: "Balthazar-Regular",
+      [theme.fn.largerThan("lg")]: {
+        fontSize: '16px'
+      }
     },
     claimButton: {
       width: "75px",
@@ -55,7 +61,7 @@ export const useSiteStyles = createStyles((theme) => {
       textAlign: "center",
       color: "#ffffff",
       background: "linear-gradient(180deg, #f97184, #f06c81 100%)",
-      fontFamily: "ale-general",
+      fontFamily: "Balthazar-Regular",
       "&:hover": {
         boxShadow: "2px 2px 2px rgba(9, 2, 4, 0.5)",
       },

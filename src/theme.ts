@@ -17,22 +17,25 @@ export const useSiteStyles = createStyles((theme) => {
       color: theme.colors.bg[0],
     },
     heroTitle: {
-      fontSize: "1.4rem",
+      fontSize: "1.6rem",
       fontFamily: "barlow-black",
       lineHeight: "1",
       [theme.fn.smallerThan("md")]: {
         fontSize: "1.25rem",
       },
+      [theme.fn.largerThan("lg")]: {
+        fontSize: "2.2rem",
+      },
     },
     modelTips: {
-      fontSize: "16px",
+      fontSize: "1rem",
       fontFamily: "inherit",
       lineHeight: 1,
       [theme.fn.smallerThan("md")]: {
         fontSize: "14px",
       },
       [theme.fn.largerThan("lg")]: {
-        fontSize: "18px",
+        fontSize: "1.2rem",
       },
     },
     teamPic: {

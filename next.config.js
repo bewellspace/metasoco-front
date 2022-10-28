@@ -12,6 +12,12 @@ const nextConfig = {
     })
     return config
   },
+  async rewrites() {
+    return [
+      //接口请求 前缀带上/api-text/
+      { source: '/api/:path*', destination: `https://gateway.pinata.cloud/:path*` },
+    ]
+  },
 }
 
 module.exports = nextConfig

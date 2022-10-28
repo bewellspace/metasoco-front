@@ -1,4 +1,13 @@
 import {
+  useNetwork,
+  useContractRead,
+  useAccount,
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+  useProvider,
+} from "wagmi";
+import {
   Anchor,
   Box,
   CopyButton,
@@ -6,6 +15,7 @@ import {
   Stack,
   Text,
   UnstyledButton,
+  Button,
   Image as MImage,
   Center,
   NumberInput,
@@ -14,33 +24,25 @@ import {
   SimpleGrid,
   Table,
 } from "@mantine/core";
+import Web3 from "web3";
 import Image from "next/image";
+import { ethers } from "ethers";
 import { NextPage } from "next";
+import abi from "src/abi/abi.json";
+import { Decimal } from "decimal.js";
 import { FifaInfo } from "src/types";
+import { useRouter } from "next/router";
 import { Parallax } from "rc-scroll-anim";
 import React, { useState, useRef, useEffect } from "react";
 import { useSiteStyles } from "src/theme";
 import { useMediaQuery } from "@mantine/hooks";
 import { IconPlus, IconMinus } from "@tabler/icons";
-// import {
-//   useContractRead,
-//   useAccount,
-//   usePrepareContractWrite,
-//   useContractWrite,
-//   useWaitForTransaction,
-// } from "wagmi";
-// import abi from "src/abi/abi.json";
-// import { ethers } from "ethers";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
+import Blindbox from "./Blindbox";
 
 const Hero = () => {
   const { classes } = useSiteStyles();
-  const [windowWidth, setWidth] = useState(0);
-
   const isBreakpointLg = useMediaQuery("(min-width: 1201px)");
-  useEffect(() => {
-    setWidth(document.body.clientWidth);
-  }, []);
-
   return (
     <Stack
       id="home"
@@ -49,22 +51,22 @@ const Hero = () => {
       sx={(theme) => ({
         width: "100%",
         background: "url('/banner-bg.png') no-repeat #fff",
-        backgroundSize: '100% 100%'
+        backgroundSize: "100% 100%",
       })}
     >
       <Center
         sx={(theme) => ({
-          padding: '50px 0 0',
+          padding: "50px 0 0",
           width: "60vw",
-          [theme.fn.largerThan('lg')]: {
-            width: '40vw'
+          [theme.fn.largerThan("lg")]: {
+            width: "40vw",
           },
-          [theme.fn.largerThan('md')]: {
-            width: '43vw'
+          [theme.fn.largerThan("md")]: {
+            width: "43vw",
           },
-          [theme.fn.smallerThan('xs')]: {
-            width: '80vw'
-          }
+          [theme.fn.smallerThan("xs")]: {
+            width: "80vw",
+          },
         })}
       >
         <MImage src="/banner.png"></MImage>
@@ -78,24 +80,24 @@ const Hero = () => {
           minHeight: "700px",
           backgroundPosition: "bottom right",
           position: "relative",
-          paddingTop: '50px',
-          paddingBottom: '65px'
+          paddingTop: "50px",
+          paddingBottom: "65px",
         })}
       >
         <Stack align="center">
           <Text align="center" className={classes.heroTitle}>
-            Get your NFT team，
+            Get your NFT,
           </Text>
           <Text align="center" className={classes.heroTitle}>
-            win the final prize pool!
+            Win the final prize!
           </Text>
         </Stack>
         <Stack align="center" pt={10}>
           <Text align="center" className={classes.modelTips}>
-            Meta-soco is a bridge between football fans and crypto users，
+            Metasoco is a bridge between soccor fans and crypto users.
           </Text>
           <Text align="center" className={classes.modelTips}>
-            win the final prize pool!
+            Support your favorite team, get your NFT, and win the final prize!
           </Text>
         </Stack>
         <Box
@@ -238,72 +240,138 @@ const Hero = () => {
 };
 
 const Mint = ({ contract }) => {
-  // const { address } = useAccount();
+  const router = useRouter();
+  const { chain } = useNetwork();
   const { classes } = useSiteStyles();
   const [value, setValue] = useState(1);
   const [price, setPrice] = useState(0.05);
+  const [supply, setSupply] = useState("0");
+  const [soldOut, setSoldOut] = useState(false);
   const [isActive, setIsActive] = useState(false);
-  const [totalNumber, setTotalNumber] = useState("0");
+  const { address, isDisconnected, isConnected } = useAccount();
+  const [totalNumber, setTotalNumber] = useState("3200");
+
+  const [mintLoading, setMintLoading] = useState(false);
+
+  const [recommenderAddress, setAddress] = useState(
+    "0x0000000000000000000000000000000000000000"
+  );
   const handlers = useRef<NumberInputHandlers>();
+  const { openConnectModal } = useConnectModal();
 
-  // useEffect(() => {
-  //   if (contract.signer) {
-  //     init();
-  //   }
-  // }, [contract]);
+  let shareAddress: any = "0x0000000000000000000000000000000000000000";
+  const routerAddr: any = router.query?.addr;
+  if (routerAddr && ethers.utils.isAddress(routerAddr)) {
+    shareAddress = routerAddr;
+  }
 
-  // const init = async () => {
-  //   const nftPrice = await contract.PRICE();
-  //   setPrice(nftPrice.toString() / Math.pow(10, 18));
-  //   checkActive();
-  // };
+  useEffect(() => {
+    if (Number(totalNumber) === Number(supply)) {
+      setSoldOut(true);
+    } else {
+      setSoldOut(false);
+    }
+  }, [totalNumber, supply]);
 
+  // PRICE
+  useContractRead({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: "PRICE",
+    enabled: !isConnected,
+    onSuccess: (data: any) => {
+      setPrice(data.toString() / Math.pow(10, 18));
+    },
+  });
+
+  // get price
   // useContractRead({
   //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
   //   abi: abi,
-  //   functionName: "totalSupply",
-  //   watch: true,
-  //   onSuccess: (data) => {
-  //     setTotalNumber(data.toString());
+  //   functionName: "mintInfo",
+  //   enabled: isConnected,
+  //   args: [shareAddress],
+  //   onSuccess: (data: any) => {
+  //     setPrice(data.mintPrice.toString() / Math.pow(10, 18));
+  //     data[0] && setAddress(shareAddress);
   //   },
   // });
 
-  // const checkActive = async () => {
-  //   const isActive = await contract.saleIsActive();
-  //   setIsActive(isActive);
-  //   return isActive;
-  // };
+  //totalSupply
+  useContractRead({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: "totalSupply",
+    watch: true,
+    onSuccess: (data) => {
+      setSupply(data.toString());
+    },
+  });
 
-  // const mintBox = usePrepareContractWrite({
-  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-  //   abi: abi,
-  //   functionName: "mintFifaNftBox",
-  //   enabled: !!value && !!price && isActive,
-  //   args: [value, "0x0000000000000000000000000000000000000000"],
-  //   overrides: {
-  //     from: address,
-  //     value: ethers.utils.parseEther((value * price).toString()),
-  //   },
-  // });
-  // const mintWrite = useContractWrite(mintBox.config);
+  //MAX_ISSUE
+  useContractRead({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: "MAX_ISSUE",
+    onSuccess: (data: any) => {
+      setTotalNumber(data.toString());
+    },
+  });
 
-  // useWaitForTransaction({
-  //   hash: mintWrite.data?.hash,
-  //   onSuccess: (data) => {
-  //     console.log("data", data);
-  //   },
-  // });
+  //saleIsActive
+  useContractRead({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: "saleIsActive",
+    watch: true,
+    onSuccess: (data: boolean) => {
+      setIsActive(data);
+    },
+  });
 
-  const triggerMint = async () => {
-    // if (isActive) {
-    //   mintWrite?.write();
-    // } else {
-    //   const active = await checkActive();
-    //   if (active) {
-    //     mintWrite?.write();
-    //   } else {
-    //   }
-    // }
+  const mintBox = usePrepareContractWrite({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: "mint",
+    enabled:
+      isActive &&
+      isConnected &&
+      chain.network === process.env.NEXT_PUBLIC_CHAIN &&
+      !soldOut &&
+      contract.signer &&
+      !!price,
+    args: [value, recommenderAddress],
+    overrides: {
+      from: address,
+      value: ethers.utils.parseEther(new Decimal(price).mul(value).toFixed()),
+    },
+    onError: (err) => {
+      console.log("mintBoxError===", err);
+      // if (err.message.indexOf(MESSAGE[0])) {
+      // }
+    },
+  });
+
+  const mintWrite = useContractWrite(mintBox.config);
+
+  useWaitForTransaction({
+    hash: mintWrite.data?.hash,
+    onSuccess: (data) => {
+      setMintLoading(false);
+      router.push("/nft");
+    },
+    onSettled: () => setMintLoading(false),
+  });
+
+  const triggerMint = () => {
+    if (isConnected) {
+      if (isActive && !soldOut) {
+        setMintLoading(true);
+        mintWrite?.write();
+      }
+    } else {
+      openConnectModal();
+    }
   };
 
   return (
@@ -329,43 +397,7 @@ const Mint = ({ contract }) => {
         })}
       >
         <Stack align="center" spacing={30}>
-          <Center
-            sx={(theme) => ({
-              position: "relative",
-            })}
-          >
-            <Center
-              sx={(theme) => ({
-                width: "300px",
-                [theme.fn.smallerThan("xs")]: {
-                  width: "200px",
-                },
-              })}
-            >
-              <MImage src="/blind-box-bg.png"></MImage>
-              <Center
-                sx={() => ({
-                  position: "absolute",
-                  top: "30%",
-                  width: "50%",
-                  zIndex: 2,
-                  animation: "bounce-down 1.5s linear infinite",
-                })}
-              >
-                <MImage src="/box.png"></MImage>
-              </Center>
-              <Center
-                sx={() => ({
-                  position: "absolute",
-                  bottom: "20%",
-                  width: "50%",
-                  animation: "scale-scale 1.5s linear infinite",
-                })}
-              >
-                <MImage src="/box-shadow.png"></MImage>
-              </Center>
-            </Center>
-          </Center>
+          <Blindbox width="300px" xsWidth="200px"></Blindbox>
           <Text size={12} style={{ fontFamily: "Balthazar-Regular" }}>
             NETWORK ETHEREUM
           </Text>
@@ -374,17 +406,22 @@ const Mint = ({ contract }) => {
           align="center"
           pt={40}
           sx={() => ({
-            maxWidth: "360px",
+            maxWidth: "420px",
           })}
         >
-          <Text className={classes.heroTitle}>META SOCO MYSTERYBOX</Text>
+          <Text className={classes.heroTitle}>METASOCO MYSTERYBOX</Text>
           <Group>
             <span>MINTED</span>
-            <span>{totalNumber}/3200</span>
+            <span>
+              {supply}/{totalNumber}
+            </span>
           </Group>
           <Group>
             <span>PRICE</span>
-            <span>{(price * 100 * value) / 100}ETH</span>
+            <span>
+              {new Decimal(price).mul(value).toFixed()}
+              ETH
+            </span>
           </Group>
           <Group>
             <span>AMOUNT</span>
@@ -407,7 +444,7 @@ const Mint = ({ contract }) => {
                 value={value}
                 onChange={(val) => setValue(val)}
                 handlersRef={handlers}
-                max={10}
+                max={5}
                 min={1}
                 step={1}
                 styles={{
@@ -439,26 +476,33 @@ const Mint = ({ contract }) => {
             </Group>
           </Group>
           <Stack spacing={10}>
-            <UnstyledButton
+            <Button
+              disabled={!isActive || soldOut}
               onClick={() => triggerMint()}
+              loading={mintLoading}
               sx={() => ({
                 background: "linear-gradient(180deg, #F67C8D, #f3556B 100%)",
                 width: "180px",
                 height: "50px",
                 textAlign: "center",
-                color: "white",
+                color: "white !important",
                 borderRadius: "50px",
                 boxShadow: "4px 4px 4px rgba(107, 109, 110, 0.5)",
                 transform: "scale(1)",
                 transition: "transform 0.1s linear 0s",
+                fontFamily: "Balthazar-Regular",
+                fontSize: "18px",
                 "&:hover": {
                   transform: "scale(0.98)",
                   transition: "transform 0.1s linear 0s",
                 },
+                "&:before": {
+                  borderRadius: "50px !important",
+                },
               })}
             >
-              Mint Your Team
-            </UnstyledButton>
+              {soldOut ? "Sold Out" : "Mint Your Team"}
+            </Button>
             <Text align="center" style={{ fontFamily: "Balthazar-Regular" }}>
               (Max mint 10x per wallet)
             </Text>
@@ -468,8 +512,8 @@ const Mint = ({ contract }) => {
             size={14}
             style={{ fontFamily: "Balthazar-Regular" }}
           >
-            The NFTS of 32 teams will appear with equal probability, 100 for
-            each team, for a total of 3200 issued.
+            3200 NFT in total according to 32 teams of FIFA World Cup 100 for
+            each team.
           </Text>
           <Text
             align="center"
@@ -563,15 +607,15 @@ const Mechanism = ({ contract, fifaInfo }) => {
     }
   }, []);
 
-  // useContractRead({
-  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-  //   abi: abi,
-  //   functionName: "totalRewardPool",
-  //   watch: true,
-  //   onSuccess: (data) => {
-  //     setTotalRewardPool(Number(data.toString()) / Math.pow(10, 18));
-  //   },
-  // });
+  useContractRead({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: "totalRewardPool",
+    watch: true,
+    onSuccess: (data) => {
+      setTotalRewardPool(Number(data.toString()) / Math.pow(10, 18));
+    },
+  });
 
   return (
     <Stack
@@ -657,7 +701,7 @@ const Mechanism = ({ contract, fifaInfo }) => {
           >
             There are five stages of the season: 32 into 16,
             <br />
-            16 into 8,8 into 4,4 into 2, the finals. <br />
+            16 into 8, 8 into 4, 4 into 2, the finals. <br />
             Each winning team NFT will enter the next
             <br />
             round of the rewards pool, which will be awarded
@@ -676,16 +720,22 @@ const Mechanism = ({ contract, fifaInfo }) => {
             align="center"
             style={{ fontFamily: "Balthazar-Regular" }}
           >
-            <Text color="#f6b35c">As a member of NFT holder you recieve:</Text>
+            <Text
+              sx={() => ({
+                fontFamily: "barlow-black",
+              })}
+            >
+              As a member of NFT holder you recieve:
+            </Text>
             NFT sales revenue awards
             <br />
             Community access
             <br />
             Airdrops
             <br />
-            Regular Giveaways
+            Regular giveaways
             <br />
-            metaverse ticket
+            Metaverse ticket
             <br />
             Much more ...
           </Text>
@@ -698,6 +748,7 @@ const Mechanism = ({ contract, fifaInfo }) => {
             padding: "25px 0 30px",
             backgroundColor: "#c3d2ef",
             borderRadius: "25px",
+            justifyContent: "center",
             [theme.fn.smallerThan("md")]: {
               width: "100%",
             },
@@ -714,7 +765,7 @@ const Mechanism = ({ contract, fifaInfo }) => {
                 },
               })}
             >
-              0% in the pool
+              0% of the pool
             </Center>
             <Group
               sx={() => ({
@@ -783,7 +834,7 @@ const Mechanism = ({ contract, fifaInfo }) => {
                     },
                   })}
                 >
-                  {item.pool}% in the pool
+                  {item.pool}% of the pool
                 </Center>
                 <Group>
                   <Center
@@ -849,39 +900,79 @@ const Mechanism = ({ contract, fifaInfo }) => {
   );
 };
 
-const elements = [
-  { address: "", tokenId: "", claimed: "", id: "1" },
-  { address: "", tokenId: "", claimed: "", id: "2" },
-  { address: "", tokenId: "", claimed: "", id: "3" },
-  { address: "", tokenId: "", claimed: "", id: "4" },
-  { address: "", tokenId: "", claimed: "", id: "5" },
-];
 let timer: any = null;
-const Claim = ({ contract, fifaInfo }) => {
-  // const { address } = useAccount();
-
+const Claim = ({ contract, fifaInfo, boardList }) => {
+  const { chain } = useNetwork();
+  const provider = useProvider();
+  const { address, isConnected } = useAccount();
   const [nftNumber, setNftNumber] = useState(0);
   const [userTotalReward, setUserTotalReward] = useState(0);
   const [recommenderReward, setRecommenderReward] = useState(0);
-  const [countDownString, setCountDown] = useState([0, 0, 0]);
-
+  const [countDownString, setCountDown] = useState([0, 0, 0, 0]);
+  const [claimLoading, setClaimLoading] = useState(false);
+  const [tableData, setTableData] = useState([
+    { address: "", rewards: "" },
+    { address: "", rewards: "" },
+    { address: "", rewards: "" },
+    { address: "", rewards: "" },
+    { address: "", rewards: "" },
+    { address: "", rewards: "" },
+  ]);
   const isBreakpointXs = useMediaQuery("(max-width: 576px)");
-  const isPC = useMediaQuery("(min-width: 992px)");
   const { classes } = useSiteStyles();
+  const { openConnectModal } = useConnectModal();
 
-  const rows = elements.map((element) => (
-    <tr key={element.id}>
-      <td style={{ borderColor: "#ccdaf6" }}>{element.address}</td>
-      <td style={{ borderColor: "#ccdaf6" }}>{element.tokenId}</td>
-      <td style={{ borderColor: "#ccdaf6" }}>{element.claimed}</td>
-    </tr>
-  ));
+  const web3 = new Web3(Web3.givenProvider || provider);
 
-  // useEffect(() => {
-  //   if (contract.signer) {
-  //     init();
-  //   }
-  // }, [contract]);
+  useEffect(() => {
+    if (boardList) {
+      let arr = [
+        { address: "", rewards: "" },
+        { address: "", rewards: "" },
+        { address: "", rewards: "" },
+        { address: "", rewards: "" },
+        { address: "", rewards: "" },
+        { address: "", rewards: "" },
+      ];
+      boardList.map((item, index) => {
+        const data = web3.eth.abi.decodeLog(
+          [
+            {
+              type: "address",
+              name: "address",
+            },
+            {
+              type: "uint256",
+              name: "rewards",
+            },
+            {
+              type: "uint8",
+              name: "mySmallNumber",
+            },
+          ],
+          item.data,
+          item.topics
+        );
+        arr[index] = {
+          address:
+            data.address.substring(0, 4) +
+            "****" +
+            data.address.substring(
+              data.address.length - 4,
+              data.address.length
+            ),
+          rewards: (Number(data.rewards) / Math.pow(10, 18)).toString(),
+        };
+      });
+      setTableData(arr);
+    }
+  }, [boardList]);
+
+  useEffect(() => {
+    if (contract.signer) {
+      init();
+    }
+  }, [contract]);
 
   const init = async () => {
     const myNft = await contract.userTokenIds();
@@ -918,18 +1009,59 @@ const Claim = ({ contract, fifaInfo }) => {
       s = 24 * o;
 
     if (diffTime > 0) {
-      // console.log('diffTime', diffTime);
       const day = Math.floor(diffTime / s),
         hours = Math.floor((diffTime % s) / o),
-        minite = Math.floor((diffTime % o) / a);
+        minite = Math.floor((diffTime % o) / a),
+        seconds = Math.floor((diffTime % a) / 1e3);
 
-      setCountDown([day, hours, minite]);
+      setCountDown([day, hours, minite, seconds]);
       timer = setTimeout(() => {
         countDown(eventTime);
       }, 1000);
     } else {
       clearTimeout(timer);
       timer = null;
+    }
+  };
+
+  const claimPre = usePrepareContractWrite({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: "claimReward",
+    enabled:
+      isConnected &&
+      chain.network === process.env.NEXT_PUBLIC_CHAIN &&
+      contract.signer &&
+      userTotalReward > 0,
+    overrides: {
+      from: address,
+      value: 0,
+    },
+    onError: (err) => {
+      console.log("claimWrite===", err);
+      // if (err.message.indexOf(MESSAGE[0])) {
+      // }
+    },
+  });
+
+  const claimWrite = useContractWrite(claimPre.config);
+
+  useWaitForTransaction({
+    hash: claimWrite.data?.hash,
+    onSuccess: (data) => {
+      setClaimLoading(false);
+    },
+    onSettled: () => setClaimLoading(false),
+  });
+
+  const handleClaim = () => {
+    if (isConnected) {
+      if (userTotalReward > 0) {
+        setClaimLoading(true);
+        claimWrite?.write();
+      }
+    } else {
+      openConnectModal();
     }
   };
 
@@ -946,9 +1078,9 @@ const Claim = ({ contract, fifaInfo }) => {
         })}
       >
         <Stack align="center">
-          <Text className={classes.heroTitle}>GET YOUR REWARD</Text>
+          <Text className={classes.heroTitle}>GET YOUR PRIZE</Text>
           <Text className={classes.heroTitle} align="center" px={10}>
-            If your team wins the match, you can claim the reward from pool
+            If your team wins the match, you can claim the prize from pool
           </Text>
         </Stack>
         <Anchor
@@ -975,7 +1107,7 @@ const Claim = ({ contract, fifaInfo }) => {
             Countdown to next reward
           </Text>
           <Group
-            spacing={isBreakpointXs ? 20 : 50}
+            spacing={isBreakpointXs ? 5 : 50}
             sx={(theme) => ({
               fontSize: "24px",
               [theme.fn.smallerThan("xs")]: {
@@ -983,81 +1115,41 @@ const Claim = ({ contract, fifaInfo }) => {
               },
             })}
           >
-            <Center
-              sx={(theme) => ({
-                width: "160px",
-                height: "160px",
-                background: "url('/countdown.png') no-repeat",
-                backgroundSize: "contain",
-                [theme.fn.smallerThan("xs")]: {
-                  width: "100px",
-                  height: "100px",
-                },
-              })}
-            >
-              <Text
-                sx={(theme) => ({
-                  fontFamily: "Saira-Black",
-                  fontSize: "32px",
-                  [theme.fn.smallerThan("xs")]: {
-                    fontSize: "24px",
-                  },
-                })}
-              >
-                {countDownString[0]}
-              </Text>
-              day
-            </Center>
-            <Center
-              sx={(theme) => ({
-                width: "160px",
-                height: "160px",
-                background: "url('/countdown.png') no-repeat",
-                backgroundSize: "contain",
-                [theme.fn.smallerThan("xs")]: {
-                  width: "100px",
-                  height: "100px",
-                },
-              })}
-            >
-              <Text
-                sx={(theme) => ({
-                  fontFamily: "Saira-Black",
-                  fontSize: "32px",
-                  [theme.fn.smallerThan("xs")]: {
-                    fontSize: "24px",
-                  },
-                })}
-              >
-                {countDownString[1]}
-              </Text>
-              h
-            </Center>
-            <Center
-              sx={(theme) => ({
-                width: "160px",
-                height: "160px",
-                background: "url('/countdown.png') no-repeat",
-                backgroundSize: "contain",
-                [theme.fn.smallerThan("xs")]: {
-                  width: "100px",
-                  height: "100px",
-                },
-              })}
-            >
-              <Text
-                sx={(theme) => ({
-                  fontFamily: "Saira-Black",
-                  fontSize: "32px",
-                  [theme.fn.smallerThan("xs")]: {
-                    fontSize: "24px",
-                  },
-                })}
-              >
-                {countDownString[2]}
-              </Text>
-              min
-            </Center>
+            {countDownString.map((item, index) => {
+              return (
+                <>
+                  <Center
+                    key={index}
+                    sx={(theme) => ({
+                      width: "160px",
+                      height: "160px",
+                      background: "url('/countdown.png') no-repeat",
+                      backgroundSize: "contain",
+                      [theme.fn.smallerThan("xs")]: {
+                        width: "80px",
+                        height: "80px",
+                      },
+                    })}
+                  >
+                    <Text
+                      sx={(theme) => ({
+                        fontFamily: "Saira-Black",
+                        fontSize: "32px",
+                        [theme.fn.smallerThan("xs")]: {
+                          fontSize: "20px",
+                        },
+                      })}
+                    >
+                      {item}
+                    </Text>
+                    {index === 0 && "day"}
+                    {index === 1 && "h"}
+                    {index === 2 && "min"}
+                    {index === 3 && "s"}
+                  </Center>
+                </>
+              );
+            })}
           </Group>
         </Stack>
 
@@ -1075,12 +1167,7 @@ const Claim = ({ contract, fifaInfo }) => {
                 My NFT Team Amount: {nftNumber}
               </Text>
             </Center>
-            <UnstyledButton
-              className={classes.claimButton}
-              style={{ opacity: 0 }}
-            >
-              Claim
-            </UnstyledButton>
+            <div className={classes.claimButton} style={{ opacity: 0 }} />
           </Group>
           <Group>
             <Center>
@@ -1089,9 +1176,14 @@ const Claim = ({ contract, fifaInfo }) => {
                 <span style={{ color: "#f3261f" }}>{userTotalReward}</span> ETH
               </Text>
             </Center>
-            <UnstyledButton className={classes.claimButton}>
+            <Button
+              loading={claimLoading}
+              className={classes.claimButton}
+              disabled={!isConnected || userTotalReward <= 0}
+              onClick={() => handleClaim()}
+            >
               Claim
-            </UnstyledButton>
+            </Button>
           </Group>
         </Stack>
         <Group
@@ -1142,53 +1234,55 @@ const Claim = ({ contract, fifaInfo }) => {
                 Your invite link:
               </Text>
               <Group position="center" spacing={8}>
-                <UnstyledButton
-                  sx={(theme) => ({
-                    padding: "10px 12px",
-                    color: "#fff",
-                    borderRadius: "6px",
-                    background: "linear-gradient(#f97184, #F55b71)",
-                    fontSize: "16px",
-                    transform: "scale(1)",
-                    transition: "transform 0.1s linear 0s",
-                    "&:hover": {
-                      transform: "scale(0.98)",
-                      transition: "transform 0.1s linear 0s",
-                    },
-                    [theme.fn.largerThan("md")]: {
-                      padding: "12px 14px",
-                      borderRadius: "8px",
-                    },
-                    [theme.fn.smallerThan("md")]: {
-                      fontSize: "14px",
-                    },
-                  })}
-                >
-                  Connect Wallect
-                </UnstyledButton>
-                {/* <Box
+                <Box
                   sx={() => ({
-                    width: "280px",
+                    width: 260,
                     wordBreak: "break-all",
                     padding: "4px 20px",
                     lineHeight: "16px",
-                    fontSize: "12px",
+                    fontSize: "15px",
                     textAlign: "center",
-                    border: "1px solid #555555",
+                    border: address ? "1px solid #555555" : "none",
                   })}
-                > */}
-                {/* {address ? (
+                >
+                  {address ? (
                     <>
                       {nftNumber > 0
-                        ? `${window.location.href}${address}`
+                        ? `${window.location.origin}${address}`
                         : "There is no token in your wallet"}
                     </>
-                  ) : ( */}
-
-                {/* )} */}
-                {/* </Box> */}
-                {/* {!!address && nftNumber > 0 && (
-                  <CopyButton value="https://mantine.dev">
+                  ) : (
+                    <UnstyledButton
+                      onClick={() => openConnectModal()}
+                      sx={(theme) => ({
+                        padding: "10px 12px",
+                        color: "#fff",
+                        borderRadius: "6px",
+                        background: "linear-gradient(#f97184, #F55b71)",
+                        fontSize: "16px",
+                        transform: "scale(1)",
+                        transition: "transform 0.1s linear 0s",
+                        "&:hover": {
+                          transform: "scale(0.98)",
+                          transition: "transform 0.1s linear 0s",
+                        },
+                        [theme.fn.largerThan("md")]: {
+                          padding: "12px 14px",
+                          borderRadius: "8px",
+                        },
+                        [theme.fn.smallerThan("md")]: {
+                          fontSize: "14px",
+                        },
+                      })}
+                    >
+                      Connect Wallect
+                    </UnstyledButton>
+                  )}
+                </Box>
+                {!!address && nftNumber > 0 && (
+                  <CopyButton
+                    value={`Invite friends to participate in Metasoco NFTS, win the final prize pool together: ${window.location.origin}${address}`}
+                  >
                     {({ copied, copy }) => (
                       <UnstyledButton
                         onClick={copy}
@@ -1209,7 +1303,7 @@ const Claim = ({ contract, fifaInfo }) => {
                       </UnstyledButton>
                     )}
                   </CopyButton>
-                )} */}
+                )}
               </Group>
             </Stack>
           </Stack>
@@ -1246,7 +1340,7 @@ const Claim = ({ contract, fifaInfo }) => {
               If the invitee's NFT team wins, the inviter
               <br />
               receives <span style={{ color: "#f3261f" }}>10%</span> of the
-              invitee's income.
+              invitee's total prize.
               <br />
               Users who make a purchase through an
               <br />
@@ -1272,7 +1366,8 @@ const Claim = ({ contract, fifaInfo }) => {
               borderBottom: "1px solid #010101",
             }}
           >
-            Awards for invitations already received : {recommenderReward} ETH
+            Awards for invitations already received :{" "}
+            <span style={{ color: "#f3261f" }}>{recommenderReward}</span> ETH
           </Text>
           <Text
             color="#8e8e8d"
@@ -1328,7 +1423,6 @@ const Claim = ({ contract, fifaInfo }) => {
         >
           <Table
             horizontalSpacing="xl"
-            verticalSpacing="xl"
             sx={() => ({
               color: "#000",
               fontFamily: "Balthazar-Regular",
@@ -1348,22 +1442,32 @@ const Claim = ({ contract, fifaInfo }) => {
                   style={{
                     color: "#000",
                     borderColor: "#ccdaf6",
-                  }}
-                >
-                  NFT Number
-                </th>
-                <th
-                  style={{
-                    width: "25%",
-                    color: "#000",
-                    borderColor: "#ccdaf6",
+                    textAlign: "center",
                   }}
                 >
                   Rewards Claimed
                 </th>
               </tr>
             </thead>
-            <tbody>{rows}</tbody>
+            <tbody>
+              {tableData.map((element, index) => (
+                <tr key={index}>
+                  <td style={{ borderColor: "#ccdaf6", fontSize: "16px" }}>
+                    {element.address}
+                  </td>
+                  <td
+                    style={{
+                      borderColor: "#ccdaf6",
+                      fontSize: "16px",
+                      textAlign: "center",
+                      height: "60px",
+                    }}
+                  >
+                    {element.rewards}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </Table>
         </Box>
       </Stack>
@@ -1408,7 +1512,7 @@ const Vote = () => {
           cols={isBreakpointXs ? 1 : 2}
           spacing={isBreakpointXs ? 10 : isBreakpointLg ? 60 : 30}
           sx={(theme) => ({
-            width: "50%",
+            width: "60%",
             [theme.fn.smallerThan("md")]: {
               width: "80%",
             },
@@ -1523,39 +1627,31 @@ const About = () => {
       <Text align="center" className={classes.heroTitle}>
         About
       </Text>
-      <Stack
+
+      <Text
         sx={(theme) => ({
-          width: "50%",
+          fontFamily: "Balthazar-Regular",
+          width: "56%",
           [theme.fn.smallerThan("md")]: {
             width: "100%",
           },
         })}
       >
-        <Text
-          sx={() => ({
-            fontFamily: "Balthazar-Regular",
-          })}
-        >
-          The Aether is a decentralized, open metasomatic virtual world built
-          using blockchain technology, where users can build, trade, interact
-          socially, and generate economic revenue. Each user is given free
-          access to celestial space, where they are given a unique virtual ID.
-          In Aether, players can Play, Create, Own, Govern, Social, Earn.
-        </Text>
-        <Text
-          sx={() => ({
-            fontFamily: "Balthazar-Regular",
-          })}
-        >
-          Meta-Soco, a metaverse platform for football fans under the Aether,
-          provides a web3 metaverse platform for global football fans to
-          socialize and play games. Meta-Soco is the bridge between soccer
-          lovers and crypto users. There will also be more games and
-          crypto-related features that engage our users. We are building a
-          full-stack Metaverse that enables players to enter our ecosystem and
-          be rewarded from their NFTs with play-to-earn games.
-        </Text>
-      </Stack>
+        The Aether is a decentralized, open metasomatic virtual world built
+        using blockchain technology, where users can build, trade, interact
+        socially, and generate economic revenue. Each user is given free access
+        to celestial space, where they are given a unique virtual ID. In Aether,
+        players can Play, Create, Own, Govern, Social, Earn.
+        <br></br>
+        <br></br>
+        Meta-Soco, a metaverse platform for football fans under the Aether,
+        provides a web3 metaverse platform for global football fans to socialize
+        and play games. Meta-Soco is the bridge between soccer lovers and crypto
+        users. There will also be more games and crypto-related features that
+        engage our users. We are building a full-stack Metaverse that enables
+        players to enter our ecosystem and be rewarded from their NFTs with
+        play-to-earn games.
+      </Text>
     </Stack>
   );
 };
@@ -1591,7 +1687,8 @@ const Partner = () => {
 const HomePage: NextPage<{
   fifaInfo: FifaInfo[];
   contract: any;
-}> = ({ fifaInfo, contract }) => {
+  boardList: [];
+}> = ({ fifaInfo, contract, boardList }) => {
   const [recentFifa, setFifaInfo] = useState({});
   useEffect(() => {
     initTime();
@@ -1614,7 +1711,7 @@ const HomePage: NextPage<{
       <Hero />
       <Mint contract={contract} />
       <Mechanism contract={contract} fifaInfo={recentFifa} />
-      <Claim contract={contract} fifaInfo={recentFifa} />
+      <Claim contract={contract} fifaInfo={recentFifa} boardList={boardList} />
       <Vote />
       <About />
       <Partner />

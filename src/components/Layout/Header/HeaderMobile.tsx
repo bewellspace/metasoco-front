@@ -5,6 +5,7 @@ import { IconArrowRight } from "@tabler/icons";
 import { scrollToAnchor } from "src/common/utils";
 import React, { useState, useEffect } from "react";
 import { Burger, Drawer, Group, Divider, UnstyledButton } from "@mantine/core";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 interface HeaderProps {
   navbarOpened: boolean;
@@ -82,6 +83,11 @@ export function HeaderMobile({ navbarOpened, toggleNavbar }: HeaderProps) {
           <Logo />
         </div>
         <Group spacing="lg">
+          <ConnectButton
+            accountStatus="address"
+            chainStatus="icon"
+            showBalance={false}
+          />
           <Burger
             opened={navbarOpened}
             size="sm"

@@ -38,7 +38,7 @@ export default function Head({
           property: "og:image",
           // @todo
           content:
-            "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/Hero.png",
+            "https://raw.githubusercontent.com/bewellspace/metasoco-front/master/public/banner.png",
         },
         {
           property: "og:image:width",

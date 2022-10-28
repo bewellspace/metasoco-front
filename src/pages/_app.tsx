@@ -16,13 +16,14 @@ import "../global.css";
 function AppContent(props: AppProps) {
   const { Component, pageProps } = props;
   const { data: signer } = useSigner();
+  
+  const contract = useContract({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    signerOrProvider: signer,
+  });
 
-  let contract = null;
-  // const contract = useContract({
-  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-  //   abi: abi,
-  //   signerOrProvider: signer,
-  // });
+  // console.log(contract, contract);
 
   return (
     <>
@@ -34,7 +35,7 @@ function AppContent(props: AppProps) {
         />
       </Head>
 
-      {/* <RainbowKitProvider
+      <RainbowKitProvider
         modalSize="compact"
         chains={chains}
         initialChain={5}
@@ -44,14 +45,14 @@ function AppContent(props: AppProps) {
           accentColorForeground: "white",
           fontStack: "system",
         })}
-      > */}
+      >
       <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
         <GlobalStyles />
         <Header navbarOpened={false} toggleNavbar={console.log} />
         <Component {...pageProps} contract={contract} />
         <Footer />
       </MantineProvider>
-      {/* </RainbowKitProvider> */}
+      </RainbowKitProvider>
     </>
   );
 }

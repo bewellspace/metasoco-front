@@ -44,8 +44,8 @@ export const useSiteStyles = createStyles((theme) => {
         width: "80px",
       },
       [theme.fn.largerThan("lg")]: {
-        width: '300px !important'
-      }
+        width: "300px !important",
+      },
     },
     underLine: {
       fontSize: "14px",
@@ -54,19 +54,22 @@ export const useSiteStyles = createStyles((theme) => {
       borderBottom: "1px solid #000",
       fontFamily: "Balthazar-Regular",
       [theme.fn.largerThan("lg")]: {
-        fontSize: '16px'
-      }
+        fontSize: "16px",
+      },
     },
     claimButton: {
-      width: "75px",
+      minWidth: "75px",
       height: "30px",
       borderRadius: "30px",
       textAlign: "center",
-      color: "#ffffff",
+      color: "#ffffff !important",
       background: "linear-gradient(180deg, #f97184, #f06c81 100%)",
       fontFamily: "Balthazar-Regular",
       "&:hover": {
         boxShadow: "2px 2px 2px rgba(9, 2, 4, 0.5)",
+      },
+      "&:before": {
+        borderRadius: "30px !important",
       },
     },
   };

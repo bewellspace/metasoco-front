@@ -95,11 +95,11 @@ export function HeaderDesktop() {
       </Group>
 
       <Group spacing="lg">
-        {/* <ConnectButton
+        <ConnectButton
           accountStatus="address"
           chainStatus="icon"
           showBalance={false}
-        ></ConnectButton> */}
+        ></ConnectButton>
       </Group>
     </div>
   );

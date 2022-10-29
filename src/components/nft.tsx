@@ -1,5 +1,4 @@
 import {
-  useContractRead,
   usePrepareContractWrite,
   useContractWrite,
   useAccount,
@@ -9,14 +8,12 @@ import {
 import {
   Stack,
   Text,
-  UnstyledButton,
   Button,
   Box,
   SimpleGrid,
   Image as MImage,
   Skeleton,
 } from "@mantine/core";
-import axios from "axios";
 import abi from "src/abi/abi.json";
 import { useEffect, useState } from "react";
 import { useSiteStyles } from "../theme";
@@ -36,6 +33,7 @@ export default function AboutPage({ contract }) {
   const [boxNumber, setBoxNumber] = useState(0);
   const [claimLoading, setClaimLoading] = useState(false);
 
+  const isBreakpointLg = useMediaQuery("(min-width: 1201px)");
   const isBreakpointXs = useMediaQuery("(max-width: 576px)");
 
   useEffect(() => {
@@ -51,6 +49,7 @@ export default function AboutPage({ contract }) {
     setUserTotalReward(
       calculateReward.userTotalReward.toString() / Math.pow(10, 18)
     );
+    getBoxNumber();
     setLoading(true);
     const newNftList = [...nftList];
     for (let i = 1; i < myNft.length; i++) {
@@ -63,19 +62,12 @@ export default function AboutPage({ contract }) {
 
   const getTokenDetail = async (id) => {
     let nftDetailURI = await contract.tokenURI(id);
-    nftDetailURI = "/api" + nftDetailURI.substring(28, nftDetailURI.length);
-    const { data } = await axios.get(nftDetailURI);
-    return data.image;
+    return nftDetailURI.split('/')[5]
   };
-
-  useEffect(() => {
-    getBoxNumber();
-  }, []);
 
   const getBoxNumber = async () => {
     const data = await contract.minterQueueInfo();
     setBoxNumber(data[0]);
-    console.log("boxNumber", data);
   };
 
   const claimPre = usePrepareContractWrite({
@@ -99,6 +91,12 @@ export default function AboutPage({ contract }) {
   });
 
   const claimWrite = useContractWrite(claimPre.config);
+
+  useEffect(() => {
+    if (claimWrite.isError) {
+      setClaimLoading(false)
+    }
+  }, [claimWrite])
 
   useWaitForTransaction({
     hash: claimWrite.data?.hash,
@@ -190,7 +188,10 @@ export default function AboutPage({ contract }) {
               new Array(Number(boxNumber)).fill(null).map((item, index) => {
                 return (
                   <div key={`box_item_${index}`}>
-                    <Blindbox />
+                    <Blindbox
+                      width={isBreakpointLg ? "240px" : "200px"}
+                      height={isBreakpointLg ? "312px" : "260px"}
+                    />
                   </div>
                 );
               })}
@@ -199,13 +200,25 @@ export default function AboutPage({ contract }) {
               return (
                 <Box
                   key={`nft_${index}`}
-                  style={{
-                    border: "1px solid #535353",
-                    borderRadius: "8px",
-                    overflow: "hidden",
-                  }}
                 >
-                  <MImage width="100%" withPlaceholder src={item}></MImage>
+                  <div
+                    className="fc-wrapper"
+                    style={{
+                      width: isBreakpointLg ? "240px" : "200px",
+                      height: isBreakpointLg ? "312px" : "260px",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <div className="fc-inner">
+                      <div className="fc-front">
+                        <img className="fc-image" src={`/team/${item}.png`}></img>
+                      </div>
+                      <div className="fc-back">
+                        <img className="fc-image" src={`/team/${item}-back.png`}></img>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <MImage width="100%" withPlaceholder src={item}></MImage> */}
                 </Box>
               );
             })}

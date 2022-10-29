@@ -128,50 +128,16 @@ const Hero = () => {
                 flexWrap: "nowrap",
               })}
             >
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/ARG.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/AUS.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/BEL.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/BRA.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/CAN.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/CMR.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/CRC.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/DEN.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/ECU.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/ENG.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/ESP.png"
-              ></MImage>
+              {
+                new Array(Number(16)).fill(null).map((item, index) => {
+                  return (
+                    <MImage
+                      width={isBreakpointLg ? 180 : 150}
+                      src={`/team/${index + 1}.png`}
+                    ></MImage>
+                  );
+                })
+              }
             </Group>
           </Parallax>
           <Parallax
@@ -187,55 +153,21 @@ const Hero = () => {
                 flexWrap: "nowrap",
               })}
             >
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/FRA.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/GHA.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/IRN.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/JPN.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/KOR.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/KSA.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/MAR.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/MEX.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/NED.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/POL.png"
-              ></MImage>
-              <MImage
-                width={isBreakpointLg ? 180 : 150}
-                src="/team/POR.png"
-              ></MImage>
+              {
+                new Array(Number(16)).fill(null).map((item, index) => {
+                  return (
+                    <MImage
+                      width={isBreakpointLg ? 180 : 150}
+                      src={`/team/${index + 17}.png`}
+                    ></MImage>
+                  );
+                })
+              }
             </Group>
           </Parallax>
         </Box>
       </Stack>
-    </Stack>
+    </Stack >
   );
 };
 
@@ -244,7 +176,7 @@ const Mint = ({ contract }) => {
   const { chain } = useNetwork();
   const { classes } = useSiteStyles();
   const [value, setValue] = useState(1);
-  const [price, setPrice] = useState(0.05);
+  const [price, setPrice] = useState(0);
   const [supply, setSupply] = useState("0");
   const [soldOut, setSoldOut] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -252,6 +184,7 @@ const Mint = ({ contract }) => {
   const [totalNumber, setTotalNumber] = useState("3200");
 
   const [mintLoading, setMintLoading] = useState(false);
+  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
 
   const [recommenderAddress, setAddress] = useState(
     "0x0000000000000000000000000000000000000000"
@@ -278,24 +211,24 @@ const Mint = ({ contract }) => {
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi: abi,
     functionName: "PRICE",
-    enabled: !isConnected,
+    watch: true,
     onSuccess: (data: any) => {
       setPrice(data.toString() / Math.pow(10, 18));
     },
   });
 
   // get price
-  // useContractRead({
-  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-  //   abi: abi,
-  //   functionName: "mintInfo",
-  //   enabled: isConnected,
-  //   args: [shareAddress],
-  //   onSuccess: (data: any) => {
-  //     setPrice(data.mintPrice.toString() / Math.pow(10, 18));
-  //     data[0] && setAddress(shareAddress);
-  //   },
-  // });
+  useContractRead({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: "mintInfo",
+    enabled: isConnected,
+    args: [shareAddress],
+    onSuccess: (data: any) => {
+      setPrice(data.mintPrice.toString() / Math.pow(10, 18));
+      data[0] && setAddress(shareAddress);
+    },
+  });
 
   //totalSupply
   useContractRead({
@@ -353,6 +286,13 @@ const Mint = ({ contract }) => {
   });
 
   const mintWrite = useContractWrite(mintBox.config);
+  console.log('mintWrite', mintWrite);
+
+  useEffect(() => {
+    if (mintWrite.isError) {
+      setMintLoading(false)
+    }
+  }, [mintWrite])
 
   useWaitForTransaction({
     hash: mintWrite.data?.hash,
@@ -397,7 +337,7 @@ const Mint = ({ contract }) => {
         })}
       >
         <Stack align="center" spacing={30}>
-          <Blindbox width="300px" xsWidth="200px"></Blindbox>
+          <Blindbox width={isBreakpointXs ? "200px" : "300px"}></Blindbox>
           <Text size={12} style={{ fontFamily: "Balthazar-Regular" }}>
             NETWORK ETHEREUM
           </Text>
@@ -820,7 +760,7 @@ const Mechanism = ({ contract, fifaInfo }) => {
 
           {mechanismList.map((item, index) => {
             return (
-              <Group spacing={40} key={`item_${index}`} sx={() => ({})}>
+              <Group spacing={40} key={`mechanism_item_${index}`} sx={() => ({})}>
                 <Center
                   sx={(theme) => ({
                     width: "120px",
@@ -1045,6 +985,12 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   });
 
   const claimWrite = useContractWrite(claimPre.config);
+
+  useEffect(() => {
+    if (claimWrite.isError) {
+      setClaimLoading(false)
+    }
+  }, [claimWrite])
 
   useWaitForTransaction({
     hash: claimWrite.data?.hash,
@@ -1475,7 +1421,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   );
 };
 
-const voteList = ["FRA", "BEL", "ENG", "URU"];
+const voteList = [12, 8, 4, 11];
 
 const Vote = () => {
   const { classes } = useSiteStyles();
@@ -1528,8 +1474,8 @@ const Vote = () => {
                   top: isBreakpointXs
                     ? 0
                     : index === 1 || index === 3
-                    ? "40px"
-                    : "0px",
+                      ? "40px"
+                      : "0px",
                 }}
               >
                 <div
@@ -1544,7 +1490,7 @@ const Vote = () => {
                       <img className="fc-image" src={`/team/${item}.png`}></img>
                     </div>
                     <div className="fc-back">
-                      <img className="fc-image" src={`/team/${item}.png`}></img>
+                      <img className="fc-image" src={`/team/${item}-back.png`}></img>
                     </div>
                   </div>
                 </div>

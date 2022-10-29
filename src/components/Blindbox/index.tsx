@@ -1,18 +1,22 @@
+import { useMediaQuery } from "@mantine/hooks";
 import { Image as MImage, Center } from "@mantine/core";
 
-export default function Blindbox({ width = 'auto', xsWidth = 'auto' }) {
+export default function Blindbox({ width = 'auto', height = 'auto' }) {
+
+  const isBreakpointLg = useMediaQuery("(min-width: 1201px)");
+  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
   return (
     <Center
       sx={(theme) => ({
         position: "relative",
+        width: width,
+        height: height
       })}
     >
       <Center
         sx={(theme) => ({
           width: width,
-          [theme.fn.smallerThan("xs")]: {
-            width: xsWidth,
-          },
+          height: height
         })}
       >
         <MImage src="/blind-box-bg.png"></MImage>

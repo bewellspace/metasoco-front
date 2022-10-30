@@ -16,14 +16,12 @@ import "../global.css";
 function AppContent(props: AppProps) {
   const { Component, pageProps } = props;
   const { data: signer } = useSigner();
-  
+
   const contract = useContract({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi: abi,
     signerOrProvider: signer,
   });
-
-  // console.log(contract, contract);
 
   return (
     <>
@@ -46,12 +44,12 @@ function AppContent(props: AppProps) {
           fontStack: "system",
         })}
       >
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-        <GlobalStyles />
-        <Header navbarOpened={false} toggleNavbar={console.log} />
-        <Component {...pageProps} contract={contract} />
-        <Footer />
-      </MantineProvider>
+        <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
+          <GlobalStyles />
+          <Header navbarOpened={false} toggleNavbar={console.log} />
+          <Component {...pageProps} contract={contract} />
+          <Footer />
+        </MantineProvider>
       </RainbowKitProvider>
     </>
   );

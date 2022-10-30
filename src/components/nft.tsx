@@ -13,6 +13,7 @@ import {
   SimpleGrid,
   Image as MImage,
   Skeleton,
+  LoadingOverlay
 } from "@mantine/core";
 import abi from "src/abi/abi.json";
 import { useEffect, useState } from "react";
@@ -84,7 +85,7 @@ export default function AboutPage({ contract }) {
       value: 0,
     },
     onError: (err) => {
-      console.log("claimWrite===", err);
+      console.log("claimWriteError===", err);
       // if (err.message.indexOf(MESSAGE[0])) {
       // }
     },
@@ -172,10 +173,11 @@ export default function AboutPage({ contract }) {
           backgroundColor: "rgba(255, 255, 255, 0.2)",
         })}
       >
+        {/* <LoadingOverlay visible={loading} overlayBlur={2} /> */}
         <Skeleton
           visible={loading}
           style={{
-            opacity: loading ? 0.5 : 1,
+            opacity: loading ? 0.8 : 1,
             minHeight: "500px",
             padding: "50px 70px",
           }}

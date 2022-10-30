@@ -286,7 +286,6 @@ const Mint = ({ contract }) => {
   });
 
   const mintWrite = useContractWrite(mintBox.config);
-  console.log('mintWrite', mintWrite);
 
   useEffect(() => {
     if (mintWrite.isError) {
@@ -921,8 +920,9 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
     setUserTotalReward(
       calculateReward.userTotalReward.toString() / Math.pow(10, 18)
     );
+    const reward = await contract.recommenderRewards(address)
     setRecommenderReward(
-      calculateReward.recommenderReward.toString() / Math.pow(10, 18)
+      reward.toString() / Math.pow(10, 18)
     );
   };
 
@@ -978,7 +978,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
       value: 0,
     },
     onError: (err) => {
-      console.log("claimWrite===", err);
+      console.log("claimWriteError===", err);
       // if (err.message.indexOf(MESSAGE[0])) {
       // }
     },
@@ -1194,7 +1194,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                   {address ? (
                     <>
                       {nftNumber > 0
-                        ? `${window.location.origin}${address}`
+                        ? `${window.location.origin}/${address}`
                         : "There is no token in your wallet"}
                     </>
                   ) : (
@@ -1227,7 +1227,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                 </Box>
                 {!!address && nftNumber > 0 && (
                   <CopyButton
-                    value={`Invite friends to participate in Metasoco NFTS, win the final prize pool together: ${window.location.origin}${address}`}
+                    value={`Invite friends to participate in Metasoco NFTS, win the final prize pool together: ${window.location.origin}/${address}`}
                   >
                     {({ copied, copy }) => (
                       <UnstyledButton
@@ -1434,7 +1434,8 @@ const Vote = () => {
       spacing={25}
       sx={(theme) => ({
         padding: "60px 110px 100px",
-        background: "#e3e9f5",
+        background: "url('/vote-bg.png') no-repeat #d4dff5",
+        backgroundPosition: 'left bottom',
         [theme.fn.smallerThan("md")]: {
           padding: "60px 10px",
         },
@@ -1483,6 +1484,8 @@ const Vote = () => {
                   style={{
                     width: isBreakpointLg ? "240px" : "200px",
                     height: isBreakpointLg ? "312px" : "260px",
+                    padding: '10px',
+                    background: 'rgba(176, 195, 235, 0.8)'
                   }}
                 >
                   <div className="fc-inner">
@@ -1494,12 +1497,6 @@ const Vote = () => {
                     </div>
                   </div>
                 </div>
-
-                <Image
-                  src={`/icon/icon-top${index + 1}.png`}
-                  width={index === 3 ? 21 : 45}
-                  height={index > 1 ? 25 : 58}
-                ></Image>
               </Group>
             );
           })}

@@ -16,13 +16,13 @@ export const getServerSideProps = async ({ res }: NextPageContext) => {
     fifaInfo = data;
   }
 
-  const {
-    data: { result },
-  } = await axios.get(process.env.BOARD_API);
+  // const {
+  //   data: { result },
+  // } = await axios.get(process.env.BOARD_API);
   let boardList = [];
-  if (result?.length) {
-    boardList = result.splice(0, 5);
-  }
+  // if (result?.length) {
+  //   boardList = result.splice(0, 5);
+  // }
 
   res.setHeader(
     "Cache-Control",

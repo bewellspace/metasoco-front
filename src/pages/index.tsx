@@ -21,7 +21,7 @@ export const getServerSideProps = async ({ res }: NextPageContext) => {
   } = await axios.get(process.env.BOARD_API);
   let boardList = [];
   if (result?.length) {
-    boardList = result.splice(0, 5);
+    boardList = result.splice(0, 6);
   }
 
   res.setHeader(

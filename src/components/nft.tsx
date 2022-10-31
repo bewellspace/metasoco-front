@@ -11,9 +11,7 @@ import {
   Button,
   Box,
   SimpleGrid,
-  Image as MImage,
-  Skeleton,
-  LoadingOverlay
+  Skeleton
 } from "@mantine/core";
 import abi from "src/abi/abi.json";
 import { useEffect, useState } from "react";
@@ -22,7 +20,7 @@ import Blindbox from "./Blindbox";
 import { useMediaQuery } from "@mantine/hooks";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 
-export default function AboutPage({ contract }) {
+export default function NFTPage({ contract }) {
   const { chain } = useNetwork();
   const { classes } = useSiteStyles();
   const { openConnectModal } = useConnectModal();
@@ -53,7 +51,7 @@ export default function AboutPage({ contract }) {
     getBoxNumber();
     setLoading(true);
     const newNftList = [...nftList];
-    for (let i = 1; i < myNft.length; i++) {
+    for (let i = 0; i < myNft.length; i++) {
       const data = await getTokenDetail(myNft[i]);
       newNftList.push(data);
     }

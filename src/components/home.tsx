@@ -18,27 +18,20 @@ import {
   Button,
   Image as MImage,
   Center,
-  NumberInput,
-  ActionIcon,
-  NumberInputHandlers,
   SimpleGrid,
   Table,
 } from "@mantine/core";
 import Web3 from "web3";
 import Image from "next/image";
-import { ethers } from "ethers";
 import { NextPage } from "next";
 import abi from "src/abi/abi.json";
-import { Decimal } from "decimal.js";
 import { FifaInfo } from "src/types";
-import { useRouter } from "next/router";
 import { Parallax } from "rc-scroll-anim";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSiteStyles } from "src/theme";
 import { useMediaQuery } from "@mantine/hooks";
-import { IconPlus, IconMinus } from "@tabler/icons";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
-import Blindbox from "./Blindbox";
+import Mint from './Mint';
 
 const Hero = () => {
   const { classes } = useSiteStyles();
@@ -132,6 +125,7 @@ const Hero = () => {
                 new Array(Number(16)).fill(null).map((item, index) => {
                   return (
                     <MImage
+                      key={`image_top_${index}`}
                       width={isBreakpointLg ? 180 : 150}
                       src={`/team/${index + 1}.png`}
                     ></MImage>
@@ -157,6 +151,7 @@ const Hero = () => {
                 new Array(Number(16)).fill(null).map((item, index) => {
                   return (
                     <MImage
+                      key={`image_bottom_${index}`}
                       width={isBreakpointLg ? 180 : 150}
                       src={`/team/${index + 17}.png`}
                     ></MImage>
@@ -168,326 +163,6 @@ const Hero = () => {
         </Box>
       </Stack>
     </Stack >
-  );
-};
-
-const Mint = ({ contract }) => {
-  const router = useRouter();
-  const { chain } = useNetwork();
-  const { classes } = useSiteStyles();
-  const [value, setValue] = useState(1);
-  const [price, setPrice] = useState(0);
-  const [supply, setSupply] = useState("0");
-  const [soldOut, setSoldOut] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-  const { address, isDisconnected, isConnected } = useAccount();
-  const [totalNumber, setTotalNumber] = useState("3200");
-
-  const [mintLoading, setMintLoading] = useState(false);
-  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
-
-  const [recommenderAddress, setAddress] = useState(
-    "0x0000000000000000000000000000000000000000"
-  );
-  const handlers = useRef<NumberInputHandlers>();
-  const { openConnectModal } = useConnectModal();
-
-  let shareAddress: any = "0x0000000000000000000000000000000000000000";
-  const routerAddr: any = router.query?.addr;
-  if (routerAddr && ethers.utils.isAddress(routerAddr)) {
-    shareAddress = routerAddr;
-  }
-
-  useEffect(() => {
-    if (Number(totalNumber) === Number(supply)) {
-      setSoldOut(true);
-    } else {
-      setSoldOut(false);
-    }
-  }, [totalNumber, supply]);
-
-  // PRICE
-  useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "PRICE",
-    watch: true,
-    onSuccess: (data: any) => {
-      setPrice(data.toString() / Math.pow(10, 18));
-    },
-  });
-
-  // get price
-  useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "mintInfo",
-    enabled: isConnected,
-    args: [shareAddress],
-    onSuccess: (data: any) => {
-      setPrice(data.mintPrice.toString() / Math.pow(10, 18));
-      data[0] && setAddress(shareAddress);
-    },
-  });
-
-  //totalSupply
-  useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "totalSupply",
-    watch: true,
-    onSuccess: (data) => {
-      setSupply(data.toString());
-    },
-  });
-
-  //MAX_ISSUE
-  useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "MAX_ISSUE",
-    onSuccess: (data: any) => {
-      setTotalNumber(data.toString());
-    },
-  });
-
-  //saleIsActive
-  useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "saleIsActive",
-    watch: true,
-    onSuccess: (data: boolean) => {
-      setIsActive(data);
-    },
-  });
-
-  const mintBox = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "mint",
-    enabled:
-      isActive &&
-      isConnected &&
-      chain.network === process.env.NEXT_PUBLIC_CHAIN &&
-      !soldOut &&
-      contract.signer &&
-      !!price,
-    args: [value, recommenderAddress],
-    overrides: {
-      from: address,
-      value: ethers.utils.parseEther(new Decimal(price).mul(value).toFixed()),
-    },
-    onError: (err) => {
-      console.log("mintBoxError===", err);
-      // if (err.message.indexOf(MESSAGE[0])) {
-      // }
-    },
-  });
-
-  const mintWrite = useContractWrite(mintBox.config);
-
-  useEffect(() => {
-    if (mintWrite.isError) {
-      setMintLoading(false)
-    }
-  }, [mintWrite])
-
-  useWaitForTransaction({
-    hash: mintWrite.data?.hash,
-    onSuccess: (data) => {
-      setMintLoading(false);
-      router.push("/nft");
-    },
-    onSettled: () => setMintLoading(false),
-  });
-
-  const triggerMint = () => {
-    if (isConnected) {
-      if (isActive && !soldOut) {
-        setMintLoading(true);
-        mintWrite?.write();
-      }
-    } else {
-      openConnectModal();
-    }
-  };
-
-  return (
-    <Stack
-      id="mint"
-      align="center"
-      sx={(theme) => ({
-        padding: "70px 0",
-        width: "100%",
-        backgroundColor: "#e3e9f5",
-        fontFamily: "Balthazar-Regular",
-        position: "relative",
-        [theme.fn.smallerThan("lg")]: {
-          // padding: "30px",
-        },
-      })}
-    >
-      <Group
-        spacing={20}
-        position="center"
-        sx={() => ({
-          alignItems: "flex-start",
-        })}
-      >
-        <Stack align="center" spacing={30}>
-          <Blindbox width={isBreakpointXs ? "200px" : "300px"}></Blindbox>
-          <Text size={12} style={{ fontFamily: "Balthazar-Regular" }}>
-            NETWORK ETHEREUM
-          </Text>
-        </Stack>
-        <Stack
-          align="center"
-          pt={40}
-          sx={() => ({
-            maxWidth: "420px",
-          })}
-        >
-          <Text className={classes.heroTitle}>METASOCO MYSTERYBOX</Text>
-          <Group>
-            <span>MINTED</span>
-            <span>
-              {supply}/{totalNumber}
-            </span>
-          </Group>
-          <Group>
-            <span>PRICE</span>
-            <span>
-              {new Decimal(price).mul(value).toFixed()}
-              ETH
-            </span>
-          </Group>
-          <Group>
-            <span>AMOUNT</span>
-            <Group spacing={0}>
-              <ActionIcon
-                size={25}
-                radius="xs"
-                variant="outline"
-                sx={() => ({
-                  borderColor: "#000",
-                  borderWidth: "2px",
-                })}
-                onClick={() => handlers.current.decrement()}
-              >
-                <IconMinus color="black" size={16} />
-              </ActionIcon>
-
-              <NumberInput
-                hideControls
-                value={value}
-                onChange={(val) => setValue(val)}
-                handlersRef={handlers}
-                max={5}
-                min={1}
-                step={1}
-                styles={{
-                  input: {
-                    width: 30,
-                    textAlign: "center",
-                    padding: 0,
-                    background: "transparent",
-                    border: "none",
-                    color: "#000",
-                    fontSize: "18px",
-                    fontFamily: "Balthazar-Regular",
-                  },
-                }}
-              />
-
-              <ActionIcon
-                size={25}
-                radius="xs"
-                variant="outline"
-                sx={() => ({
-                  borderColor: "#000",
-                  borderWidth: "2px",
-                })}
-                onClick={() => handlers.current.increment()}
-              >
-                <IconPlus color="black" size={16} />
-              </ActionIcon>
-            </Group>
-          </Group>
-          <Stack spacing={10}>
-            <Button
-              disabled={!isActive || soldOut}
-              onClick={() => triggerMint()}
-              loading={mintLoading}
-              sx={() => ({
-                background: "linear-gradient(180deg, #F67C8D, #f3556B 100%)",
-                width: "180px",
-                height: "50px",
-                textAlign: "center",
-                color: "white !important",
-                borderRadius: "50px",
-                boxShadow: "4px 4px 4px rgba(107, 109, 110, 0.5)",
-                transform: "scale(1)",
-                transition: "transform 0.1s linear 0s",
-                fontFamily: "Balthazar-Regular",
-                fontSize: "18px",
-                "&:hover": {
-                  transform: "scale(0.98)",
-                  transition: "transform 0.1s linear 0s",
-                },
-                "&:before": {
-                  borderRadius: "50px !important",
-                },
-              })}
-            >
-              {soldOut ? "Sold Out" : "Mint Your Team"}
-            </Button>
-            <Text align="center" style={{ fontFamily: "Balthazar-Regular" }}>
-              (Max mint 10x per wallet)
-            </Text>
-          </Stack>
-          <Text
-            align="center"
-            size={14}
-            style={{ fontFamily: "Balthazar-Regular" }}
-          >
-            3200 NFT in total according to 32 teams of FIFA World Cup 100 for
-            each team.
-          </Text>
-          <Text
-            align="center"
-            size={14}
-            style={{ fontFamily: "Balthazar-Regular" }}
-          >
-            The holders of NFTS are rewarded according to the actual performance
-            of each team during the World Cup 2022. The NFT values of all
-            players and teams will fluctuate in real time with each game's
-            performance, and the value of players and teams will directly affect
-            the payoffs to holders, including holding incentives and secondary
-            market trading prices.
-          </Text>
-        </Stack>
-      </Group>
-      <UnstyledButton
-        sx={(theme) => ({
-          position: "absolute",
-          right: "60px",
-          bottom: "60px",
-          transform: "scale(1)",
-          transition: "transform 0.1s linear 0s",
-          "&:hover": {
-            transform: "scale(1.06)",
-            transition: "transform 0.1s linear 0s",
-          },
-          [theme.fn.smallerThan("md")]: {
-            bottom: "10px",
-            right: "20px",
-          },
-        })}
-      >
-        <Image src="/icon/icon-os.png" width={33} height={41}></Image>
-      </UnstyledButton>
-    </Stack>
   );
 };
 
@@ -840,6 +515,14 @@ const Mechanism = ({ contract, fifaInfo }) => {
 };
 
 let timer: any = null;
+const defaultData = [
+  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
+  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
+  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
+  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
+  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
+  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
+]
 const Claim = ({ contract, fifaInfo, boardList }) => {
   const { chain } = useNetwork();
   const provider = useProvider();
@@ -849,14 +532,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   const [recommenderReward, setRecommenderReward] = useState(0);
   const [countDownString, setCountDown] = useState([0, 0, 0, 0]);
   const [claimLoading, setClaimLoading] = useState(false);
-  const [tableData, setTableData] = useState([
-    { address: "", rewards: "" },
-    { address: "", rewards: "" },
-    { address: "", rewards: "" },
-    { address: "", rewards: "" },
-    { address: "", rewards: "" },
-    { address: "", rewards: "" },
-  ]);
+  const [tableData, setTableData] = useState(defaultData);
   const isBreakpointXs = useMediaQuery("(max-width: 576px)");
   const { classes } = useSiteStyles();
   const { openConnectModal } = useConnectModal();
@@ -865,20 +541,20 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
 
   useEffect(() => {
     if (boardList) {
-      let arr = [
-        { address: "", rewards: "" },
-        { address: "", rewards: "" },
-        { address: "", rewards: "" },
-        { address: "", rewards: "" },
-        { address: "", rewards: "" },
-        { address: "", rewards: "" },
-      ];
+      let arr = defaultData;
       boardList.map((item, index) => {
         const data = web3.eth.abi.decodeLog(
           [
+            { type: 'unit256', name: 'tokenId' },
+            { type: 'unit8', name: 'tokenType' },
+            { type: 'unit8', name: 'class' },
             {
               type: "address",
-              name: "address",
+              name: "address1", // 自己
+            },
+            {
+              type: "address",
+              name: "address2", // 邀請人
             },
             {
               type: "uint256",
@@ -886,20 +562,29 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             },
             {
               type: "uint8",
-              name: "mySmallNumber",
+              name: "claimType", // 1 用户自己领的，2 发给邀请人的
             },
           ],
           item.data,
           item.topics
         );
         arr[index] = {
-          address:
-            data.address.substring(0, 4) +
+          claimType: Number(item.claimType),
+          address1:
+            data.address1.substring(0, 4) +
             "****" +
-            data.address.substring(
-              data.address.length - 4,
-              data.address.length
+            data.address1.substring(
+              data.address1.length - 4,
+              data.address1.length
             ),
+          address2:
+            data.address2.substring(0, 4) +
+            "****" +
+            data.address2.substring(
+              data.address2.length - 4,
+              data.address2.length
+            ),
+          tokenId: data.tokenId,
           rewards: (Number(data.rewards) / Math.pow(10, 18)).toString(),
         };
       });
@@ -1063,37 +748,35 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
           >
             {countDownString.map((item, index) => {
               return (
-                <>
-                  <Center
-                    key={index}
+                <Center
+                  key={index}
+                  sx={(theme) => ({
+                    width: "160px",
+                    height: "160px",
+                    background: "url('/countdown.png') no-repeat",
+                    backgroundSize: "contain",
+                    [theme.fn.smallerThan("xs")]: {
+                      width: "80px",
+                      height: "80px",
+                    },
+                  })}
+                >
+                  <Text
                     sx={(theme) => ({
-                      width: "160px",
-                      height: "160px",
-                      background: "url('/countdown.png') no-repeat",
-                      backgroundSize: "contain",
+                      fontFamily: "Saira-Black",
+                      fontSize: "32px",
                       [theme.fn.smallerThan("xs")]: {
-                        width: "80px",
-                        height: "80px",
+                        fontSize: "20px",
                       },
                     })}
                   >
-                    <Text
-                      sx={(theme) => ({
-                        fontFamily: "Saira-Black",
-                        fontSize: "32px",
-                        [theme.fn.smallerThan("xs")]: {
-                          fontSize: "20px",
-                        },
-                      })}
-                    >
-                      {item}
-                    </Text>
-                    {index === 0 && "day"}
-                    {index === 1 && "h"}
-                    {index === 2 && "min"}
-                    {index === 3 && "s"}
-                  </Center>
-                </>
+                    {item}
+                  </Text>
+                  {index === 0 && "day"}
+                  {index === 1 && "h"}
+                  {index === 2 && "min"}
+                  {index === 3 && "s"}
+                </Center>
               );
             })}
           </Group>
@@ -1192,11 +875,9 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                   })}
                 >
                   {address ? (
-                    <>
-                      {nftNumber > 0
-                        ? `${window.location.origin}/${address}`
-                        : "There is no token in your wallet"}
-                    </>
+                    <div>
+                      {nftNumber > 0 ? `${window.location.origin}/${address}` : "There is no token in your wallet"}
+                    </div>
                   ) : (
                     <UnstyledButton
                       onClick={() => openConnectModal()}
@@ -1388,6 +1069,14 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                   style={{
                     color: "#000",
                     borderColor: "#ccdaf6",
+                  }}
+                >
+                  TokenId
+                </th>
+                <th
+                  style={{
+                    color: "#000",
+                    borderColor: "#ccdaf6",
                     textAlign: "center",
                   }}
                 >
@@ -1397,9 +1086,12 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             </thead>
             <tbody>
               {tableData.map((element, index) => (
-                <tr key={index}>
+                <tr key={`table_item_${index}`}>
                   <td style={{ borderColor: "#ccdaf6", fontSize: "16px" }}>
-                    {element.address}
+                    {element.claimType === 1 ? element.address1 : element.address2}
+                  </td>
+                  <td style={{ borderColor: "#ccdaf6", fontSize: "16px" }}>
+                    {element.tokenId}
                   </td>
                   <td
                     style={{
@@ -1628,10 +1320,11 @@ const Partner = () => {
 };
 
 const HomePage: NextPage<{
-  fifaInfo: FifaInfo[];
-  contract: any;
-  boardList: [];
-}> = ({ fifaInfo, contract, boardList }) => {
+  fifaInfo: FifaInfo[]
+  contract: any
+  boardList: []
+  whiteListData: []
+}> = ({ fifaInfo, contract, boardList, whiteListData }) => {
   const [recentFifa, setFifaInfo] = useState({});
   useEffect(() => {
     initTime();
@@ -1652,7 +1345,7 @@ const HomePage: NextPage<{
   return (
     <div className="container">
       <Hero />
-      <Mint contract={contract} />
+      <Mint contract={contract} whiteListData={whiteListData} />
       <Mechanism contract={contract} fifaInfo={recentFifa} />
       <Claim contract={contract} fifaInfo={recentFifa} boardList={boardList} />
       <Vote />

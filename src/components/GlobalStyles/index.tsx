@@ -22,14 +22,6 @@ export function GlobalStyles() {
         },
         {
           "@font-face": {
-            fontFamily: "ale-general",
-            src: `url('/fonts/Alegreya-Regular.otf') format("opentype")`,
-            fontWeight: 400,
-            fontStyle: "normal",
-          },
-        },
-        {
-          "@font-face": {
             fontFamily: "barlow-black",
             src: `url('/fonts/Barlow-BlackItalic.ttf') format("truetype")`,
             fontWeight: 400,

@@ -81,16 +81,19 @@ export function HeaderDesktop() {
           Vote
         </Button>
         <Link href="/nft">
-          <Button
-            onClick={() => setActive("")}
-            className={
-              router.pathname === "/nft"
-                ? classes.menuItemSelected
-                : classes.menuItem
-            }
-          >
-            My NFT
-          </Button>
+          <a>
+            <Button
+              onClick={() => setActive("")}
+              className={
+                router.pathname === "/nft"
+                  ? classes.menuItemSelected
+                  : classes.menuItem
+              }
+            >
+              My NFT
+            </Button>
+          </a>
+
         </Link>
       </Group>
 

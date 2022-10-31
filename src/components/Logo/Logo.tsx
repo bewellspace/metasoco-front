@@ -7,7 +7,9 @@ export function Logo() {
 
   return (
     <Link href="/" className={classes.logo} aria-label="Metasoco">
-      <Image src="/logo.png" width="140" height="30" />
+      <a style={{ display: 'flex' }}>
+        <Image src="/logo.png" width="140" height="30" />
+      </a>
     </Link>
   )
 }

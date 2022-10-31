@@ -44,7 +44,6 @@ const Mint = ({ contract, whiteListData }) => {
   const { address, isConnected } = useAccount()
   const [totalNumber, setTotalNumber] = useState("3200")
   const [mintLoading, setMintLoading] = useState(false)
-  const [whiteList, setWhiteList] = useState(false)
   const [proof, setProof] = useState([])
   const [proofEnd, setProofEnd] = useState(false)
   const [recommenderAddress, setAddress] = useState(NULL_ADDRESS)
@@ -111,7 +110,7 @@ const Mint = ({ contract, whiteListData }) => {
   });
 
   useEffect(() => {
-    if (whiteListData && whiteListData.length && isConnected) {
+    if (whiteListData && whiteListData.length && isConnected && contract.signer) {
       const leafNodes = whiteListData.map(addr => keccak256(addr))
       const tree = new MerkleTree(leafNodes, keccak256, { sortPairs: true })
       const proof = tree.getHexProof(keccak256(address))
@@ -119,7 +118,7 @@ const Mint = ({ contract, whiteListData }) => {
       setProof(proof)
       setProofEnd(true)
     }
-  }, [whiteListData, isConnected])
+  }, [whiteListData, isConnected, contract])
 
   const getPrice = async (proof) => {
     const data = await contract.mintInfo(shareAddress, proof)

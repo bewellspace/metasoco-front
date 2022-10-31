@@ -28,7 +28,6 @@ import { MerkleTree } from 'merkletreejs'
 import { useMediaQuery } from "@mantine/hooks"
 import { IconPlus, IconMinus } from "@tabler/icons"
 import { useConnectModal } from "@rainbow-me/rainbowkit"
-
 import React, { useState, useRef, useEffect } from "react"
 
 const NULL_ADDRESS = "0x0000000000000000000000000000000000000000"
@@ -79,23 +78,6 @@ const Mint = ({ contract, whiteListData }) => {
     },
   });
 
-  // get price
-  useContractRead({
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    abi: abi,
-    functionName: "mintInfo",
-    enabled: isConnected && proofEnd,
-    args: [shareAddress, proof],
-    onSuccess: (data: any) => {
-      console.log('data', data);
-      setPrice(data.mintPrice.toString() / Math.pow(10, 18));
-      data[0] && setAddress(shareAddress);
-    },
-    onError: (error) => {
-      console.log('error======', error);
-    }
-  });
-
   //totalSupply
   useContractRead({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
@@ -129,15 +111,21 @@ const Mint = ({ contract, whiteListData }) => {
   });
 
   useEffect(() => {
-    console.log('whiteListData', whiteListData);
     if (whiteListData && whiteListData.length && isConnected) {
       const leafNodes = whiteListData.map(addr => keccak256(addr))
       const tree = new MerkleTree(leafNodes, keccak256, { sortPairs: true })
       const proof = tree.getHexProof(keccak256(address))
+      getPrice(proof)
       setProof(proof)
       setProofEnd(true)
     }
   }, [whiteListData, isConnected])
+
+  const getPrice = async (proof) => {
+    const data = await contract.mintInfo(shareAddress, proof)
+    setPrice(data.mintPrice.toString() / Math.pow(10, 18));
+    data[0] && setAddress(shareAddress);
+  }
 
   const mintBox = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,

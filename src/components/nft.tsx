@@ -6,6 +6,7 @@ import {
   useNetwork,
   useWaitForTransaction,
 } from 'wagmi';
+import { ethers } from 'ethers';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import { Stack, Text, Button, Box, SimpleGrid, Skeleton } from '@mantine/core';
 import Blindbox from './Blindbox';
@@ -16,7 +17,6 @@ import { MerkleTree } from 'merkletreejs';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 const abi: any = process.env.NEXT_PUBLIC_ABI;
 

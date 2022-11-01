@@ -62,7 +62,8 @@ export default function NFTPage({ contract }) {
 
   const getBoxNumber = async () => {
     const data = await contract.minterQueueInfo();
-    setBoxNumber(data[0]);
+    setBoxNumber(2);
+    // setBoxNumber(data[0]);
   };
 
   const claimPre = usePrepareContractWrite({
@@ -209,20 +210,22 @@ export default function NFTPage({ contract }) {
                         className='fc-wrapper'
                         style={{
                           width: isBreakpointLg ? '240px' : '200px',
-                          height: isBreakpointLg ? '312px' : '260px',
+                          height: isBreakpointLg ? '330px' : '260px',
                           borderRadius: '8px',
                         }}
                       >
                         <div className='fc-inner'>
-                          <div className='fc-front' style={{backgroundColor: '#DFE9F8'}}>
-                            <Blindbox
+                          <div className='fc-front'>
+                            <img
                               className='fc-image'
-                              width={isBreakpointLg ? '240px' : '200px'}
-                              height={isBreakpointLg ? '312px' : '260px'}
-                            />
+                              src={`/box-card.png`}
+                            ></img>
                           </div>
                           <div className='fc-back'>
-                            <img className='fc-image' src='/box-back.png'></img>
+                            <img
+                              className='fc-image'
+                              src={`/box-back.png`}
+                            ></img>
                           </div>
                         </div>
                       </div>
@@ -239,7 +242,7 @@ export default function NFTPage({ contract }) {
                       className='fc-wrapper'
                       style={{
                         width: isBreakpointLg ? '240px' : '200px',
-                        height: isBreakpointLg ? '312px' : '260px',
+                        height: isBreakpointLg ? '330px' : '260px',
                         borderRadius: '8px',
                       }}
                     >

@@ -33,7 +33,6 @@ export default function NFTPage({ contract }) {
 
   useEffect(() => {
     if (contract.signer) {
-      console.log(contract);
       init();
     }
   }, [contract]);

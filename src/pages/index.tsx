@@ -17,7 +17,6 @@ export const getServerSideProps = async ({ res }: NextPageContext) => {
   }
 
   const {
-    data: boradData,
     data: { result },
   } = await axios.get(process.env.BOARD_API);
   const boardList = result;

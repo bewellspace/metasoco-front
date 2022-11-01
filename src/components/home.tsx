@@ -549,7 +549,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
       });
       let arr = defaultData;
       let logArr = [];
-      newBoardList.slice(0, 100).map((item, index) => {
+      newBoardList.slice(0, 6).map((item, index) => {
         const data = web3.eth.abi.decodeLog(
           [
             { type: 'uint256', name: 'tokenId' },
@@ -593,7 +593,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
               data.address2.length
             ),
           tokenId: data.tokenId,
-          rewards: (Number(data.rewards) / Math.pow(10, 18)).toString(),
+          rewards: (Number(data.rewards) / Math.pow(10, 18)).toFixed(8),
         };
       });
       console.log(JSON.stringify(logArr));

@@ -14,7 +14,7 @@ import Blindbox from './Blindbox';
 import { useMediaQuery } from '@mantine/hooks';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 
-const abi: any = process.env.NEXT_PUBLIC_ABI
+const abi: any = process.env.NEXT_PUBLIC_ABI;
 export default function NFTPage({ contract }) {
   const { chain } = useNetwork();
   const { classes } = useSiteStyles();
@@ -200,19 +200,35 @@ export default function NFTPage({ contract }) {
             cols={isBreakpointXs ? 1 : 4}
             spacing={isBreakpointXs ? 10 : 40}
           >
-            {boxNumber > 0 &&
-              new Array(Number(boxNumber)).fill(null).map((item, index) => {
-                return (
-                  <div key={`box_item_${index}`}>
-                    <Blindbox
-                      width={isBreakpointLg ? '240px' : '200px'}
-                      height={isBreakpointLg ? '312px' : '260px'}
-                    />
-                  </div>
-                );
-              })}
-
             <PhotoProvider maskOpacity={0.8}>
+              {boxNumber > 0 &&
+                new Array(Number(boxNumber)).fill(null).map((item, index) => {
+                  return (
+                    <PhotoView key={`box_item_${index}`} src='/box-back.png'>
+                      <div
+                        className='fc-wrapper'
+                        style={{
+                          width: isBreakpointLg ? '240px' : '200px',
+                          height: isBreakpointLg ? '312px' : '260px',
+                          borderRadius: '8px',
+                        }}
+                      >
+                        <div className='fc-inner'>
+                          <div className='fc-front' style={{backgroundColor: '#DFE9F8'}}>
+                            <Blindbox
+                              className='fc-image'
+                              width={isBreakpointLg ? '240px' : '200px'}
+                              height={isBreakpointLg ? '312px' : '260px'}
+                            />
+                          </div>
+                          <div className='fc-back'>
+                            <img className='fc-image' src='/box-back.png'></img>
+                          </div>
+                        </div>
+                      </div>
+                    </PhotoView>
+                  );
+                })}
               {nftList.map((item, index) => {
                 return (
                   <PhotoView
@@ -242,7 +258,6 @@ export default function NFTPage({ contract }) {
                         </div>
                       </div>
                     </div>
-                    {/* <MImage width="100%" withPlaceholder src={item}></MImage> */}
                   </PhotoView>
                 );
               })}

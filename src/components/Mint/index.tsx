@@ -30,7 +30,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import React, { useState, useRef, useEffect } from 'react';
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
-const abi = process.env.NEXT_PUBLIC_ABI
+const abi: any = process.env.NEXT_PUBLIC_ABI;
 
 const Mint = ({ contract, whiteListData }) => {
   const router = useRouter();

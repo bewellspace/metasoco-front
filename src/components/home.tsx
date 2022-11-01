@@ -32,7 +32,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import Mint from './Mint';
 
-const abi = process.env.NEXT_PUBLIC_ABI;
+const abi: any = process.env.NEXT_PUBLIC_ABI;
 const Hero = () => {
   const { classes } = useSiteStyles();
   const isBreakpointLg = useMediaQuery('(min-width: 1201px)');

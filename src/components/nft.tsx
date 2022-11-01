@@ -14,7 +14,7 @@ import Blindbox from './Blindbox';
 import { useMediaQuery } from '@mantine/hooks';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 
-const abi = process.env.NEXT_PUBLIC_ABI
+const abi: any = process.env.NEXT_PUBLIC_ABI
 export default function NFTPage({ contract }) {
   const { chain } = useNetwork();
   const { classes } = useSiteStyles();

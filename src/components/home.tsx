@@ -6,7 +6,7 @@ import {
   useContractWrite,
   useWaitForTransaction,
   useProvider,
-} from "wagmi";
+} from 'wagmi';
 import {
   Anchor,
   Box,
@@ -20,183 +20,179 @@ import {
   Center,
   SimpleGrid,
   Table,
-} from "@mantine/core";
-import Web3 from "web3";
-import Image from "next/image";
-import { NextPage } from "next";
-import abi from "src/abi/abi.json";
-import { FifaInfo } from "src/types";
-import { Parallax } from "rc-scroll-anim";
-import React, { useState, useEffect } from "react";
-import { useSiteStyles } from "src/theme";
-import { useMediaQuery } from "@mantine/hooks";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
+} from '@mantine/core';
+import Web3 from 'web3';
+import Image from 'next/image';
+import { NextPage } from 'next';
+import abi from 'src/abi/abi.json';
+import { FifaInfo } from 'src/types';
+import { Parallax } from 'rc-scroll-anim';
+import React, { useState, useEffect } from 'react';
+import { useSiteStyles } from 'src/theme';
+import { useMediaQuery } from '@mantine/hooks';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 import Mint from './Mint';
 
 const Hero = () => {
   const { classes } = useSiteStyles();
-  const isBreakpointLg = useMediaQuery("(min-width: 1201px)");
+  const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
   return (
     <Stack
-      id="home"
-      align="center"
+      id='home'
+      align='center'
       spacing={0}
       sx={(theme) => ({
-        width: "100%",
+        width: '100%',
         background: "url('/banner-bg.png') no-repeat #fff",
-        backgroundSize: "100% 100%",
+        backgroundSize: '100% 100%',
       })}
     >
       <Center
         sx={(theme) => ({
-          padding: "50px 0 0",
-          width: "60vw",
-          [theme.fn.largerThan("lg")]: {
-            width: "40vw",
+          padding: '50px 0 0',
+          width: '60vw',
+          [theme.fn.largerThan('lg')]: {
+            width: '40vw',
           },
-          [theme.fn.largerThan("md")]: {
-            width: "43vw",
+          [theme.fn.largerThan('md')]: {
+            width: '43vw',
           },
-          [theme.fn.smallerThan("xs")]: {
-            width: "80vw",
+          [theme.fn.smallerThan('xs')]: {
+            width: '80vw',
           },
         })}
       >
-        <MImage src="/banner.png"></MImage>
+        <MImage src='/banner.png'></MImage>
       </Center>
 
       <Stack
         sx={(theme) => ({
-          width: "100%",
+          width: '100%',
           background: "url('/hero-bg.png') no-repeat #f3f7ff",
-          backgroundSize: "60%",
-          minHeight: "700px",
-          backgroundPosition: "bottom right",
-          position: "relative",
-          paddingTop: "50px",
-          paddingBottom: "65px",
+          backgroundSize: '60%',
+          minHeight: '700px',
+          backgroundPosition: 'bottom right',
+          position: 'relative',
+          paddingTop: '50px',
+          paddingBottom: '65px',
         })}
       >
-        <Stack align="center">
-          <Text align="center" className={classes.heroTitle}>
+        <Stack align='center'>
+          <Text align='center' className={classes.heroTitle}>
             Get your NFT,
           </Text>
-          <Text align="center" className={classes.heroTitle}>
+          <Text align='center' className={classes.heroTitle}>
             Win the final prize!
           </Text>
         </Stack>
-        <Stack align="center" pt={10}>
-          <Text align="center" className={classes.modelTips}>
+        <Stack align='center' pt={10}>
+          <Text align='center' className={classes.modelTips}>
             Metasoco is a bridge between soccor fans and crypto users.
           </Text>
-          <Text align="center" className={classes.modelTips}>
+          <Text align='center' className={classes.modelTips}>
             Support your favorite team, get your NFT, and win the final prize!
           </Text>
         </Stack>
         <Box
           sx={(theme) => ({
-            height: "650px",
-            padding: "70px 0",
-            width: "100%",
-            overflow: "hidden",
-            [theme.fn.smallerThan("md")]: {
-              padding: "20px 0",
-              height: "550px",
+            height: '650px',
+            padding: '70px 0',
+            width: '100%',
+            overflow: 'hidden',
+            [theme.fn.smallerThan('md')]: {
+              padding: '20px 0',
+              height: '550px',
             },
-            [theme.fn.largerThan("lg")]: {
-              height: "750px",
+            [theme.fn.largerThan('lg')]: {
+              height: '750px',
             },
           })}
         >
           <Parallax
             animation={{ x: 0, rotate: -5 }}
             style={{
-              transform: "translateX(-100px) rotate(-5deg)",
-              margin: "30px auto",
+              transform: 'translateX(-100px) rotate(-5deg)',
+              margin: '30px auto',
             }}
-            className="code-box-left"
+            className='code-box-left'
           >
             <Group
               sx={() => ({
-                flexWrap: "nowrap",
+                flexWrap: 'nowrap',
               })}
             >
-              {
-                new Array(Number(16)).fill(null).map((item, index) => {
-                  return (
-                    <MImage
-                      key={`image_top_${index}`}
-                      width={isBreakpointLg ? 180 : 150}
-                      src={`/team/${index + 1}.png`}
-                    ></MImage>
-                  );
-                })
-              }
+              {new Array(Number(16)).fill(null).map((item, index) => {
+                return (
+                  <MImage
+                    key={`image_top_${index}`}
+                    width={isBreakpointLg ? 180 : 150}
+                    src={`/team/${index + 1}.png`}
+                  ></MImage>
+                );
+              })}
             </Group>
           </Parallax>
           <Parallax
             animation={{ x: -100, rotate: -5 }}
             style={{
-              transform: "translateX(0) rotate(-5deg)",
-              margin: "30px auto",
+              transform: 'translateX(0) rotate(-5deg)',
+              margin: '30px auto',
             }}
-            className="code-box-right"
+            className='code-box-right'
           >
             <Group
               sx={() => ({
-                flexWrap: "nowrap",
+                flexWrap: 'nowrap',
               })}
             >
-              {
-                new Array(Number(16)).fill(null).map((item, index) => {
-                  return (
-                    <MImage
-                      key={`image_bottom_${index}`}
-                      width={isBreakpointLg ? 180 : 150}
-                      src={`/team/${index + 17}.png`}
-                    ></MImage>
-                  );
-                })
-              }
+              {new Array(Number(16)).fill(null).map((item, index) => {
+                return (
+                  <MImage
+                    key={`image_bottom_${index}`}
+                    width={isBreakpointLg ? 180 : 150}
+                    src={`/team/${index + 17}.png`}
+                  ></MImage>
+                );
+              })}
             </Group>
           </Parallax>
         </Box>
       </Stack>
-    </Stack >
+    </Stack>
   );
 };
 
 const mechanismList = [
   {
-    name: "16 teams",
+    name: '16 teams',
     pool: 5,
     iconScale: 1,
     active: false,
     key: 16,
   },
   {
-    name: "8 teams",
+    name: '8 teams',
     pool: 10,
     iconScale: 1.15,
     active: false,
     key: 8,
   },
   {
-    name: "1/4",
+    name: '1/4',
     pool: 15,
     iconScale: 1.35,
     active: false,
     key: 4,
   },
   {
-    name: "1/2",
+    name: '1/2',
     pool: 20,
     iconScale: 1.45,
     active: false,
     key: 1,
   },
   {
-    name: "winner",
+    name: 'winner',
     pool: 50,
     iconScale: 1.65,
     active: false,
@@ -206,7 +202,7 @@ const mechanismList = [
 
 const Mechanism = ({ contract, fifaInfo }) => {
   const { classes } = useSiteStyles();
-  const isBreakpointMd = useMediaQuery("(min-width: 992px)");
+  const isBreakpointMd = useMediaQuery('(min-width: 992px)');
 
   const [totalRewardPool, setTotalRewardPool] = useState(0);
 
@@ -224,7 +220,7 @@ const Mechanism = ({ contract, fifaInfo }) => {
   useContractRead({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi: abi,
-    functionName: "totalRewardPool",
+    functionName: 'totalRewardPool',
     watch: true,
     onSuccess: (data) => {
       setTotalRewardPool(Number(data.toString()) / Math.pow(10, 18));
@@ -233,36 +229,36 @@ const Mechanism = ({ contract, fifaInfo }) => {
 
   return (
     <Stack
-      id="mechanism"
-      align="center"
-      spacing={isBreakpointMd ? 50 : "sm"}
+      id='mechanism'
+      align='center'
+      spacing={isBreakpointMd ? 50 : 'sm'}
       sx={(theme) => ({
-        padding: "60px 70px 40px",
-        position: "relative",
-        overflow: "hidden",
+        padding: '60px 70px 40px',
+        position: 'relative',
+        overflow: 'hidden',
         background: "url('/mechanism-bg.png') no-repeat #d8e2f7",
-        backgroundPosition: "left bottom",
-        [theme.fn.smallerThan("md")]: {
-          padding: "60px 20px 40px",
+        backgroundPosition: 'left bottom',
+        [theme.fn.smallerThan('md')]: {
+          padding: '60px 20px 40px',
         },
       })}
     >
-      <Stack align="center" spacing={25}>
-        <Text align="center" className={classes.heroTitle}>
+      <Stack align='center' spacing={25}>
+        <Text align='center' className={classes.heroTitle}>
           THE MECHANISM
         </Text>
-        <Text align="center" className={classes.heroTitle}>
+        <Text align='center' className={classes.heroTitle}>
           NFTS are the core of meta-universe props and entertainment
         </Text>
         <Center
           sx={(theme) => ({
-            width: "235px",
-            height: "50px",
-            backgroundColor: "#f3546a",
-            color: "#fbf9f9",
-            boxShadow: "3px 3px 2px rgba(3, 127, 204, 0.5)",
-            [theme.fn.largerThan("md")]: {
-              fontSize: "20px",
+            width: '235px',
+            height: '50px',
+            backgroundColor: '#f3546a',
+            color: '#fbf9f9',
+            boxShadow: '3px 3px 2px rgba(3, 127, 204, 0.5)',
+            [theme.fn.largerThan('md')]: {
+              fontSize: '20px',
             },
           })}
         >
@@ -276,27 +272,27 @@ const Mechanism = ({ contract, fifaInfo }) => {
         breakpoints={[{ maxWidth: 860, cols: 1, spacing: 45 }]}
       >
         <Stack
-          align={"center"}
+          align={'center'}
           spacing={25}
           sx={(theme) => ({
-            padding: "0 35px",
-            [theme.fn.smallerThan("md")]: {
-              padding: "0",
+            padding: '0 35px',
+            [theme.fn.smallerThan('md')]: {
+              padding: '0',
             },
           })}
         >
-          <Text align="center" className={classes.heroTitle}>
+          <Text align='center' className={classes.heroTitle}>
             How to play?
           </Text>
           <Text
-            align="center"
+            align='center'
             sx={(theme) => ({
-              fontSize: "14px",
-              [theme.fn.largerThan("lg")]: {
-                fontSize: "16px",
+              fontSize: '14px',
+              [theme.fn.largerThan('lg')]: {
+                fontSize: '16px',
               },
             })}
-            style={{ fontFamily: "Balthazar-Regular" }}
+            style={{ fontFamily: 'Balthazar-Regular' }}
           >
             The project party retains 20% of the sales revenue as
             <br />
@@ -304,14 +300,14 @@ const Mechanism = ({ contract, fifaInfo }) => {
             <br /> returned to NFT holders in the form of rewards.
           </Text>
           <Text
-            align="center"
+            align='center'
             sx={(theme) => ({
-              fontSize: "14px",
-              [theme.fn.largerThan("lg")]: {
-                fontSize: "16px",
+              fontSize: '14px',
+              [theme.fn.largerThan('lg')]: {
+                fontSize: '16px',
               },
             })}
-            style={{ fontFamily: "Balthazar-Regular" }}
+            style={{ fontFamily: 'Balthazar-Regular' }}
           >
             There are five stages of the season: 32 into 16,
             <br />
@@ -320,23 +316,23 @@ const Mechanism = ({ contract, fifaInfo }) => {
             <br />
             round of the rewards pool, which will be awarded
             <br /> 5%, 10%, 15%, and 20% of the total bonus pool, respectively.
-            <Text color={"#eb3f3f"} style={{ fontFamily: "Balthazar-Regular" }}>
+            <Text color={'#eb3f3f'} style={{ fontFamily: 'Balthazar-Regular' }}>
               The champion team NFT will receive 50% of the total sales revenue.
             </Text>
           </Text>
           <Text
             sx={(theme) => ({
-              fontSize: "14px",
-              [theme.fn.largerThan("lg")]: {
-                fontSize: "16px",
+              fontSize: '14px',
+              [theme.fn.largerThan('lg')]: {
+                fontSize: '16px',
               },
             })}
-            align="center"
-            style={{ fontFamily: "Balthazar-Regular" }}
+            align='center'
+            style={{ fontFamily: 'Balthazar-Regular' }}
           >
             <Text
               sx={() => ({
-                fontFamily: "barlow-black",
+                fontFamily: 'barlow-black',
               })}
             >
               As a member of NFT holder you recieve:
@@ -356,26 +352,26 @@ const Mechanism = ({ contract, fifaInfo }) => {
         </Stack>
         <Stack
           spacing={25}
-          align="center"
+          align='center'
           sx={(theme) => ({
-            width: "450px",
-            padding: "25px 0 30px",
-            backgroundColor: "#c3d2ef",
-            borderRadius: "25px",
-            justifyContent: "center",
-            [theme.fn.smallerThan("md")]: {
-              width: "100%",
+            width: '450px',
+            padding: '25px 0 30px',
+            backgroundColor: '#c3d2ef',
+            borderRadius: '25px',
+            justifyContent: 'center',
+            [theme.fn.smallerThan('md')]: {
+              width: '100%',
             },
           })}
         >
           <Group spacing={40} sx={() => ({})}>
             <Center
               sx={(theme) => ({
-                width: "120px",
-                height: "33px",
+                width: '120px',
+                height: '33px',
                 opacity: 0,
-                [theme.fn.smallerThan("xs")]: {
-                  width: "100px",
+                [theme.fn.smallerThan('xs')]: {
+                  width: '100px',
                 },
               })}
             >
@@ -388,33 +384,33 @@ const Mechanism = ({ contract, fifaInfo }) => {
             >
               <Center
                 sx={() => ({
-                  width: "26px",
-                  height: "20px",
+                  width: '26px',
+                  height: '20px',
                 })}
               >
-                <MImage src="/icon/icon-bag.png"></MImage>
+                <MImage src='/icon/icon-bag.png'></MImage>
               </Center>
 
-              <Image src="/icon/icon-right.png" width={22} height={18}></Image>
+              <Image src='/icon/icon-right.png' width={22} height={18}></Image>
             </Group>
             <Stack
-              align={"center"}
-              justify="flex-start"
+              align={'center'}
+              justify='flex-start'
               spacing={0}
               sx={() => ({
-                position: "relative",
+                position: 'relative',
               })}
             >
               <Center
                 sx={() => ({
-                  width: "72px",
-                  height: "28px",
-                  borderRadius: "28px",
-                  fontSize: "13px",
-                  color: "#fdfcfc",
-                  backgroundColor: "#f7b04d",
-                  border: "1px solid #ad8edc",
-                  boxShadow: "2px 2px 2px rgba(161, 181, 226, 0.75)",
+                  width: '72px',
+                  height: '28px',
+                  borderRadius: '28px',
+                  fontSize: '13px',
+                  color: '#fdfcfc',
+                  backgroundColor: '#f7b04d',
+                  border: '1px solid #ad8edc',
+                  boxShadow: '2px 2px 2px rgba(161, 181, 226, 0.75)',
                 })}
               >
                 32 teams
@@ -422,10 +418,10 @@ const Mechanism = ({ contract, fifaInfo }) => {
 
               <MImage
                 sx={() => ({
-                  position: "absolute",
-                  top: "34px",
+                  position: 'absolute',
+                  top: '34px',
                 })}
-                src="/icon/icon-down1.png"
+                src='/icon/icon-down1.png'
                 width={8}
                 height={16}
               ></MImage>
@@ -434,17 +430,21 @@ const Mechanism = ({ contract, fifaInfo }) => {
 
           {mechanismList.map((item, index) => {
             return (
-              <Group spacing={40} key={`mechanism_item_${index}`} sx={() => ({})}>
+              <Group
+                spacing={40}
+                key={`mechanism_item_${index}`}
+                sx={() => ({})}
+              >
                 <Center
                   sx={(theme) => ({
-                    width: "120px",
-                    height: "33px",
-                    backgroundColor: "#bb9ce9",
-                    color: "#fdfcfc",
-                    fontSize: "13px",
-                    boxShadow: "2px 2px 2px rgba(161, 181, 226, 0.75)",
-                    [theme.fn.smallerThan("xs")]: {
-                      width: "100px",
+                    width: '120px',
+                    height: '33px',
+                    backgroundColor: '#bb9ce9',
+                    color: '#fdfcfc',
+                    fontSize: '13px',
+                    boxShadow: '2px 2px 2px rgba(161, 181, 226, 0.75)',
+                    [theme.fn.smallerThan('xs')]: {
+                      width: '100px',
                     },
                   })}
                 >
@@ -453,52 +453,52 @@ const Mechanism = ({ contract, fifaInfo }) => {
                 <Group>
                   <Center
                     sx={() => ({
-                      width: "26px",
-                      height: "20px",
+                      width: '26px',
+                      height: '20px',
                       transform: `scale(${item.iconScale})`,
                     })}
                   >
-                    <MImage src="/icon/icon-bag.png"></MImage>
+                    <MImage src='/icon/icon-bag.png'></MImage>
                   </Center>
 
                   <Image
-                    src="/icon/icon-right.png"
+                    src='/icon/icon-right.png'
                     width={22}
                     height={18}
                   ></Image>
                 </Group>
                 <Stack
-                  align={"center"}
-                  justify="flex-start"
+                  align={'center'}
+                  justify='flex-start'
                   spacing={0}
                   sx={() => ({
-                    position: "relative",
+                    position: 'relative',
                   })}
                 >
                   <Center
                     sx={() => ({
-                      width: "72px",
-                      height: "28px",
-                      borderRadius: "28px",
-                      fontSize: "13px",
-                      color: "#fdfcfc",
-                      backgroundColor: !item.active ? "#bb9ce9" : "#f7b04d",
-                      border: "1px solid #ad8edc",
-                      boxShadow: "2px 2px 2px rgba(161, 181, 226, 0.75)",
+                      width: '72px',
+                      height: '28px',
+                      borderRadius: '28px',
+                      fontSize: '13px',
+                      color: '#fdfcfc',
+                      backgroundColor: !item.active ? '#bb9ce9' : '#f7b04d',
+                      border: '1px solid #ad8edc',
+                      boxShadow: '2px 2px 2px rgba(161, 181, 226, 0.75)',
                     })}
                   >
                     {item.name}
                   </Center>
-                  {item.name !== "winner" && (
+                  {item.name !== 'winner' && (
                     <MImage
                       sx={() => ({
-                        position: "absolute",
-                        top: "34px",
+                        position: 'absolute',
+                        top: '34px',
                       })}
                       src={
                         !item.active
-                          ? "/icon/icon-down2.png"
-                          : "/icon/icon-down1.png"
+                          ? '/icon/icon-down2.png'
+                          : '/icon/icon-down1.png'
                       }
                       width={8}
                       height={16}
@@ -516,13 +516,13 @@ const Mechanism = ({ contract, fifaInfo }) => {
 
 let timer: any = null;
 const defaultData = [
-  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
-  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
-  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
-  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
-  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
-  { claimType: 1, address1: "", address2: "", tokenId: '', rewards: "" },
-]
+  { claimType: 1, address1: '', address2: '', tokenId: '', rewards: '' },
+  { claimType: 1, address1: '', address2: '', tokenId: '', rewards: '' },
+  { claimType: 1, address1: '', address2: '', tokenId: '', rewards: '' },
+  { claimType: 1, address1: '', address2: '', tokenId: '', rewards: '' },
+  { claimType: 1, address1: '', address2: '', tokenId: '', rewards: '' },
+  { claimType: 1, address1: '', address2: '', tokenId: '', rewards: '' },
+];
 const Claim = ({ contract, fifaInfo, boardList }) => {
   const { chain } = useNetwork();
   const provider = useProvider();
@@ -533,7 +533,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   const [countDownString, setCountDown] = useState([0, 0, 0, 0]);
   const [claimLoading, setClaimLoading] = useState(false);
   const [tableData, setTableData] = useState(defaultData);
-  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
+  const isBreakpointXs = useMediaQuery('(max-width: 576px)');
   const { classes } = useSiteStyles();
   const { openConnectModal } = useConnectModal();
 
@@ -542,10 +542,13 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   useEffect(() => {
     if (boardList) {
       const newBoardList = boardList.sort((a, b) => {
-        return web3.utils.hexToNumber(b.timeStamp) - web3.utils.hexToNumber(a.timeStamp)
-      })
+        return (
+          web3.utils.hexToNumber(b.timeStamp) -
+          web3.utils.hexToNumber(a.timeStamp)
+        );
+      });
       let arr = defaultData;
-      let logArr = []
+      let logArr = [];
       newBoardList.slice(0, 100).map((item, index) => {
         const data = web3.eth.abi.decodeLog(
           [
@@ -553,38 +556,38 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             { type: 'uint8', name: 'tokenType' },
             { type: 'uint8', name: 'class' },
             {
-              type: "address",
-              name: "address1",
+              type: 'address',
+              name: 'address1',
             },
             {
-              type: "address",
-              name: "address2",
+              type: 'address',
+              name: 'address2',
             },
             {
-              type: "uint256",
-              name: "rewards",
+              type: 'uint256',
+              name: 'rewards',
             },
             {
-              type: "uint8",
-              name: "claimType",
+              type: 'uint8',
+              name: 'claimType',
             },
           ],
           item.data,
           item.topics
         );
-        logArr.push(data)
+        logArr.push(data);
         arr[index] = {
           claimType: Number(data.claimType),
           address1:
             data.address1.substring(0, 4) +
-            "****" +
+            '****' +
             data.address1.substring(
               data.address1.length - 4,
               data.address1.length
             ),
           address2:
             data.address2.substring(0, 4) +
-            "****" +
+            '****' +
             data.address2.substring(
               data.address2.length - 4,
               data.address2.length
@@ -611,10 +614,8 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
     setUserTotalReward(
       calculateReward.userTotalReward.toString() / Math.pow(10, 18)
     );
-    const reward = await contract.recommenderRewards(address)
-    setRecommenderReward(
-      reward.toString() / Math.pow(10, 18)
-    );
+    const reward = await contract.recommenderRewards(address);
+    setRecommenderReward(reward.toString() / Math.pow(10, 18));
   };
 
   useEffect(() => {
@@ -658,7 +659,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   const claimPre = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi: abi,
-    functionName: "claimReward",
+    functionName: 'claimReward',
     enabled:
       isConnected &&
       chain.network === process.env.NEXT_PUBLIC_CHAIN &&
@@ -669,7 +670,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
       value: 0,
     },
     onError: (err) => {
-      console.log("claimWriteError===", err);
+      console.log('claimWriteError===', err);
       // if (err.message.indexOf(MESSAGE[0])) {
       // }
     },
@@ -679,16 +680,22 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
 
   useEffect(() => {
     if (claimWrite.isError) {
-      setClaimLoading(false)
+      setClaimLoading(false);
     }
-  }, [claimWrite])
+  }, [claimWrite]);
 
   useWaitForTransaction({
     hash: claimWrite.data?.hash,
     onSuccess: (data) => {
       setClaimLoading(false);
     },
-    onSettled: () => setClaimLoading(false),
+    onSettled: async () => {
+      setClaimLoading(false);
+      const calculateReward = await contract.calculateReward();
+      setUserTotalReward(
+        calculateReward.userTotalReward.toString() / Math.pow(10, 18)
+      );
+    },
   });
 
   const handleClaim = () => {
@@ -703,52 +710,52 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   };
 
   return (
-    <div id="claim">
+    <div id='claim'>
       <Stack
-        align={"center"}
+        align={'center'}
         spacing={isBreakpointXs ? 15 : 40}
         sx={(theme) => ({
-          padding: "65px 0",
+          padding: '65px 0',
           background: "url('/claim-bg.png') no-repeat #e3e9f5",
-          backgroundSize: isBreakpointXs ? "cover" : "contain",
-          backgroundPositionY: "60px",
+          backgroundSize: isBreakpointXs ? 'cover' : 'contain',
+          backgroundPositionY: '60px',
         })}
       >
-        <Stack align="center">
+        <Stack align='center'>
           <Text className={classes.heroTitle}>GET YOUR PRIZE</Text>
-          <Text className={classes.heroTitle} align="center" px={10}>
+          <Text className={classes.heroTitle} align='center' px={10}>
             If your team wins the match, you can claim the prize from pool
           </Text>
         </Stack>
         <Anchor
-          href="https://www.fifa.com/fifaplus/en/tournaments/mens/worldcup/qatar2022/countdown-to-qatar-2022"
-          target="_blank"
+          href='https://www.fifa.com/fifaplus/en/tournaments/mens/worldcup/qatar2022/countdown-to-qatar-2022'
+          target='_blank'
         >
           <Text
             underline
-            color="#9d9d9d"
-            style={{ fontFamily: "Balthazar-Regular" }}
+            color='#9d9d9d'
+            style={{ fontFamily: 'Balthazar-Regular' }}
           >
             Click here to check the match information
           </Text>
         </Anchor>
-        <Stack align="center" spacing={35}>
+        <Stack align='center' spacing={35}>
           <Text
-            align="center"
-            color="#de3e3e"
+            align='center'
+            color='#de3e3e'
             sx={() => ({
-              fontSize: "25px",
+              fontSize: '25px',
             })}
-            style={{ fontFamily: "Balthazar-Regular" }}
+            style={{ fontFamily: 'Balthazar-Regular' }}
           >
             Countdown to next reward
           </Text>
           <Group
             spacing={isBreakpointXs ? 5 : 50}
             sx={(theme) => ({
-              fontSize: "24px",
-              [theme.fn.smallerThan("xs")]: {
-                fontSize: "18px",
+              fontSize: '24px',
+              [theme.fn.smallerThan('xs')]: {
+                fontSize: '18px',
               },
             })}
           >
@@ -757,31 +764,31 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                 <Center
                   key={index}
                   sx={(theme) => ({
-                    width: "160px",
-                    height: "160px",
+                    width: '160px',
+                    height: '160px',
                     background: "url('/countdown.png') no-repeat",
-                    backgroundSize: "contain",
-                    [theme.fn.smallerThan("xs")]: {
-                      width: "80px",
-                      height: "80px",
+                    backgroundSize: 'contain',
+                    [theme.fn.smallerThan('xs')]: {
+                      width: '80px',
+                      height: '80px',
                     },
                   })}
                 >
                   <Text
                     sx={(theme) => ({
-                      fontFamily: "Saira-Black",
-                      fontSize: "32px",
-                      [theme.fn.smallerThan("xs")]: {
-                        fontSize: "20px",
+                      fontFamily: 'Saira-Black',
+                      fontSize: '32px',
+                      [theme.fn.smallerThan('xs')]: {
+                        fontSize: '20px',
                       },
                     })}
                   >
                     {item}
                   </Text>
-                  {index === 0 && "day"}
-                  {index === 1 && "h"}
-                  {index === 2 && "min"}
-                  {index === 3 && "s"}
+                  {index === 0 && 'day'}
+                  {index === 1 && 'h'}
+                  {index === 2 && 'min'}
+                  {index === 3 && 's'}
                 </Center>
               );
             })}
@@ -789,11 +796,11 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
         </Stack>
 
         <Stack
-          align="center"
+          align='center'
           spacing={15}
           sx={() => ({
-            position: "relative",
-            left: "40px",
+            position: 'relative',
+            left: '40px',
           })}
         >
           <Group>
@@ -807,8 +814,8 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
           <Group>
             <Center>
               <Text className={classes.underLine}>
-                My NFT reward:{" "}
-                <span style={{ color: "#f3261f" }}>{userTotalReward}</span> ETH
+                My NFT reward:{' '}
+                <span style={{ color: '#f3261f' }}>{userTotalReward}</span> ETH
               </Text>
             </Center>
             <Button
@@ -825,86 +832,91 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
           spacing={0}
           mt={30}
           sx={(theme) => ({
-            [theme.fn.smallerThan("md")]: {
-              justifyContent: "center",
+            [theme.fn.smallerThan('md')]: {
+              justifyContent: 'center',
             },
-            [theme.fn.smallerThan("xs")]: {
-              width: "100%",
-              padding: "0 10px",
+            [theme.fn.smallerThan('xs')]: {
+              width: '100%',
+              padding: '0 10px',
             },
           })}
         >
           <Stack
-            align="center"
-            justify="center"
+            align='center'
+            justify='center'
             sx={(theme) => ({
               zIndex: 2,
-              width: "440px",
-              height: "175px",
-              padding: "0 28px",
-              color: "#fff",
+              width: '440px',
+              height: '175px',
+              padding: '0 28px',
+              color: '#fff',
               background: "url('/card-bg.png') no-repeat",
-              backgroundSize: "100% 100%",
-              [theme.fn.smallerThan("xs")]: {
-                width: "100vw",
-                height: "160px",
+              backgroundSize: '100% 100%',
+              [theme.fn.smallerThan('xs')]: {
+                width: '100vw',
+                height: '160px',
               },
             })}
           >
-            <Text align="center" className={classes.modelTips}>
+            <Text align='center' className={classes.modelTips}>
               Invite friends,
             </Text>
-            <Text align="center" className={classes.modelTips}>
+            <Text align='center' className={classes.modelTips}>
               get rewards together!
             </Text>
             <Stack
               spacing={10}
               pt={10}
               sx={() => ({
-                width: "100%",
-                borderTop: "1px solid #bfbfbf",
+                width: '100%',
+                borderTop: '1px solid #bfbfbf',
               })}
             >
-              <Text align="center" className={classes.modelTips}>
+              <Text align='center' className={classes.modelTips}>
                 Your invite link:
               </Text>
-              <Group position="center" spacing={8}>
+              <Group position='center' spacing={8}>
                 <Box
                   sx={() => ({
                     width: 260,
-                    wordBreak: "break-all",
-                    padding: "4px 20px",
-                    lineHeight: "16px",
-                    fontSize: "15px",
-                    textAlign: "center",
-                    border: isConnected && nftNumber > 0 ? "1px solid #555555" : "none",
+                    wordBreak: 'break-all',
+                    padding: '4px 20px',
+                    lineHeight: '16px',
+                    fontSize: '15px',
+                    textAlign: 'center',
+                    border:
+                      isConnected && nftNumber > 0
+                        ? '1px solid #555555'
+                        : 'none',
                   })}
                 >
                   {isConnected ? (
                     <div>
-                      {nftNumber > 0 ? `${window.location.origin}/${address}` : "A minimum of one NFT is required"}
+                      {nftNumber > 0
+                        ? `${window.location.origin}/${address}`
+                        : 'A minimum of one NFT is required'}
                     </div>
                   ) : (
                     <UnstyledButton
                       onClick={() => openConnectModal()}
                       sx={(theme) => ({
-                        padding: "10px 12px",
-                        color: "#fff",
-                        borderRadius: "6px",
-                        background: "linear-gradient(#f97184, #F55b71)",
-                        fontSize: "16px",
-                        transform: "scale(1)",
-                        transition: "transform 0.1s linear 0s",
-                        "&:hover": {
-                          transform: "scale(0.98)",
-                          transition: "transform 0.1s linear 0s",
+                        padding: '10px 12px',
+                        color: '#fff',
+                        borderRadius: '6px',
+                        background: 'linear-gradient(#f97184, #F55b71)',
+                        fontSize: '16px',
+                        transform: 'scale(1)',
+                        transition: 'transform 0.1s linear 0s',
+                        '&:hover': {
+                          transform: 'scale(0.98)',
+                          transition: 'transform 0.1s linear 0s',
                         },
-                        [theme.fn.largerThan("md")]: {
-                          padding: "12px 14px",
-                          borderRadius: "8px",
+                        [theme.fn.largerThan('md')]: {
+                          padding: '12px 14px',
+                          borderRadius: '8px',
                         },
-                        [theme.fn.smallerThan("md")]: {
-                          fontSize: "14px",
+                        [theme.fn.smallerThan('md')]: {
+                          fontSize: '14px',
                         },
                       })}
                     >
@@ -920,16 +932,16 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                       <UnstyledButton
                         onClick={copy}
                         sx={() => ({
-                          transition: "transform 0.1s linear 0s",
-                          fontFamily: "Balthazar-Regular",
-                          "&:hover": {
-                            transform: "scale(0.96)",
-                            transition: "transform 0.1s linear 0s",
+                          transition: 'transform 0.1s linear 0s',
+                          fontFamily: 'Balthazar-Regular',
+                          '&:hover': {
+                            transform: 'scale(0.96)',
+                            transition: 'transform 0.1s linear 0s',
                           },
                         })}
                       >
                         <Image
-                          src="/icon/icon-copy.png"
+                          src='/icon/icon-copy.png'
                           width={24}
                           height={24}
                         ></Image>
@@ -942,80 +954,80 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
           </Stack>
           <Center
             sx={(theme) => ({
-              width: "390px",
-              height: "160px",
-              backgroundColor: "#becbe6",
-              position: "relative",
-              left: "-20px",
+              width: '390px',
+              height: '160px',
+              backgroundColor: '#becbe6',
+              position: 'relative',
+              left: '-20px',
               zIndex: 1,
-              [theme.fn.smallerThan("md")]: {
+              [theme.fn.smallerThan('md')]: {
                 left: 0,
-                marginTop: "10px",
+                marginTop: '10px',
               },
-              [theme.fn.smallerThan("xs")]: {
-                width: "100%",
+              [theme.fn.smallerThan('xs')]: {
+                width: '100%',
                 left: 0,
-                marginTop: "10px",
+                marginTop: '10px',
               },
             })}
           >
             <Text
-              align="center"
+              align='center'
               sx={(theme) => ({
-                fontFamily: "Balthazar-Regular",
-                lineHeight: "28px",
-                fontSize: "14px",
-                [theme.fn.largerThan("lg")]: {
-                  fontSize: "16px",
+                fontFamily: 'Balthazar-Regular',
+                lineHeight: '28px',
+                fontSize: '14px',
+                [theme.fn.largerThan('lg')]: {
+                  fontSize: '16px',
                 },
               })}
             >
               If the invitee's NFT team wins, the inviter
               <br />
-              receives <span style={{ color: "#f3261f" }}>10%</span> of the
+              receives <span style={{ color: '#f3261f' }}>10%</span> of the
               invitee's total prize.
               <br />
               Users who make a purchase through an
               <br />
-              invitation link get <span style={{ color: "#f3261f" }}>
+              invitation link get <span style={{ color: '#f3261f' }}>
                 20%
-              </span>{" "}
+              </span>{' '}
               off Mint prices.
             </Text>
           </Center>
         </Group>
-        <Stack align="center" spacing={14}>
+        <Stack align='center' spacing={14}>
           <Text
-            color="#010101"
+            color='#010101'
             sx={(theme) => ({
-              fontSize: "14px",
-              [theme.fn.largerThan("lg")]: {
-                fontSize: "16px",
+              fontSize: '14px',
+              [theme.fn.largerThan('lg')]: {
+                fontSize: '16px',
               },
             })}
             style={{
-              lineHeight: "25px",
-              fontFamily: "Balthazar-Regular",
-              borderBottom: "1px solid #010101",
+              lineHeight: '25px',
+              fontFamily: 'Balthazar-Regular',
+              borderBottom: '1px solid #010101',
             }}
           >
-            Awards for invitations already received :{" "}
-            <span style={{ color: "#f3261f" }}>{recommenderReward}</span> ETH
+            Awards for invitations already received :{' '}
+            <span style={{ color: '#f3261f' }}>{recommenderReward}</span> ETH
           </Text>
           <Text
-            color="#8e8e8d"
+            color='#8e8e8d'
             sx={(theme) => ({
-              fontSize: "14px",
-              [theme.fn.largerThan("lg")]: {
-                fontSize: "16px",
+              fontSize: '14px',
+              [theme.fn.largerThan('lg')]: {
+                fontSize: '16px',
               },
             })}
             style={{
               lineHeight: 1,
-              fontFamily: "Balthazar-Regular",
+              fontFamily: 'Balthazar-Regular',
             }}
           >
-            Automatically transferred to wallet, check on{" "}
+            Automatically transferred to wallet, check on{' '}
             <UnstyledButton
               onClick={() => {
                 window.open(
@@ -1023,9 +1035,9 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                 );
               }}
               sx={() => ({
-                fontSize: "14px",
-                color: "#0e32b6",
-                fontFamily: "Balthazar-Regular",
+                fontSize: '14px',
+                color: '#0e32b6',
+                fontFamily: 'Balthazar-Regular',
               })}
             >
               ETHSCAN
@@ -1034,56 +1046,56 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
         </Stack>
       </Stack>
       <Stack
-        align="center"
+        align='center'
         spacing={20}
         sx={(theme) => ({
           background: "url('/board-bg.png') no-repeat #ccdaf6",
-          backgroundPosition: "left bottom",
-          padding: "50px 10px",
+          backgroundPosition: 'left bottom',
+          padding: '50px 10px',
         })}
       >
         <Text className={classes.heroTitle}>LEARDERBOARD</Text>
         <Box
           sx={(theme) => ({
-            padding: "20px",
-            borderRadius: "25px",
-            width: "735px",
-            backgroundColor: "rgba(255, 255, 255, 0.5)",
-            [theme.fn.smallerThan("xs")]: {
-              width: "100%",
+            padding: '20px',
+            borderRadius: '25px',
+            width: '735px',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            [theme.fn.smallerThan('xs')]: {
+              width: '100%',
             },
           })}
         >
           <Table
-            horizontalSpacing="xl"
+            horizontalSpacing='xl'
             sx={() => ({
-              color: "#000",
-              fontFamily: "Balthazar-Regular",
+              color: '#000',
+              fontFamily: 'Balthazar-Regular',
             })}
           >
             <thead>
               <tr>
                 <th
                   style={{
-                    color: "#000",
-                    borderColor: "#ccdaf6",
+                    color: '#000',
+                    borderColor: '#ccdaf6',
                   }}
                 >
                   Address
                 </th>
                 <th
                   style={{
-                    color: "#000",
-                    borderColor: "#ccdaf6",
+                    color: '#000',
+                    borderColor: '#ccdaf6',
                   }}
                 >
                   TokenId
                 </th>
                 <th
                   style={{
-                    color: "#000",
-                    borderColor: "#ccdaf6",
-                    textAlign: "center",
+                    color: '#000',
+                    borderColor: '#ccdaf6',
+                    textAlign: 'center',
                   }}
                 >
                   Rewards Claimed
@@ -1093,18 +1105,20 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             <tbody>
               {tableData.map((element, index) => (
                 <tr key={`table_item_${index}`}>
-                  <td style={{ borderColor: "#ccdaf6", fontSize: "16px" }}>
-                    {element.claimType === 1 ? element.address1 : element.address2}
+                  <td style={{ borderColor: '#ccdaf6', fontSize: '16px' }}>
+                    {element.claimType === 1
+                      ? element.address1
+                      : element.address2}
                   </td>
-                  <td style={{ borderColor: "#ccdaf6", fontSize: "16px" }}>
+                  <td style={{ borderColor: '#ccdaf6', fontSize: '16px' }}>
                     {element.tokenId}
                   </td>
                   <td
                     style={{
-                      borderColor: "#ccdaf6",
-                      fontSize: "16px",
-                      textAlign: "center",
-                      height: "60px",
+                      borderColor: '#ccdaf6',
+                      fontSize: '16px',
+                      textAlign: 'center',
+                      height: '60px',
                     }}
                   >
                     {element.rewards}
@@ -1123,43 +1137,43 @@ const voteList = [12, 8, 4, 11];
 
 const Vote = () => {
   const { classes } = useSiteStyles();
-  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
-  const isBreakpointLg = useMediaQuery("(min-width: 1201px)");
+  const isBreakpointXs = useMediaQuery('(max-width: 576px)');
+  const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
   return (
     <Stack
-      id="vote"
-      align="center"
+      id='vote'
+      align='center'
       spacing={25}
       sx={(theme) => ({
-        padding: "60px 110px 100px",
+        padding: '60px 110px 100px',
         background: "url('/vote-bg.png') no-repeat #d4dff5",
         backgroundPosition: 'left bottom',
-        [theme.fn.smallerThan("md")]: {
-          padding: "60px 10px",
+        [theme.fn.smallerThan('md')]: {
+          padding: '60px 10px',
         },
       })}
     >
-      <Text align="center" className={classes.heroTitle}>
+      <Text align='center' className={classes.heroTitle}>
         Vote
       </Text>
-      <Text color="#555555" align="center" className={classes.modelTips}>
+      <Text color='#555555' align='center' className={classes.modelTips}>
         Top 4 hot team
       </Text>
 
       <Group
-        align="center"
+        align='center'
         sx={() => ({
-          width: "100%",
-          justifyContent: "center",
+          width: '100%',
+          justifyContent: 'center',
         })}
       >
         <SimpleGrid
           cols={isBreakpointXs ? 1 : 2}
           spacing={isBreakpointXs ? 10 : isBreakpointLg ? 60 : 30}
           sx={(theme) => ({
-            width: "60%",
-            [theme.fn.smallerThan("md")]: {
-              width: "80%",
+            width: '60%',
+            [theme.fn.smallerThan('md')]: {
+              width: '80%',
             },
           })}
         >
@@ -1169,29 +1183,32 @@ const Vote = () => {
                 key={`item_${index}`}
                 spacing={10}
                 style={{
-                  position: "relative",
+                  position: 'relative',
                   top: isBreakpointXs
                     ? 0
                     : index === 1 || index === 3
-                      ? "40px"
-                      : "0px",
+                    ? '40px'
+                    : '0px',
                 }}
               >
                 <div
-                  className="fc-wrapper"
+                  className='fc-wrapper'
                   style={{
-                    width: isBreakpointLg ? "240px" : "200px",
-                    height: isBreakpointLg ? "312px" : "260px",
+                    width: isBreakpointLg ? '240px' : '200px',
+                    height: isBreakpointLg ? '312px' : '260px',
                     padding: '10px',
-                    background: 'rgba(176, 195, 235, 0.8)'
+                    background: 'rgba(176, 195, 235, 0.8)',
                   }}
                 >
-                  <div className="fc-inner">
-                    <div className="fc-front">
-                      <img className="fc-image" src={`/team/${item}.png`}></img>
+                  <div className='fc-inner'>
+                    <div className='fc-front'>
+                      <img className='fc-image' src={`/team/${item}.png`}></img>
                     </div>
-                    <div className="fc-back">
-                      <img className="fc-image" src={`/team/${item}-back.png`}></img>
+                    <div className='fc-back'>
+                      <img
+                        className='fc-image'
+                        src={`/team/${item}-back.png`}
+                      ></img>
                     </div>
                   </div>
                 </div>
@@ -1200,45 +1217,45 @@ const Vote = () => {
           })}
         </SimpleGrid>
         <Stack
-          align="center"
+          align='center'
           spacing={8}
           sx={(theme) => ({
-            [theme.fn.smallerThan("md")]: {
-              marginTop: "30px",
+            [theme.fn.smallerThan('md')]: {
+              marginTop: '30px',
             },
           })}
         >
           <Text
             sx={(theme) => ({
-              fontSize: "12px",
-              [theme.fn.largerThan("md")]: {
-                fontSize: "16px",
+              fontSize: '12px',
+              [theme.fn.largerThan('md')]: {
+                fontSize: '16px',
               },
             })}
-            style={{ fontFamily: "Balthazar-Regular" }}
+            style={{ fontFamily: 'Balthazar-Regular' }}
           >
             Vote from our commutity
           </Text>
           <UnstyledButton
-            onClick={() => window.open("http://t.me/theaetheroffic")}
+            onClick={() => window.open('http://t.me/theaetheroffic')}
             sx={(theme) => ({
-              backgroundColor: "#f3546a",
-              width: "164px",
-              height: "50px",
-              fontSize: "1rem",
-              position: "relative",
-              textAlign: "center",
-              color: "#fdfafa",
-              fontFamily: "Balthazar-Regular",
-              "&:hover": {
-                boxShadow: "5px 5px 2px rgba(9, 2, 4, 0.5)",
+              backgroundColor: '#f3546a',
+              width: '164px',
+              height: '50px',
+              fontSize: '1rem',
+              position: 'relative',
+              textAlign: 'center',
+              color: '#fdfafa',
+              fontFamily: 'Balthazar-Regular',
+              '&:hover': {
+                boxShadow: '5px 5px 2px rgba(9, 2, 4, 0.5)',
               },
             })}
           >
             Join to vote!
             <MImage
-              style={{ position: "absolute", bottom: "-9px", right: "-7px" }}
-              src="/icon/icon-mouse.png"
+              style={{ position: 'absolute', bottom: '-9px', right: '-7px' }}
+              src='/icon/icon-mouse.png'
               width={30}
               height={26}
             ></MImage>
@@ -1253,28 +1270,28 @@ const About = () => {
   const { classes } = useSiteStyles();
   return (
     <Stack
-      id="about"
-      align="center"
+      id='about'
+      align='center'
       spacing={60}
       sx={(theme) => ({
-        padding: "60px 130px",
+        padding: '60px 130px',
         background: "url('/about-bg.png') no-repeat #d9e2f5",
-        backgroundPosition: "center bottom",
-        [theme.fn.smallerThan("md")]: {
-          padding: "60px 10px",
+        backgroundPosition: 'center bottom',
+        [theme.fn.smallerThan('md')]: {
+          padding: '60px 10px',
         },
       })}
     >
-      <Text align="center" className={classes.heroTitle}>
+      <Text align='center' className={classes.heroTitle}>
         About
       </Text>
 
       <Text
         sx={(theme) => ({
-          fontFamily: "Balthazar-Regular",
-          width: "56%",
-          [theme.fn.smallerThan("md")]: {
-            width: "100%",
+          fontFamily: 'Balthazar-Regular',
+          width: '56%',
+          [theme.fn.smallerThan('md')]: {
+            width: '100%',
           },
         })}
       >
@@ -1299,37 +1316,37 @@ const About = () => {
 
 const Partner = () => {
   const { classes } = useSiteStyles();
-  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
+  const isBreakpointXs = useMediaQuery('(max-width: 576px)');
   return (
     <Stack
-      id="partner"
-      align="center"
+      id='partner'
+      align='center'
       spacing={60}
       sx={(theme) => ({
-        padding: "60px 130px 100px",
-        backgroundColor: "#e3e9f5",
-        [theme.fn.smallerThan("xs")]: {
-          padding: "60px 10px",
+        padding: '60px 130px 100px',
+        backgroundColor: '#e3e9f5',
+        [theme.fn.smallerThan('xs')]: {
+          padding: '60px 10px',
         },
       })}
     >
-      <Text align="center" className={classes.heroTitle}>
+      <Text align='center' className={classes.heroTitle}>
         Partners ＆Supporters
       </Text>
       <SimpleGrid cols={3} spacing={isBreakpointXs ? 10 : 25}>
-        <MImage src="/partner1.png"></MImage>
-        <MImage src="/partner2.png"></MImage>
-        <MImage src="/partner3.png"></MImage>
+        <MImage src='/partner1.png'></MImage>
+        <MImage src='/partner2.png'></MImage>
+        <MImage src='/partner3.png'></MImage>
       </SimpleGrid>
     </Stack>
   );
 };
 
 const HomePage: NextPage<{
-  fifaInfo: FifaInfo[]
-  contract: any
-  boardList: []
-  whiteListData: []
+  fifaInfo: FifaInfo[];
+  contract: any;
+  boardList: [];
+  whiteListData: [];
 }> = ({ fifaInfo, contract, boardList, whiteListData }) => {
   const [recentFifa, setFifaInfo] = useState({});
   useEffect(() => {
@@ -1349,7 +1366,7 @@ const HomePage: NextPage<{
   };
 
   return (
-    <div className="container">
+    <div className='container'>
       <Hero />
       <Mint contract={contract} whiteListData={whiteListData} />
       <Mechanism contract={contract} fifaInfo={recentFifa} />

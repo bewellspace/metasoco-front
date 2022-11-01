@@ -4,21 +4,14 @@ import {
   useAccount,
   useNetwork,
   useWaitForTransaction,
-} from "wagmi";
-import {
-  Stack,
-  Text,
-  Button,
-  Box,
-  SimpleGrid,
-  Skeleton
-} from "@mantine/core";
-import abi from "src/abi/abi.json";
-import { useEffect, useState } from "react";
-import { useSiteStyles } from "../theme";
-import Blindbox from "./Blindbox";
-import { useMediaQuery } from "@mantine/hooks";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
+} from 'wagmi';
+import { Stack, Text, Button, Box, SimpleGrid, Skeleton } from '@mantine/core';
+import abi from 'src/abi/abi.json';
+import { useEffect, useState } from 'react';
+import { useSiteStyles } from '../theme';
+import Blindbox from './Blindbox';
+import { useMediaQuery } from '@mantine/hooks';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 export default function NFTPage({ contract }) {
   const { chain } = useNetwork();
@@ -32,8 +25,8 @@ export default function NFTPage({ contract }) {
   const [boxNumber, setBoxNumber] = useState(0);
   const [claimLoading, setClaimLoading] = useState(false);
 
-  const isBreakpointLg = useMediaQuery("(min-width: 1201px)");
-  const isBreakpointXs = useMediaQuery("(max-width: 576px)");
+  const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
+  const isBreakpointXs = useMediaQuery('(max-width: 576px)');
 
   useEffect(() => {
     if (contract.signer) {
@@ -43,7 +36,7 @@ export default function NFTPage({ contract }) {
 
   const init = async () => {
     const myNft = await contract.userTokenIds();
-    myNft.forEach(item => console.log(item.toString()))
+    myNft.forEach((item) => console.log(item.toString()));
 
     setNftNumber(myNft.length);
     const calculateReward = await contract.calculateReward();
@@ -63,7 +56,7 @@ export default function NFTPage({ contract }) {
 
   const getTokenDetail = async (id) => {
     let nftDetailURI = await contract.tokenURI(id);
-    return nftDetailURI.split('/')[5]
+    return nftDetailURI.split('/')[5];
   };
 
   const getBoxNumber = async () => {
@@ -74,7 +67,7 @@ export default function NFTPage({ contract }) {
   const claimPre = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi: abi,
-    functionName: "claimReward",
+    functionName: 'claimReward',
     enabled:
       isConnected &&
       chain.network === process.env.NEXT_PUBLIC_CHAIN &&
@@ -85,7 +78,7 @@ export default function NFTPage({ contract }) {
       value: 0,
     },
     onError: (err) => {
-      console.log("claimWriteError===", err);
+      console.log('claimWriteError===', err);
       // if (err.message.indexOf(MESSAGE[0])) {
       // }
     },
@@ -95,16 +88,22 @@ export default function NFTPage({ contract }) {
 
   useEffect(() => {
     if (claimWrite.isError) {
-      setClaimLoading(false)
+      setClaimLoading(false);
     }
-  }, [claimWrite])
+  }, [claimWrite]);
 
   useWaitForTransaction({
     hash: claimWrite.data?.hash,
     onSuccess: (data) => {
       setClaimLoading(false);
     },
-    onSettled: () => setClaimLoading(false),
+    onSettled: async () => {
+      setClaimLoading(false);
+      const calculateReward = await contract.calculateReward();
+      setUserTotalReward(
+        calculateReward.userTotalReward.toString() / Math.pow(10, 18)
+      );
+    },
   });
 
   const handleClaim = () => {
@@ -120,20 +119,20 @@ export default function NFTPage({ contract }) {
 
   return (
     <Stack
-      align="center"
+      align='center'
       spacing={30}
       sx={(theme) => ({
-        padding: "150px 80px 80px",
+        padding: '150px 80px 80px',
         background: "url('/nft-bg.png') no-repeat #d8e2f7",
-        backgroundPositionX: "right",
-        backgroundPositionY: "bottom",
-        backgroundSize: "370px 410px",
-        [theme.fn.smallerThan("md")]: {
-          padding: "120px 10px",
+        backgroundPositionX: 'right',
+        backgroundPositionY: 'bottom',
+        backgroundSize: '370px 410px',
+        [theme.fn.smallerThan('md')]: {
+          padding: '120px 10px',
         },
       })}
     >
-      <Stack align="center" spacing={45}>
+      <Stack align='center' spacing={45}>
         <Text className={classes.heroTitle}>
           YOU OWNED {nftNumber} TEAM NFTS
         </Text>
@@ -146,18 +145,18 @@ export default function NFTPage({ contract }) {
         disabled={!isConnected || userTotalReward <= 0}
         onClick={() => handleClaim()}
         sx={() => ({
-          width: "150px",
-          height: "45px",
-          borderRadius: "45px",
-          textAlign: "center",
-          color: "#ffffff !important",
-          fontSize: "20px",
-          background: "linear-gradient(#f68898, #f3546a)",
-          "&:hover": {
-            boxShadow: "6px 6px 10px #9ab4e5",
+          width: '150px',
+          height: '45px',
+          borderRadius: '45px',
+          textAlign: 'center',
+          color: '#ffffff !important',
+          fontSize: '20px',
+          background: 'linear-gradient(#f68898, #f3546a)',
+          '&:hover': {
+            boxShadow: '6px 6px 10px #9ab4e5',
           },
-          "&:before": {
-            borderRadius: "45px !important",
+          '&:before': {
+            borderRadius: '45px !important',
           },
         })}
       >
@@ -166,11 +165,11 @@ export default function NFTPage({ contract }) {
 
       <Box
         sx={(theme) => ({
-          width: "86vw",
-          minHeight: "500px",
-          borderRadius: "4px",
-          marginTop: "30px",
-          backgroundColor: "rgba(255, 255, 255, 0.2)",
+          width: '86vw',
+          minHeight: '500px',
+          borderRadius: '4px',
+          marginTop: '30px',
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
         })}
       >
         {/* <LoadingOverlay visible={loading} overlayBlur={2} /> */}
@@ -178,8 +177,8 @@ export default function NFTPage({ contract }) {
           visible={loading}
           style={{
             opacity: loading ? 0.8 : 1,
-            minHeight: "500px",
-            padding: "50px 70px",
+            minHeight: '500px',
+            padding: '50px 70px',
           }}
         >
           <SimpleGrid
@@ -191,8 +190,8 @@ export default function NFTPage({ contract }) {
                 return (
                   <div key={`box_item_${index}`}>
                     <Blindbox
-                      width={isBreakpointLg ? "240px" : "200px"}
-                      height={isBreakpointLg ? "312px" : "260px"}
+                      width={isBreakpointLg ? '240px' : '200px'}
+                      height={isBreakpointLg ? '312px' : '260px'}
                     />
                   </div>
                 );
@@ -200,23 +199,27 @@ export default function NFTPage({ contract }) {
 
             {nftList.map((item, index) => {
               return (
-                <Box
-                  key={`nft_${index}`}
-                >
+                <Box key={`nft_${index}`}>
                   <div
-                    className="fc-wrapper"
+                    className='fc-wrapper'
                     style={{
-                      width: isBreakpointLg ? "240px" : "200px",
-                      height: isBreakpointLg ? "312px" : "260px",
-                      borderRadius: "8px",
+                      width: isBreakpointLg ? '240px' : '200px',
+                      height: isBreakpointLg ? '312px' : '260px',
+                      borderRadius: '8px',
                     }}
                   >
-                    <div className="fc-inner">
-                      <div className="fc-front">
-                        <img className="fc-image" src={`/team/${item}.png`}></img>
+                    <div className='fc-inner'>
+                      <div className='fc-front'>
+                        <img
+                          className='fc-image'
+                          src={`/team/${item}.png`}
+                        ></img>
                       </div>
-                      <div className="fc-back">
-                        <img className="fc-image" src={`/team/${item}-back.png`}></img>
+                      <div className='fc-back'>
+                        <img
+                          className='fc-image'
+                          src={`/team/${item}-back.png`}
+                        ></img>
                       </div>
                     </div>
                   </div>

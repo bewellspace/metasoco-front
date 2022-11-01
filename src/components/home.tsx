@@ -941,31 +941,35 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                   )}
                 </Box>
                 {!!address && nftNumber > 0 && (
-                  <CopyButton
-                    value={`Invite friends to participate in Metasoco NFTS, win the final prize pool together: ${window.location.origin}/${address}`}
+                  <UnstyledButton
+                    onClick={() => {
+                      const input = document.createElement('input');
+                      document.body.appendChild(input);
+                      input.setAttribute(
+                        'value',
+                        `Invite friends to participate in Metasoco NFTS, win the final prize pool together: ${window.location.origin}/${address}`
+                      );
+                      input.select();
+                      if (document.execCommand('copy')) {
+                        document.execCommand('copy');
+                      }
+                      document.body.removeChild(input);
+                    }}
+                    sx={() => ({
+                      transition: 'transform 0.1s linear 0s',
+                      fontFamily: 'Balthazar-Regular',
+                      '&:hover': {
+                        transform: 'scale(0.96)',
+                        transition: 'transform 0.1s linear 0s',
+                      },
+                    })}
                   >
-                    {({ copied, copy }) => (
-                      <UnstyledButton
-                        onClick={() => {
-                          copy()
-                        }}
-                        sx={() => ({
-                          transition: 'transform 0.1s linear 0s',
-                          fontFamily: 'Balthazar-Regular',
-                          '&:hover': {
-                            transform: 'scale(0.96)',
-                            transition: 'transform 0.1s linear 0s',
-                          },
-                        })}
-                      >
-                        <Image
-                          src='/icon/icon-copy.png'
-                          width={24}
-                          height={24}
-                        ></Image>
-                      </UnstyledButton>
-                    )}
-                  </CopyButton>
+                    <Image
+                      src='/icon/icon-copy.png'
+                      width={24}
+                      height={24}
+                    ></Image>
+                  </UnstyledButton>
                 )}
               </Group>
             </Stack>

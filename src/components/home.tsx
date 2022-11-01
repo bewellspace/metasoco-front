@@ -24,7 +24,6 @@ import {
 import Web3 from 'web3';
 import Image from 'next/image';
 import { NextPage } from 'next';
-import abi from 'src/abi/abi.json';
 import { FifaInfo } from 'src/types';
 import { Parallax } from 'rc-scroll-anim';
 import React, { useState, useEffect } from 'react';
@@ -33,6 +32,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import Mint from './Mint';
 
+const abi = process.env.NEXT_PUBLIC_ABI;
 const Hero = () => {
   const { classes } = useSiteStyles();
   const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
@@ -764,6 +764,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             spacing={isBreakpointXs ? 5 : 50}
             sx={(theme) => ({
               fontSize: '24px',
+              justifyContent: 'center',
               [theme.fn.smallerThan('xs')]: {
                 fontSize: '18px',
               },
@@ -1197,6 +1198,7 @@ const Vote = () => {
           {voteList.map((item, index) => {
             return (
               <Center
+                key={`team_${index}`}
                 sx={(theme) => ({
                   cursor: 'pointer',
                   transform: 'scale(1)',

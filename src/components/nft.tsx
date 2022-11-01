@@ -8,13 +8,13 @@ import {
 } from 'wagmi';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import { Stack, Text, Button, Box, SimpleGrid, Skeleton } from '@mantine/core';
-import abi from 'src/abi/abi.json';
 import { useEffect, useState } from 'react';
 import { useSiteStyles } from '../theme';
 import Blindbox from './Blindbox';
 import { useMediaQuery } from '@mantine/hooks';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 
+const abi = process.env.NEXT_PUBLIC_ABI
 export default function NFTPage({ contract }) {
   const { chain } = useNetwork();
   const { classes } = useSiteStyles();

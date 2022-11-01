@@ -19,7 +19,6 @@ import {
 import Image from 'next/image';
 import { ethers } from 'ethers';
 import keccak256 from 'keccak256';
-import abi from 'src/abi/abi.json';
 import Blindbox from '../Blindbox';
 import { Decimal } from 'decimal.js';
 import { useRouter } from 'next/router';
@@ -31,6 +30,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit';
 import React, { useState, useRef, useEffect } from 'react';
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
+const abi = process.env.NEXT_PUBLIC_ABI
 
 const Mint = ({ contract, whiteListData }) => {
   const router = useRouter();

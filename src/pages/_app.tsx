@@ -9,11 +9,12 @@ import Header from "src/components/Layout/Header";
 import Footer from "src/components/Layout/Footer";
 import { chains, wagmiClient } from "src/connectors";
 import { WagmiConfig, useContract, useSigner } from "wagmi";
-import abi from "src/abi/abi.json";
+
 
 import 'react-photo-view/dist/react-photo-view.css';
 import "../global.css";
 
+const abi = process.env.NEXT_PUBLIC_ABI
 function AppContent(props: AppProps) {
   const { Component, pageProps } = props;
   const { data: signer } = useSigner();
@@ -37,7 +38,6 @@ function AppContent(props: AppProps) {
       <RainbowKitProvider
         modalSize="compact"
         chains={chains}
-        initialChain={5}
         theme={lightTheme({
           borderRadius: "small",
           accentColor: "#2ab0f5",

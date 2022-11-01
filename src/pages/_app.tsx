@@ -11,6 +11,7 @@ import { chains, wagmiClient } from "src/connectors";
 import { WagmiConfig, useContract, useSigner } from "wagmi";
 import abi from "src/abi/abi.json";
 
+import 'react-photo-view/dist/react-photo-view.css';
 import "../global.css";
 
 function AppContent(props: AppProps) {

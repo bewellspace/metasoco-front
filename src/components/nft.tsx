@@ -1,10 +1,12 @@
 import {
   usePrepareContractWrite,
   useContractWrite,
+  useContractRead,
   useAccount,
   useNetwork,
   useWaitForTransaction,
 } from 'wagmi';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 import { Stack, Text, Button, Box, SimpleGrid, Skeleton } from '@mantine/core';
 import abi from 'src/abi/abi.json';
 import { useEffect, useState } from 'react';
@@ -24,20 +26,20 @@ export default function NFTPage({ contract }) {
   const [loading, setLoading] = useState(false);
   const [boxNumber, setBoxNumber] = useState(0);
   const [claimLoading, setClaimLoading] = useState(false);
+  const [claimActive, setClaimActive] = useState(false);
 
   const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
   const isBreakpointXs = useMediaQuery('(max-width: 576px)');
 
   useEffect(() => {
     if (contract.signer) {
+      console.log(contract);
       init();
     }
   }, [contract]);
 
   const init = async () => {
     const myNft = await contract.userTokenIds();
-    myNft.forEach((item) => console.log(item.toString()));
-
     setNftNumber(myNft.length);
     const calculateReward = await contract.calculateReward();
     setUserTotalReward(
@@ -72,7 +74,8 @@ export default function NFTPage({ contract }) {
       isConnected &&
       chain.network === process.env.NEXT_PUBLIC_CHAIN &&
       contract.signer &&
-      userTotalReward > 0,
+      userTotalReward > 0 &&
+      claimActive,
     overrides: {
       from: address,
       value: 0,
@@ -108,7 +111,7 @@ export default function NFTPage({ contract }) {
 
   const handleClaim = () => {
     if (isConnected) {
-      if (userTotalReward > 0) {
+      if (userTotalReward > 0 && claimWrite?.write) {
         setClaimLoading(true);
         claimWrite?.write();
       }
@@ -116,6 +119,16 @@ export default function NFTPage({ contract }) {
       openConnectModal();
     }
   };
+
+  useContractRead({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: 'claimIsActive',
+    watch: true,
+    onSuccess: (data) => {
+      setClaimActive(data);
+    },
+  });
 
   return (
     <Stack
@@ -137,12 +150,16 @@ export default function NFTPage({ contract }) {
           YOU OWNED {nftNumber} TEAM NFTS
         </Text>
         <Text className={classes.modelTips} underline>
-          My NFT reward：{userTotalReward} ETH
+          My NFT reward：
+          {userTotalReward > 0
+            ? userTotalReward.toFixed(8)
+            : userTotalReward}{' '}
+          ETH
         </Text>
       </Stack>
       <Button
         loading={claimLoading}
-        disabled={!isConnected || userTotalReward <= 0}
+        disabled={!isConnected || userTotalReward <= 0 || !claimActive}
         onClick={() => handleClaim()}
         sx={() => ({
           width: '150px',
@@ -172,7 +189,6 @@ export default function NFTPage({ contract }) {
           backgroundColor: 'rgba(255, 255, 255, 0.2)',
         })}
       >
-        {/* <LoadingOverlay visible={loading} overlayBlur={2} /> */}
         <Skeleton
           visible={loading}
           style={{
@@ -197,36 +213,41 @@ export default function NFTPage({ contract }) {
                 );
               })}
 
-            {nftList.map((item, index) => {
-              return (
-                <Box key={`nft_${index}`}>
-                  <div
-                    className='fc-wrapper'
-                    style={{
-                      width: isBreakpointLg ? '240px' : '200px',
-                      height: isBreakpointLg ? '312px' : '260px',
-                      borderRadius: '8px',
-                    }}
+            <PhotoProvider maskOpacity={0.8}>
+              {nftList.map((item, index) => {
+                return (
+                  <PhotoView
+                    key={`nft_${index}`}
+                    src={`/team/${item}-back.png`}
                   >
-                    <div className='fc-inner'>
-                      <div className='fc-front'>
-                        <img
-                          className='fc-image'
-                          src={`/team/${item}.png`}
-                        ></img>
-                      </div>
-                      <div className='fc-back'>
-                        <img
-                          className='fc-image'
-                          src={`/team/${item}-back.png`}
-                        ></img>
+                    <div
+                      className='fc-wrapper'
+                      style={{
+                        width: isBreakpointLg ? '240px' : '200px',
+                        height: isBreakpointLg ? '312px' : '260px',
+                        borderRadius: '8px',
+                      }}
+                    >
+                      <div className='fc-inner'>
+                        <div className='fc-front'>
+                          <img
+                            className='fc-image'
+                            src={`/team/${item}.png`}
+                          ></img>
+                        </div>
+                        <div className='fc-back'>
+                          <img
+                            className='fc-image'
+                            src={`/team/${item}-back.png`}
+                          ></img>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {/* <MImage width="100%" withPlaceholder src={item}></MImage> */}
-                </Box>
-              );
-            })}
+                    {/* <MImage width="100%" withPlaceholder src={item}></MImage> */}
+                  </PhotoView>
+                );
+              })}
+            </PhotoProvider>
           </SimpleGrid>
         </Skeleton>
       </Box>

@@ -533,6 +533,8 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   const [countDownString, setCountDown] = useState([0, 0, 0, 0]);
   const [claimLoading, setClaimLoading] = useState(false);
   const [tableData, setTableData] = useState(defaultData);
+  const [claimActive, setClaimActive] = useState(false);
+
   const isBreakpointXs = useMediaQuery('(max-width: 576px)');
   const { classes } = useSiteStyles();
   const { openConnectModal } = useConnectModal();
@@ -656,6 +658,16 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
     }
   };
 
+  useContractRead({
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    abi: abi,
+    functionName: 'claimIsActive',
+    watch: true,
+    onSuccess: (data) => {
+      setClaimActive(data);
+    },
+  });
+
   const claimPre = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi: abi,
@@ -664,7 +676,8 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
       isConnected &&
       chain.network === process.env.NEXT_PUBLIC_CHAIN &&
       contract.signer &&
-      userTotalReward > 0,
+      userTotalReward > 0 &&
+      claimActive,
     overrides: {
       from: address,
       value: 0,
@@ -700,7 +713,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
 
   const handleClaim = () => {
     if (isConnected) {
-      if (userTotalReward > 0) {
+      if (userTotalReward > 0 && claimWrite?.write) {
         setClaimLoading(true);
         claimWrite?.write();
       }
@@ -815,13 +828,18 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             <Center>
               <Text className={classes.underLine}>
                 My NFT reward:{' '}
-                <span style={{ color: '#f3261f' }}>{userTotalReward}</span> ETH
+                <span style={{ color: '#f3261f' }}>
+                  {userTotalReward > 0
+                    ? userTotalReward.toFixed(8)
+                    : userTotalReward}
+                </span>{' '}
+                ETH
               </Text>
             </Center>
             <Button
               loading={claimLoading}
               className={classes.claimButton}
-              disabled={!isConnected || userTotalReward <= 0}
+              disabled={!isConnected || userTotalReward <= 0 || !claimActive}
               onClick={() => handleClaim()}
             >
               Claim
@@ -1012,7 +1030,12 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             }}
           >
             Awards for invitations already received :{' '}
-            <span style={{ color: '#f3261f' }}>{recommenderReward}</span> ETH
+            <span style={{ color: '#f3261f' }}>
+              {recommenderReward > 0
+                ? recommenderReward.toFixed(8)
+                : recommenderReward}
+            </span>{' '}
+            ETH
           </Text>
           <Text
             color='#8e8e8d'

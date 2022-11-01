@@ -26,6 +26,7 @@ specifiers:
   react-dom: 17.0.2
   react-helmet: ^6.1.0
   react-photo-album: ^1.16.1
+  react-photo-view: ^1.2.2
   tsx: ^3.8.2
   twitter-api-sdk: ^1.1.0
   typescript: ^4.7.4
@@ -53,6 +54,7 @@ dependencies:
   react-dom: 17.0.2_react@17.0.2
   react-helmet: 6.1.0_react@17.0.2
   react-photo-album: 1.16.1_react@17.0.2
+  react-photo-view: 1.2.2_sfoxds7t5ydpegc3knd667wn6m
   twitter-api-sdk: 1.1.0
   wagmi: 0.7.5_lmb3f6ifmcimtpduzyzytzr34i
   web3: 1.8.0
@@ -5416,6 +5418,16 @@ packages:
       react: 17.0.2
     dev: false
 
+  /react-photo-view/1.2.2_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-/xsOiDuiR23hKxpmF73EDKPvsBvcWogolXvnBhMZV4CUhd9tnXF91amjKnuQe9BmLaR9CbNxXDOI9SNKeXT5ew==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+
   /react-property/2.0.0:
     resolution: {integrity: sha512-kzmNjIgU32mO4mmH5+iUyrqlpFQhF8K2k7eZ4fdLSOPFrD1XgEuSBv9LDEgxRXTMBqMd8ppT0x6TIzqE5pdGdw==}
     dev: false
@@ -6984,7 +6996,7 @@ packages:
     dev: false
 
   github.com/ethereumjs/ethereumjs-abi/ee3994657fa7a427238e6ba92a84d0b529bbcde0:
-    resolution: {tarball: https://codeload.github.com/ethereumjs/ethereumjs-abi/tar.gz/ee3994657fa7a427238e6ba92a84d0b529bbcde0}
+    resolution: {commit: ee3994657fa7a427238e6ba92a84d0b529bbcde0, repo: git+ssh://git@github.com/ethereumjs/ethereumjs-abi.git, type: git}
     name: ethereumjs-abi
     version: 0.6.8
     dependencies:

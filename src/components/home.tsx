@@ -1153,7 +1153,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   );
 };
 
-const voteList = [12, 8, 4, 11];
+const voteList = [1, 2, 3, 4];
 
 const Vote = () => {
   const { classes } = useSiteStyles();
@@ -1180,7 +1180,7 @@ const Vote = () => {
         Top 4 hot team
       </Text>
 
-      <Group
+      <Stack
         align='center'
         sx={() => ({
           width: '100%',
@@ -1188,51 +1188,27 @@ const Vote = () => {
         })}
       >
         <SimpleGrid
-          cols={isBreakpointXs ? 1 : 2}
+          cols={isBreakpointXs ? 2 : 4}
           spacing={isBreakpointXs ? 10 : isBreakpointLg ? 60 : 30}
           sx={(theme) => ({
-            width: '60%',
-            [theme.fn.smallerThan('md')]: {
-              width: '80%',
-            },
+            width: '100%',
           })}
         >
           {voteList.map((item, index) => {
             return (
-              <Group
-                key={`item_${index}`}
-                spacing={10}
-                style={{
-                  position: 'relative',
-                  top: isBreakpointXs
-                    ? 0
-                    : index === 1 || index === 3
-                    ? '40px'
-                    : '0px',
-                }}
+              <Center
+                sx={(theme) => ({
+                  cursor: 'pointer',
+                  transform: 'scale(1)',
+                  transition: 'transform 0.1s linear 0s',
+                  '&:hover': {
+                    transform: 'scale(1.02)',
+                    transition: 'transform 0.1s linear 0s',
+                  },
+                })}
               >
-                <div
-                  className='fc-wrapper'
-                  style={{
-                    width: isBreakpointLg ? '240px' : '200px',
-                    height: isBreakpointLg ? '312px' : '260px',
-                    padding: '10px',
-                    background: 'rgba(176, 195, 235, 0.8)',
-                  }}
-                >
-                  <div className='fc-inner'>
-                    <div className='fc-front'>
-                      <img className='fc-image' src={`/team/${item}.png`}></img>
-                    </div>
-                    <div className='fc-back'>
-                      <img
-                        className='fc-image'
-                        src={`/team/${item}-back.png`}
-                      ></img>
-                    </div>
-                  </div>
-                </div>
-              </Group>
+                <MImage src={`/vote/vote-${item}.png`}></MImage>
+              </Center>
             );
           })}
         </SimpleGrid>
@@ -1240,6 +1216,7 @@ const Vote = () => {
           align='center'
           spacing={8}
           sx={(theme) => ({
+            marginTop: '40px',
             [theme.fn.smallerThan('md')]: {
               marginTop: '30px',
             },
@@ -1267,6 +1244,7 @@ const Vote = () => {
               textAlign: 'center',
               color: '#fdfafa',
               fontFamily: 'Balthazar-Regular',
+              borderRadius: '2px',
               '&:hover': {
                 boxShadow: '5px 5px 2px rgba(9, 2, 4, 0.5)',
               },
@@ -1281,7 +1259,7 @@ const Vote = () => {
             ></MImage>
           </UnstyledButton>
         </Stack>
-      </Group>
+      </Stack>
     </Stack>
   );
 };

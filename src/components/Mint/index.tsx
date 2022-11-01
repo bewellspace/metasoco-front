@@ -339,6 +339,7 @@ const Mint = ({ contract, whiteListData }) => {
         </Stack>
       </Group>
       <UnstyledButton
+        onClick={() => window.open('https://opensea.io/collection/metasoco')}
         sx={(theme) => ({
           position: 'absolute',
           right: '60px',

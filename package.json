@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 8804",
+    "start": "next start -p 8802",
     "sync-tweet": "tsx ./scripts/sync-tweet.ts"
   },
   "dependencies": {

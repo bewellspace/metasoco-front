@@ -62,8 +62,8 @@ export default function NFTPage({ contract }) {
 
   const getBoxNumber = async () => {
     const data = await contract.minterQueueInfo();
-    setBoxNumber(2);
-    // setBoxNumber(data[0]);
+    // setBoxNumber(2);
+    setBoxNumber(data[0]);
   };
 
   const claimPre = usePrepareContractWrite({

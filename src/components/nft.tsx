@@ -43,6 +43,8 @@ export default function NFTPage({ contract }) {
 
   const init = async () => {
     const myNft = await contract.userTokenIds();
+    myNft.forEach(item => console.log(item.toString()))
+
     setNftNumber(myNft.length);
     const calculateReward = await contract.calculateReward();
     setUserTotalReward(

@@ -541,20 +541,24 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
 
   useEffect(() => {
     if (boardList) {
+      const newBoardList = boardList.sort((a, b) => {
+        return web3.utils.hexToNumber(b.timeStamp) - web3.utils.hexToNumber(a.timeStamp)
+      })
       let arr = defaultData;
-      boardList.map((item, index) => {
+      let logArr = []
+      newBoardList.slice(0, 100).map((item, index) => {
         const data = web3.eth.abi.decodeLog(
           [
-            { type: 'unit256', name: 'tokenId' },
-            { type: 'unit8', name: 'tokenType' },
-            { type: 'unit8', name: 'class' },
+            { type: 'uint256', name: 'tokenId' },
+            { type: 'uint8', name: 'tokenType' },
+            { type: 'uint8', name: 'class' },
             {
               type: "address",
-              name: "address1", // 自己
+              name: "address1",
             },
             {
               type: "address",
-              name: "address2", // 邀請人
+              name: "address2",
             },
             {
               type: "uint256",
@@ -562,14 +566,15 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             },
             {
               type: "uint8",
-              name: "claimType", // 1 用户自己领的，2 发给邀请人的
+              name: "claimType",
             },
           ],
           item.data,
           item.topics
         );
+        logArr.push(data)
         arr[index] = {
-          claimType: Number(item.claimType),
+          claimType: Number(data.claimType),
           address1:
             data.address1.substring(0, 4) +
             "****" +
@@ -588,6 +593,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
           rewards: (Number(data.rewards) / Math.pow(10, 18)).toString(),
         };
       });
+      console.log(JSON.stringify(logArr));
       setTableData(arr);
     }
   }, [boardList]);
@@ -871,12 +877,12 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                     lineHeight: "16px",
                     fontSize: "15px",
                     textAlign: "center",
-                    border: address ? "1px solid #555555" : "none",
+                    border: isConnected && nftNumber > 0 ? "1px solid #555555" : "none",
                   })}
                 >
-                  {address ? (
+                  {isConnected ? (
                     <div>
-                      {nftNumber > 0 ? `${window.location.origin}/${address}` : "There is no token in your wallet"}
+                      {nftNumber > 0 ? `${window.location.origin}/${address}` : "A minimum of one NFT is required"}
                     </div>
                   ) : (
                     <UnstyledButton

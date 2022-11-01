@@ -19,10 +19,7 @@ export const getServerSideProps = async ({ res }: NextPageContext) => {
   const {
     data: { result },
   } = await axios.get(process.env.BOARD_API);
-  let boardList = [];
-  if (result?.length) {
-    boardList = result.splice(0, 6);
-  }
+  const boardList = result;
 
   let { data: whiteListData } = await axios.get(process.env.WHITE_LIST)
 

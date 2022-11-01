@@ -8,14 +8,20 @@ import {
 } from 'wagmi';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import { Stack, Text, Button, Box, SimpleGrid, Skeleton } from '@mantine/core';
-import { useEffect, useState } from 'react';
-import { useSiteStyles } from '../theme';
 import Blindbox from './Blindbox';
+import keccak256 from 'keccak256';
+import { useRouter } from 'next/router';
+import { useSiteStyles } from '../theme';
+import { MerkleTree } from 'merkletreejs';
+import { useEffect, useState } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 
+const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 const abi: any = process.env.NEXT_PUBLIC_ABI;
-export default function NFTPage({ contract }) {
+
+export default function NFTPage({ contract, whiteListData }) {
+  const router = useRouter();
   const { chain } = useNetwork();
   const { classes } = useSiteStyles();
   const { openConnectModal } = useConnectModal();
@@ -27,6 +33,15 @@ export default function NFTPage({ contract }) {
   const [boxNumber, setBoxNumber] = useState(0);
   const [claimLoading, setClaimLoading] = useState(false);
   const [claimActive, setClaimActive] = useState(false);
+  const [proof, setProof] = useState([]);
+  const [proofEnd, setProofEnd] = useState(false);
+  const [totalClaimedReward, setTotalReward] = useState(0);
+
+  let shareAddress: any = NULL_ADDRESS;
+  const routerAddr: any = router.query?.addr;
+  if (routerAddr && ethers.utils.isAddress(routerAddr)) {
+    shareAddress = routerAddr;
+  }
 
   const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
   const isBreakpointXs = useMediaQuery('(max-width: 576px)');
@@ -36,6 +51,22 @@ export default function NFTPage({ contract }) {
       init();
     }
   }, [contract]);
+
+  useEffect(() => {
+    if (
+      whiteListData &&
+      whiteListData.length &&
+      isConnected &&
+      contract.signer
+    ) {
+      const leafNodes = whiteListData.map((addr) => keccak256(addr));
+      const tree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
+      const proof = tree.getHexProof(keccak256(address));
+      setProof(proof);
+      setProofEnd(true);
+      getClaimedRewards(proof);
+    }
+  }, [whiteListData, isConnected, contract]);
 
   const init = async () => {
     const myNft = await contract.userTokenIds();
@@ -53,6 +84,12 @@ export default function NFTPage({ contract }) {
     }
     setNftList(newNftList);
     setLoading(false);
+  };
+
+  const getClaimedRewards = async (proof) => {
+    const data = await contract.mintInfo(shareAddress, proof);
+    const totalRewards = data[3].add(data[4]).toString() / Math.pow(10, 18);
+    setTotalReward(totalRewards);
   };
 
   const getTokenDetail = async (id) => {
@@ -106,6 +143,7 @@ export default function NFTPage({ contract }) {
       setUserTotalReward(
         calculateReward.userTotalReward.toString() / Math.pow(10, 18)
       );
+      getClaimedRewards(proof);
     },
   });
 
@@ -157,28 +195,51 @@ export default function NFTPage({ contract }) {
           ETH
         </Text>
       </Stack>
-      <Button
-        loading={claimLoading}
-        disabled={!isConnected || userTotalReward <= 0 || !claimActive}
-        onClick={() => handleClaim()}
-        sx={() => ({
-          width: '150px',
-          height: '45px',
-          borderRadius: '45px',
-          textAlign: 'center',
-          color: '#ffffff !important',
-          fontSize: '20px',
-          background: 'linear-gradient(#f68898, #f3546a)',
-          '&:hover': {
-            boxShadow: '6px 6px 10px #9ab4e5',
-          },
-          '&:before': {
-            borderRadius: '45px !important',
-          },
-        })}
-      >
-        Claim
-      </Button>
+      <Stack align='center'>
+        <Button
+          loading={claimLoading}
+          disabled={!isConnected || userTotalReward <= 0 || !claimActive}
+          onClick={() => handleClaim()}
+          sx={() => ({
+            width: '150px',
+            height: '45px',
+            borderRadius: '45px',
+            textAlign: 'center',
+            color: '#ffffff !important',
+            fontSize: '20px',
+            background: 'linear-gradient(#f68898, #f3546a)',
+            '&:hover': {
+              boxShadow: '6px 6px 10px #9ab4e5',
+            },
+            '&:before': {
+              borderRadius: '45px !important',
+            },
+          })}
+        >
+          Claim
+        </Button>
+        <Text
+          sx={(theme) => ({
+            fontFamily: 'Balthazar-Regular',
+            lineHeight: '28px',
+            fontSize: '14px',
+            [theme.fn.largerThan('lg')]: {
+              fontSize: '16px',
+            },
+          })}
+          align='center'
+        >
+          Total received:{' '}
+          <span style={{ color: '#f3261f' }}>
+            {totalClaimedReward > 0
+              ? totalClaimedReward.toFixed(8)
+              : totalClaimedReward}
+          </span>{' '}
+          ETH
+          <br />
+          (Include invitation rewards)
+        </Text>
+      </Stack>
 
       <Box
         sx={(theme) => ({

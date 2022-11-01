@@ -946,7 +946,9 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                   >
                     {({ copied, copy }) => (
                       <UnstyledButton
-                        onClick={copy}
+                        onClick={() => {
+                          copy()
+                        }}
                         sx={() => ({
                           transition: 'transform 0.1s linear 0s',
                           fontFamily: 'Balthazar-Regular',
@@ -1052,7 +1054,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             <UnstyledButton
               onClick={() => {
                 window.open(
-                  `${process.env.NEXT_PUBLIC_BROWSER_DOMAIN}/address/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`
+                  `${process.env.NEXT_PUBLIC_BROWSER_DOMAIN}address/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`
                 );
               }}
               sx={() => ({
@@ -1061,7 +1063,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                 fontFamily: 'Balthazar-Regular',
               })}
             >
-              ETHSCAN
+              ETHERSCAN
             </UnstyledButton>
           </Text>
         </Stack>

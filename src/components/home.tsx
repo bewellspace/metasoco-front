@@ -660,7 +660,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
     abi: abi,
     functionName: 'claimIsActive',
     watch: true,
-    onSuccess: (data) => {
+    onSuccess: (data: boolean) => {
       setClaimActive(data);
     },
   });

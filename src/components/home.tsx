@@ -1170,15 +1170,13 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
           transform: 'translateX(-50%)',
           top: copySuccess ? '100px' : 0,
           zIndex: 5,
-          transition: 'all .3s ease-in',
+          transition: 'all .2s ease-in',
         }}
       >
         <Notification
           onClose={() => {
             setCopySuccess(false);
           }}
-          icon={<IconCheck size={18} />}
-          color='teal'
           title='Copy success!'
         />
       </div>

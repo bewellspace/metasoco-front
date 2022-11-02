@@ -671,7 +671,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
     functionName: 'claimReward',
     enabled:
       isConnected &&
-      chain.network === process.env.NEXT_PUBLIC_CHAIN &&
+      // chain.network === process.env.NEXT_PUBLIC_CHAIN &&
       contract.signer &&
       userTotalReward > 0 &&
       claimActive,

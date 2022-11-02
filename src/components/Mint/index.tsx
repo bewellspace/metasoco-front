@@ -138,7 +138,7 @@ const Mint = ({ contract, whiteListData }) => {
     enabled:
       isActive &&
       isConnected &&
-      chain.network === process.env.NEXT_PUBLIC_CHAIN &&
+      // chain.network === process.env.NEXT_PUBLIC_CHAIN &&
       !soldOut &&
       contract.signer &&
       !!price &&

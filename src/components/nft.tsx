@@ -109,7 +109,7 @@ export default function NFTPage({ contract, whiteListData }) {
     functionName: 'claimReward',
     enabled:
       isConnected &&
-      chain.network === process.env.NEXT_PUBLIC_CHAIN &&
+      // chain.network === process.env.NEXT_PUBLIC_CHAIN &&
       contract.signer &&
       userTotalReward > 0 &&
       claimActive,

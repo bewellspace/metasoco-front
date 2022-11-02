@@ -680,7 +680,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
       value: 0,
     },
     onError: (err) => {
-      console.log('claimWriteError===', err);
+      // console.log('claimWriteError===', err);
       // if (err.message.indexOf(MESSAGE[0])) {
       // }
     },

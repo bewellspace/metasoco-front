@@ -149,7 +149,7 @@ const Mint = ({ contract, whiteListData }) => {
       value: ethers.utils.parseEther(new Decimal(price).mul(value).toFixed()),
     },
     onError: (err) => {
-      console.log('mintBoxError===', err);
+      // console.log('mintBoxError===', err);
       // if (err.message.indexOf(MESSAGE[0])) {
       // }
     },

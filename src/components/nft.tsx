@@ -118,7 +118,7 @@ export default function NFTPage({ contract, whiteListData }) {
       value: 0,
     },
     onError: (err) => {
-      console.log('claimWriteError===', err);
+      // console.log('claimWriteError===', err);
       // if (err.message.indexOf(MESSAGE[0])) {
       // }
     },

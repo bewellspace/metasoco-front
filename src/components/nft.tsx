@@ -9,7 +9,6 @@ import {
 import { ethers } from 'ethers';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import { Stack, Text, Button, Box, SimpleGrid, Skeleton } from '@mantine/core';
-import Blindbox from './Blindbox';
 import keccak256 from 'keccak256';
 import { useRouter } from 'next/router';
 import { useSiteStyles } from '../theme';
@@ -22,7 +21,6 @@ const abi: any = process.env.NEXT_PUBLIC_ABI;
 
 export default function NFTPage({ contract, whiteListData }) {
   const router = useRouter();
-  const { chain } = useNetwork();
   const { classes } = useSiteStyles();
   const { openConnectModal } = useConnectModal();
   const { address, isConnected } = useAccount();
@@ -34,7 +32,6 @@ export default function NFTPage({ contract, whiteListData }) {
   const [claimLoading, setClaimLoading] = useState(false);
   const [claimActive, setClaimActive] = useState(false);
   const [proof, setProof] = useState([]);
-  const [proofEnd, setProofEnd] = useState(false);
   const [totalClaimedReward, setTotalReward] = useState(0);
 
   let shareAddress: any = NULL_ADDRESS;
@@ -45,6 +42,10 @@ export default function NFTPage({ contract, whiteListData }) {
 
   const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
   const isBreakpointXs = useMediaQuery('(max-width: 576px)');
+
+  useEffect(() => {
+    setNftList([])
+  }, [address])
 
   useEffect(() => {
     if (contract.signer) {
@@ -63,7 +64,6 @@ export default function NFTPage({ contract, whiteListData }) {
       const tree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
       const proof = tree.getHexProof(keccak256(address));
       setProof(proof);
-      setProofEnd(true);
       getClaimedRewards(proof);
     }
   }, [whiteListData, isConnected, contract]);

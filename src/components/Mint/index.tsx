@@ -119,6 +119,7 @@ const Mint = ({ contract, whiteListData }) => {
       const leafNodes = whiteListData.map((addr) => keccak256(addr));
       const tree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
       const proof = tree.getHexProof(keccak256(address));
+      console.log(proof);
       getPrice(proof);
       setProof(proof);
       setProofEnd(true);
@@ -225,11 +226,14 @@ const Mint = ({ contract, whiteListData }) => {
               {supply}/{totalNumber}
             </span>
           </Group>
-          <Group>
+          <Group
+            sx={() => ({
+              fontSize: '20px',
+            })}
+          >
             <span>PRICE</span>
             <span>
-              {new Decimal(price).mul(value).toFixed()}
-              ETH
+              <span style={{color: '#f3261f'}}>{new Decimal(price).mul(value).toFixed()}</span> ETH
             </span>
           </Group>
           <Group>

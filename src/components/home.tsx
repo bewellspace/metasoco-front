@@ -10,7 +10,7 @@ import {
 import {
   Anchor,
   Box,
-  CopyButton,
+  Notification,
   Group,
   Stack,
   Text,
@@ -21,6 +21,7 @@ import {
   SimpleGrid,
   Table,
 } from '@mantine/core';
+import { IconCheck, IconX } from '@tabler/icons';
 import Web3 from 'web3';
 import Image from 'next/image';
 import { NextPage } from 'next';
@@ -29,6 +30,7 @@ import React, { useState, useEffect } from 'react';
 import { useSiteStyles } from 'src/theme';
 import { useMediaQuery } from '@mantine/hooks';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { transitions } from '@mantine/core/lib/Transition/transitions';
 import Mint from './Mint';
 import Hero from './Hero';
 
@@ -406,6 +408,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
   const [claimLoading, setClaimLoading] = useState(false);
   const [tableData, setTableData] = useState(defaultData);
   const [claimActive, setClaimActive] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const isBreakpointXs = useMediaQuery('(max-width: 576px)');
   const { classes } = useSiteStyles();
@@ -825,6 +828,10 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                         document.execCommand('copy');
                       }
                       document.body.removeChild(input);
+                      setCopySuccess(true);
+                      setTimeout(() => {
+                        setCopySuccess(false);
+                      }, 2000);
                     }}
                     sx={() => ({
                       transition: 'transform 0.1s linear 0s',
@@ -1027,6 +1034,25 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
           </Table>
         </Box>
       </Stack>
+      <div
+        style={{
+          position: 'fixed',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          top: copySuccess ? '100px' : 0,
+          zIndex: 5,
+          transition: 'all .3s ease-in',
+        }}
+      >
+        <Notification
+          onClose={() => {
+            setCopySuccess(false);
+          }}
+          icon={<IconCheck size={18} />}
+          color='teal'
+          title='Copy success!'
+        />
+      </div>
     </div>
   );
 };

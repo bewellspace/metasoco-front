@@ -1,6 +1,6 @@
-import { createStyles } from "@mantine/core";
+import { createStyles } from '@mantine/core';
 
-export const HEADER_HEIGHT = 80;
+export const HEADER_HEIGHT = 70;
 
 export default createStyles((theme) => ({
   header: {
@@ -9,68 +9,63 @@ export default createStyles((theme) => ({
     right: 0,
     height: HEADER_HEIGHT,
     zIndex: 6,
-    position: "fixed",
-    backgroundColor: "#f3f7ff",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.08)",
-    padding: "0 80px",
-    [theme.fn.smallerThan("md")]: {
-      display: "none",
+    position: 'fixed',
+    background: 'url("/nav-bg.png") no-repeat transparent',
+    backgroundSize: 'cover',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.08)',
+    padding: '0 40px',
+    [theme.fn.smallerThan('md')]: {
+      display: 'none',
     },
   },
 
   logo: {
     paddingRight: theme.spacing.md,
     paddingLeft: theme.spacing.md,
-    height: HEADER_HEIGHT,
-    display: "flex",
-    alignItems: "center",
-    cursor: 'pointer'
+    height: '30px',
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
   },
 
   mainSection: {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
   },
 
   logoWrapper: {
-    display: "flex",
-    alignItems: "center",
-    pointerEvents: "all",
+    display: 'flex',
+    alignItems: 'center',
+    pointerEvents: 'all',
   },
 
   menus: {
-    color: "#fff",
+    color: '#fff',
   },
   menuItem: {
-    color: "#555555",
-    backgroundColor: "#c3d2ef",
-    padding: "0 34px",
-    fontSize: "16px",
-    lineHeight: "20px",
-    height: "40px",
-    fontFamily: "Balthazar-Regular",
-    "&:hover": {
-      color: "#fcf7f7",
-      backgroundColor: "#f3546a",
+    color: '#fafafa',
+    fontSize: '20px',
+    lineHeight: '20px',
+    fontFamily: 'Balthazar-Regular',
+    textShadow: '0px 7px 5px #000000',
+    '&:hover': {
+      color: '#f2ea19',
     },
   },
   menuItemSelected: {
-    color: "#fcf7f7",
-    backgroundColor: "#f3546a",
-    padding: "0 34px",
-    fontSize: "16px",
-    lineHeight: "20px",
-    height: "40px",
-    fontFamily: "Balthazar-Regular",
-    "&:hover": {
-      color: "#fcf7f7",
-      backgroundColor: "#f3546a",
+    color: '#f2ea19',
+    fontSize: '20px',
+    lineHeight: '20px',
+    fontFamily: 'Balthazar-Regular',
+    textShadow: '0px 7px 5px #000000',
+    '&:hover': {
+      color: '#f2ea19',
     },
   },
   controls: {
-    display: "flex",
+    display: 'flex',
   },
 }));

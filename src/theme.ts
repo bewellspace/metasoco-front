@@ -18,7 +18,7 @@ export const useSiteStyles = createStyles((theme) => {
     },
     heroTitle: {
       fontSize: "1.6rem",
-      fontFamily: "barlow-black",
+      fontFamily: "BalooBhaina",
       lineHeight: "1",
       [theme.fn.smallerThan("md")]: {
         fontSize: "1.25rem",

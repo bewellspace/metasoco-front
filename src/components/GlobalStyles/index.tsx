@@ -6,8 +6,8 @@ export function GlobalStyles() {
       styles={(theme: MantineTheme) => [
         {
           "@font-face": {
-            fontFamily: 'Saira-Black',
-            src: `url('/fonts/Saira-Black.ttf') format("truetype")`,
+            fontFamily: 'BalooBhaina',
+            src: `url('/fonts/BalooBhaina.ttf') format("truetype")`,
             fontWeight: 400,
             fontStyle: "normal",
           }
@@ -19,14 +19,6 @@ export function GlobalStyles() {
             fontWeight: 400,
             fontStyle: "normal",
           }
-        },
-        {
-          "@font-face": {
-            fontFamily: "barlow-black",
-            src: `url('/fonts/Barlow-BlackItalic.ttf') format("truetype")`,
-            fontWeight: 400,
-            fontStyle: "normal",
-          },
         },
         {
           "*, *::before, *::after": {

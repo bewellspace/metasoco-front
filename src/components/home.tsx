@@ -25,142 +25,14 @@ import Web3 from 'web3';
 import Image from 'next/image';
 import { NextPage } from 'next';
 import { FifaInfo } from 'src/types';
-import { Parallax } from 'rc-scroll-anim';
 import React, { useState, useEffect } from 'react';
 import { useSiteStyles } from 'src/theme';
 import { useMediaQuery } from '@mantine/hooks';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import Mint from './Mint';
+import Hero from './Hero';
 
 const abi: any = process.env.NEXT_PUBLIC_ABI;
-const Hero = () => {
-  const { classes } = useSiteStyles();
-  const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
-  return (
-    <Stack
-      id='home'
-      align='center'
-      spacing={0}
-      sx={(theme) => ({
-        width: '100%',
-        background: "url('/banner-bg.png') no-repeat #fff",
-        backgroundSize: '100% 100%',
-      })}
-    >
-      <Center
-        sx={(theme) => ({
-          padding: '50px 0 0',
-          width: '60vw',
-          [theme.fn.largerThan('lg')]: {
-            width: '40vw',
-          },
-          [theme.fn.largerThan('md')]: {
-            width: '43vw',
-          },
-          [theme.fn.smallerThan('xs')]: {
-            width: '80vw',
-          },
-        })}
-      >
-        <MImage src='/banner.png'></MImage>
-      </Center>
-
-      <Stack
-        sx={(theme) => ({
-          width: '100%',
-          background: "url('/hero-bg.png') no-repeat #f3f7ff",
-          backgroundSize: '60%',
-          minHeight: '700px',
-          backgroundPosition: 'bottom right',
-          position: 'relative',
-          paddingTop: '50px',
-          paddingBottom: '65px',
-        })}
-      >
-        <Stack align='center'>
-          <Text align='center' className={classes.heroTitle}>
-            Get your NFT,
-          </Text>
-          <Text align='center' className={classes.heroTitle}>
-            Win the final prize!
-          </Text>
-        </Stack>
-        <Stack align='center' pt={10}>
-          <Text align='center' className={classes.modelTips}>
-            Metasoco is a bridge between soccor fans and crypto users.
-          </Text>
-          <Text align='center' className={classes.modelTips}>
-            Support your favorite team, get your NFT, and win the final prize!
-          </Text>
-        </Stack>
-        <Box
-          sx={(theme) => ({
-            height: '650px',
-            padding: '70px 0',
-            width: '100%',
-            overflow: 'hidden',
-            [theme.fn.smallerThan('md')]: {
-              padding: '20px 0',
-              height: '550px',
-            },
-            [theme.fn.largerThan('lg')]: {
-              height: '750px',
-            },
-          })}
-        >
-          <Parallax
-            animation={{ x: 0, rotate: -5 }}
-            style={{
-              transform: 'translateX(-100px) rotate(-5deg)',
-              margin: '30px auto',
-            }}
-            className='code-box-left'
-          >
-            <Group
-              sx={() => ({
-                flexWrap: 'nowrap',
-              })}
-            >
-              {new Array(Number(16)).fill(null).map((item, index) => {
-                return (
-                  <MImage
-                    key={`image_top_${index}`}
-                    width={isBreakpointLg ? 180 : 150}
-                    src={`/team/${index + 1}.png`}
-                  ></MImage>
-                );
-              })}
-            </Group>
-          </Parallax>
-          <Parallax
-            animation={{ x: -100, rotate: -5 }}
-            style={{
-              transform: 'translateX(0) rotate(-5deg)',
-              margin: '30px auto',
-            }}
-            className='code-box-right'
-          >
-            <Group
-              sx={() => ({
-                flexWrap: 'nowrap',
-              })}
-            >
-              {new Array(Number(16)).fill(null).map((item, index) => {
-                return (
-                  <MImage
-                    key={`image_bottom_${index}`}
-                    width={isBreakpointLg ? 180 : 150}
-                    src={`/team/${index + 17}.png`}
-                  ></MImage>
-                );
-              })}
-            </Group>
-          </Parallax>
-        </Box>
-      </Stack>
-    </Stack>
-  );
-};
 
 const mechanismList = [
   {
@@ -332,7 +204,7 @@ const Mechanism = ({ contract, fifaInfo }) => {
           >
             <Text
               sx={() => ({
-                fontFamily: 'barlow-black',
+               
               })}
             >
               As a member of NFT holder you recieve:
@@ -787,7 +659,6 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
                 >
                   <Text
                     sx={(theme) => ({
-                      fontFamily: 'Saira-Black',
                       fontSize: '32px',
                       [theme.fn.smallerThan('xs')]: {
                         fontSize: '20px',
@@ -1374,15 +1245,14 @@ const HomePage: NextPage<{
   return (
     <div className='container'>
       <Hero />
-      <Mint contract={contract} whiteListData={whiteListData} />
+      {/* <Mint contract={contract} whiteListData={whiteListData} />
       <Mechanism contract={contract} fifaInfo={recentFifa} />
       <Claim contract={contract} fifaInfo={recentFifa} boardList={boardList} />
       <Vote />
       <About />
-      <Partner />
+      <Partner /> */}
       <style jsx>{`
         .container {
-          padding-top: 80px;
           width: 100%;
           height: 100%;
           line-height: 24px;

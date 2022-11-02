@@ -1,24 +1,24 @@
 /* eslint-disable import/no-relative-packages */
-import React, { useEffect, useState } from "react";
-import { Group, Button } from "@mantine/core";
-import { Logo } from "../../Logo/Logo";
-import useStyles from "./HeaderDesktop.styles";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { scrollToAnchor } from "src/common/utils";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import React, { useEffect, useState } from 'react';
+import { Group, Button, UnstyledButton } from '@mantine/core';
+import { Logo } from '../../Logo/Logo';
+import useStyles from './HeaderDesktop.styles';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { scrollToAnchor } from 'src/common/utils';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export function HeaderDesktop() {
   const { classes } = useStyles();
   const router = useRouter();
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState('');
 
   useEffect(() => {
     const customLink = () => {
-      if (router.pathname === "/") {
+      if (router.pathname === '/') {
         scrollToAnchor(active);
       } else {
-        router.push("/");
+        router.push('/');
       }
     };
     if (active) {
@@ -27,7 +27,7 @@ export function HeaderDesktop() {
   }, [active]);
 
   return (
-    <div className={classes.header} id="nav">
+    <div className={classes.header} id='nav'>
       <div className={classes.mainSection}>
         <div className={classes.logoWrapper}>
           <div className={classes.logo}>
@@ -36,71 +36,70 @@ export function HeaderDesktop() {
         </div>
       </div>
 
-      <Group spacing="xl">
-        <Button
+      <Group spacing={70}>
+        <UnstyledButton
           onClick={() => {
-            setActive("mint");
+            setActive('mint');
           }}
           className={
-            router.pathname === "/" && active === "mint"
+            router.pathname === '/' && active === 'mint'
               ? classes.menuItemSelected
               : classes.menuItem
           }
         >
           Mint
-        </Button>
+        </UnstyledButton>
 
-        <Button
-          onClick={() => setActive("mechanism")}
+        <UnstyledButton
+          onClick={() => setActive('mechanism')}
           className={
-            router.pathname === "/" && active === "mechanism"
+            router.pathname === '/' && active === 'mechanism'
               ? classes.menuItemSelected
               : classes.menuItem
           }
         >
           Mechanism
-        </Button>
-        <Button
-          onClick={() => setActive("claim")}
+        </UnstyledButton>
+        <UnstyledButton
+          onClick={() => setActive('claim')}
           className={
-            router.pathname === "/" && active === "claim"
+            router.pathname === '/' && active === 'claim'
               ? classes.menuItemSelected
               : classes.menuItem
           }
         >
           Claim
-        </Button>
-        <Button
-          onClick={() => setActive("vote")}
+        </UnstyledButton>
+        <UnstyledButton
+          onClick={() => setActive('vote')}
           className={
-            router.pathname === "/" && active === "vote"
+            router.pathname === '/' && active === 'vote'
               ? classes.menuItemSelected
               : classes.menuItem
           }
         >
           Vote
-        </Button>
-        <Link href="/nft">
+        </UnstyledButton>
+        <Link href='/nft'>
           <a>
-            <Button
-              onClick={() => setActive("")}
+            <UnstyledButton
+              onClick={() => setActive('')}
               className={
-                router.pathname === "/nft"
+                router.pathname === '/nft'
                   ? classes.menuItemSelected
                   : classes.menuItem
               }
             >
               My NFT
-            </Button>
+            </UnstyledButton>
           </a>
-
         </Link>
       </Group>
 
-      <Group spacing="lg">
+      <Group spacing='lg'>
         <ConnectButton
-          accountStatus="address"
-          chainStatus="icon"
+          accountStatus='address'
+          chainStatus='icon'
           showBalance={false}
         ></ConnectButton>
       </Group>

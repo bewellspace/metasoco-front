@@ -1,5 +1,4 @@
 import {
-  useNetwork,
   useContractRead,
   useAccount,
   usePrepareContractWrite,
@@ -15,6 +14,9 @@ import {
   NumberInput,
   ActionIcon,
   NumberInputHandlers,
+  Image as MImage,
+  Box,
+  BackgroundImage,
 } from '@mantine/core';
 import Image from 'next/image';
 import { ethers } from 'ethers';
@@ -34,7 +36,6 @@ const abi: any = process.env.NEXT_PUBLIC_ABI;
 
 const Mint = ({ contract, whiteListData }) => {
   const router = useRouter();
-  const { chain } = useNetwork();
   const { classes } = useSiteStyles();
   const [value, setValue] = useState(1);
   const [price, setPrice] = useState(0);
@@ -185,184 +186,216 @@ const Mint = ({ contract, whiteListData }) => {
   };
 
   return (
-    <Stack
-      id='mint'
-      align='center'
-      sx={(theme) => ({
-        padding: '70px 0',
-        width: '100%',
-        backgroundColor: '#e3e9f5',
-        fontFamily: 'Balthazar-Regular',
-        position: 'relative',
-        [theme.fn.smallerThan('lg')]: {
-          // padding: "30px",
-        },
-      })}
-    >
-      <Group
-        spacing={20}
-        position='center'
-        sx={() => ({
-          alignItems: 'flex-start',
-        })}
-      >
-        <Stack align='center' spacing={30}>
-          <Blindbox width={isBreakpointXs ? '200px' : '300px'}></Blindbox>
-          <Text size={12} style={{ fontFamily: 'Balthazar-Regular' }}>
-            NETWORK ETHEREUM
-          </Text>
-        </Stack>
+    <div id='mint'>
+      <BackgroundImage src='/mint-bg.jpg'>
         <Stack
           align='center'
-          pt={40}
-          sx={() => ({
-            maxWidth: '420px',
+          sx={(theme) => ({
+            padding: '40px 0 100px',
+            width: '100%',
+            fontFamily: 'Balthazar-Regular',
+            position: 'relative',
+            color: '#FBFAFA',
+            [theme.fn.smallerThan('lg')]: {
+              // padding: "30px",
+            },
           })}
         >
-          <Text className={classes.heroTitle}>METASOCO MYSTERYBOX</Text>
-          <Group>
-            <span>MINTED</span>
-            <span>
-              {supply}/{totalNumber}
-            </span>
-          </Group>
           <Group
+            spacing={48}
+            mb={20}
+            position='center'
             sx={() => ({
-              fontSize: '20px',
+              width: '100%',
             })}
           >
-            <span>PRICE</span>
-            <span>
-              <span style={{color: '#f3261f'}}>{new Decimal(price).mul(value).toFixed()}</span> ETH
-            </span>
-          </Group>
-          <Group>
-            <span>AMOUNT</span>
-            <Group spacing={0}>
-              <ActionIcon
-                size={25}
-                radius='xs'
-                variant='outline'
+            <Stack align='center' spacing={20}>
+              <Box
                 sx={() => ({
-                  borderColor: '#000',
-                  borderWidth: '2px',
+                  width: '280px',
+                  boxShadow: '5px 6px 6px rgba(9, 2, 4, 0.5)',
+                  borderRadius: '2px',
+                  overflow: 'hidden',
                 })}
-                onClick={() => handlers.current.decrement()}
               >
-                <IconMinus color='black' size={16} />
-              </ActionIcon>
+                <MImage src='/box-card.png'></MImage>
+              </Box>
 
-              <NumberInput
-                hideControls
-                value={value}
-                onChange={(val) => setValue(val)}
-                handlersRef={handlers}
-                max={5}
-                min={1}
-                step={1}
-                styles={{
-                  input: {
-                    width: 30,
-                    textAlign: 'center',
-                    padding: 0,
-                    background: 'transparent',
-                    border: 'none',
-                    color: '#000',
-                    fontSize: '18px',
-                    fontFamily: 'Balthazar-Regular',
-                  },
-                }}
-              />
-
-              <ActionIcon
-                size={25}
-                radius='xs'
-                variant='outline'
-                sx={() => ({
-                  borderColor: '#000',
-                  borderWidth: '2px',
-                })}
-                onClick={() => handlers.current.increment()}
+              <Text
+                size={12}
+                color='#FCF9F9'
+                style={{ fontFamily: 'Balthazar-Regular', lineHeight: 1 }}
               >
-                <IconPlus color='black' size={16} />
-              </ActionIcon>
-            </Group>
-          </Group>
-          <Stack spacing={10}>
-            <Button
-              disabled={!isActive || soldOut}
-              onClick={() => triggerMint()}
-              loading={mintLoading}
+                NETWORK ETHEREUM
+              </Text>
+            </Stack>
+            <Stack
+              spacing={16}
+              align='center'
               sx={() => ({
-                background: 'linear-gradient(180deg, #F67C8D, #f3556B 100%)',
-                width: '180px',
-                height: '50px',
-                textAlign: 'center',
-                color: 'white !important',
-                borderRadius: '50px',
-                boxShadow: '4px 4px 4px rgba(107, 109, 110, 0.5)',
-                transform: 'scale(1)',
-                transition: 'transform 0.1s linear 0s',
-                fontFamily: 'Balthazar-Regular',
-                fontSize: '18px',
-                '&:hover': {
-                  transform: 'scale(0.98)',
-                  transition: 'transform 0.1s linear 0s',
-                },
-                '&:before': {
-                  borderRadius: '50px !important',
-                },
+                maxWidth: '50vw',
               })}
             >
-              {soldOut ? 'Sold Out' : 'Mint Your Team'}
-            </Button>
-            <Text align='center' style={{ fontFamily: 'Balthazar-Regular' }}>
-              (Max mint 10x per wallet)
+              <Text className={classes.heroTitle} pb={36}>
+                METASOCO MYSTERYBOX
+              </Text>
+              <Group>
+                <span>MINTED</span>
+                <span>
+                  {supply}/{totalNumber}
+                </span>
+              </Group>
+              <Group
+                sx={() => ({
+                  fontSize: '20px',
+                })}
+              >
+                <span>PRICE</span>
+                <span>
+                  <span style={{ color: '#f3261f' }}>
+                    {new Decimal(price).mul(value).toFixed()}
+                  </span>{' '}
+                  ETH
+                </span>
+              </Group>
+              <Group>
+                <span>AMOUNT</span>
+                <Group spacing={0}>
+                  <ActionIcon
+                    size={25}
+                    radius='xs'
+                    variant='outline'
+                    sx={() => ({
+                      borderColor: '#000',
+                      borderWidth: '2px',
+                    })}
+                    onClick={() => handlers.current.decrement()}
+                  >
+                    <IconMinus color='#FBF9F9' size={16} />
+                  </ActionIcon>
+
+                  <NumberInput
+                    hideControls
+                    value={value}
+                    onChange={(val) => setValue(val)}
+                    handlersRef={handlers}
+                    max={5}
+                    min={1}
+                    step={1}
+                    styles={{
+                      input: {
+                        width: 30,
+                        textAlign: 'center',
+                        padding: 0,
+                        background: 'transparent',
+                        border: 'none',
+                        color: '#FBF9F9',
+                        fontSize: '20px',
+                        fontFamily: 'Balthazar-Regular',
+                      },
+                    }}
+                  />
+
+                  <ActionIcon
+                    size={25}
+                    radius='xs'
+                    variant='outline'
+                    sx={() => ({
+                      borderColor: '#000',
+                      borderWidth: '2px',
+                    })}
+                    onClick={() => handlers.current.increment()}
+                  >
+                    <IconPlus color='#FBF9F9' size={16} />
+                  </ActionIcon>
+                </Group>
+              </Group>
+              <Stack spacing={10}>
+                <Button
+                  disabled={!isActive || soldOut}
+                  onClick={() => triggerMint()}
+                  loading={mintLoading}
+                  sx={() => ({
+                    background: 'linear-gradient(#f59e32, #f22819)',
+                    textAlign: 'center',
+                    color: 'white !important',
+                    borderRadius: '10px',
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.66)',
+                    transform: 'scale(1)',
+                    transition: 'transform 0.1s linear 0s',
+                    fontFamily: 'Balthazar-Regular',
+                    fontSize: '18px',
+                    border: 'none',
+                    '&:hover': {
+                      background: 'linear-gradient(#f36d23, #f22919)',
+                    },
+                    '&:before': {
+                      borderRadius: '10px !important',
+                    },
+                  })}
+                >
+                  {soldOut ? 'Sold Out' : 'Mint Your Team'}
+                </Button>
+                <Text
+                  align='center'
+                  style={{ fontFamily: 'Balthazar-Regular' }}
+                >
+                  (Max mint 10x per wallet)
+                </Text>
+              </Stack>
+            </Stack>
+          </Group>
+          <Stack
+            spacing={14}
+            sx={() => ({
+              maxWidth: '800px',
+            })}
+          >
+            <Text
+              size={18}
+              style={{ fontFamily: 'Balthazar-Regular', lineHeight: 1 }}
+            >
+              3200 NFT in total according to 32 teams of FIFA World Cup 100 for
+              each team.
+            </Text>
+            <Text
+              size={18}
+              style={{ fontFamily: 'Balthazar-Regular', lineHeight: 2 }}
+            >
+              The holders of NFTS are rewarded according to the actual
+              performance of each team during the World Cup 2022. The NFT values
+              of all players and teams will fluctuate in real time with each
+              game's performance, and the value of players and teams will
+              directly affect the payoffs to holders, including holding
+              incentives and secondary market trading prices.
             </Text>
           </Stack>
-          <Text
-            align='center'
-            size={14}
-            style={{ fontFamily: 'Balthazar-Regular' }}
+
+          <UnstyledButton
+            onClick={() =>
+              window.open('https://opensea.io/collection/metasoco')
+            }
+            sx={(theme) => ({
+              position: 'absolute',
+              right: '60px',
+              bottom: '60px',
+              transform: 'scale(1)',
+              transition: 'transform 0.1s linear 0s',
+              '&:hover': {
+                transform: 'scale(1.06)',
+                transition: 'transform 0.1s linear 0s',
+              },
+              [theme.fn.smallerThan('md')]: {
+                bottom: '10px',
+                right: '20px',
+              },
+            })}
           >
-            3200 NFT in total according to 32 teams of FIFA World Cup 100 for
-            each team.
-          </Text>
-          <Text
-            align='center'
-            size={14}
-            style={{ fontFamily: 'Balthazar-Regular' }}
-          >
-            The holders of NFTS are rewarded according to the actual performance
-            of each team during the World Cup 2022. The NFT values of all
-            players and teams will fluctuate in real time with each game's
-            performance, and the value of players and teams will directly affect
-            the payoffs to holders, including holding incentives and secondary
-            market trading prices.
-          </Text>
+            <Image src='/icon/icon-os.png' width={45} height={42}></Image>
+          </UnstyledButton>
         </Stack>
-      </Group>
-      <UnstyledButton
-        onClick={() => window.open('https://opensea.io/collection/metasoco')}
-        sx={(theme) => ({
-          position: 'absolute',
-          right: '60px',
-          bottom: '60px',
-          transform: 'scale(1)',
-          transition: 'transform 0.1s linear 0s',
-          '&:hover': {
-            transform: 'scale(1.06)',
-            transition: 'transform 0.1s linear 0s',
-          },
-          [theme.fn.smallerThan('md')]: {
-            bottom: '10px',
-            right: '20px',
-          },
-        })}
-      >
-        <Image src='/icon/icon-os.png' width={33} height={41}></Image>
-      </UnstyledButton>
-    </Stack>
+      </BackgroundImage>
+    </div>
   );
 };
 

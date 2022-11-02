@@ -1,10 +1,10 @@
-import { MantineThemeOverride, createStyles } from "@mantine/core";
+import { MantineThemeOverride, createStyles } from '@mantine/core';
 
 const theme: MantineThemeOverride = {
-  colorScheme: "light",
+  colorScheme: 'light',
   colors: {
-    site: ["#EAF557"],
-    bg: ["#23203D"],
+    site: ['#EAF557'],
+    bg: ['#23203D'],
   },
 };
 
@@ -17,59 +17,61 @@ export const useSiteStyles = createStyles((theme) => {
       color: theme.colors.bg[0],
     },
     heroTitle: {
-      fontSize: "1.6rem",
-      fontFamily: "BalooBhaina",
-      lineHeight: "1",
-      [theme.fn.smallerThan("md")]: {
-        fontSize: "1.25rem",
+      fontSize: '1.6rem',
+      fontFamily: 'BalooBhaina',
+      lineHeight: '1',
+      color: '#F8D648',
+      textShadow: '0px 5px 5px #000000',
+      [theme.fn.smallerThan('md')]: {
+        fontSize: '1.25rem',
       },
-      [theme.fn.largerThan("lg")]: {
-        fontSize: "2.2rem",
+      [theme.fn.largerThan('lg')]: {
+        fontSize: '2.2rem',
       },
     },
     modelTips: {
-      fontSize: "1rem",
-      fontFamily: "inherit",
+      fontSize: '1rem',
+      fontFamily: 'inherit',
       lineHeight: 1,
-      [theme.fn.smallerThan("md")]: {
-        fontSize: "14px",
+      [theme.fn.smallerThan('md')]: {
+        fontSize: '14px',
       },
-      [theme.fn.largerThan("lg")]: {
-        fontSize: "1.2rem",
+      [theme.fn.largerThan('lg')]: {
+        fontSize: '1.2rem',
       },
     },
     teamPic: {
-      width: "150px",
-      [theme.fn.smallerThan("md")]: {
-        width: "80px",
+      width: '150px',
+      [theme.fn.smallerThan('md')]: {
+        width: '80px',
       },
-      [theme.fn.largerThan("lg")]: {
-        width: "300px !important",
+      [theme.fn.largerThan('lg')]: {
+        width: '300px !important',
       },
     },
     underLine: {
-      fontSize: "14px",
+      fontSize: '14px',
       lineHeight: 1,
-      padding: "5px 0",
-      borderBottom: "1px solid #000",
-      fontFamily: "Balthazar-Regular",
-      [theme.fn.largerThan("lg")]: {
-        fontSize: "16px",
+      padding: '5px 0',
+      borderBottom: '1px solid #000',
+      fontFamily: 'Balthazar-Regular',
+      [theme.fn.largerThan('lg')]: {
+        fontSize: '16px',
       },
     },
     claimButton: {
-      minWidth: "75px",
-      height: "30px",
-      borderRadius: "30px",
-      textAlign: "center",
-      color: "#ffffff !important",
-      background: "linear-gradient(180deg, #f97184, #f06c81 100%)",
-      fontFamily: "Balthazar-Regular",
-      "&:hover": {
-        boxShadow: "2px 2px 2px rgba(9, 2, 4, 0.5)",
+      minWidth: '75px',
+      height: '30px',
+      borderRadius: '30px',
+      textAlign: 'center',
+      color: '#ffffff !important',
+      background: 'linear-gradient(180deg, #f97184, #f06c81 100%)',
+      fontFamily: 'Balthazar-Regular',
+      '&:hover': {
+        boxShadow: '2px 2px 2px rgba(9, 2, 4, 0.5)',
       },
-      "&:before": {
-        borderRadius: "30px !important",
+      '&:before': {
+        borderRadius: '30px !important',
       },
     },
   };

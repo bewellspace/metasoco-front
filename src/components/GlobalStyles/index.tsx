@@ -26,8 +26,7 @@ export function GlobalStyles() {
           },
           body: {
             backgroundColor: "#e3e9f5",
-            color:
-              theme.colorScheme === "dark" ? '#000' : theme.black,
+            color: '#FBFAFA',
             lineHeight: theme.lineHeight,
             fontSize: theme.fontSizes.md,
             fontFamily: "Balthazar-Regular",

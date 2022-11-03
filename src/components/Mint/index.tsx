@@ -119,7 +119,7 @@ const Mint = ({ contract, whiteListData }) => {
       isConnected &&
       contract.signer
     ) {
-      const leafNodes = whiteListData.map((addr) => keccak256(addr));
+      const leafNodes = whiteListData.map((addr) => keccak256(addr.trim()));
       const tree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
       const proof = tree.getHexProof(keccak256(address));
       console.log(proof);

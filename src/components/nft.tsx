@@ -7,7 +7,7 @@ import {
 } from 'wagmi';
 import { ethers } from 'ethers';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import { Stack, Text, Button, Box, SimpleGrid, Skeleton, BackgroundImage, Image as MImage, Grid } from '@mantine/core';
+import { Stack, Text, Button, Box, Skeleton, BackgroundImage, Grid } from '@mantine/core';
 import keccak256 from 'keccak256';
 import { useRouter } from 'next/router';
 import { useSiteStyles } from '../theme';
@@ -58,7 +58,7 @@ export default function NFTPage({ contract, whiteListData }) {
       isConnected &&
       contract.signer
     ) {
-      const leafNodes = whiteListData.map((addr) => keccak256(addr));
+      const leafNodes = whiteListData.map((addr) => keccak256(addr.trim()));
       const tree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
       const proof = tree.getHexProof(keccak256(address));
       setProof(proof);

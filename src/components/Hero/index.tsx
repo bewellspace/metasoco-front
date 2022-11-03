@@ -4,13 +4,10 @@ import {
   Stack,
   Text,
   Image as MImage,
-  Center,
   BackgroundImage,
 } from '@mantine/core';
-import Image from 'next/image';
 import { Parallax } from 'rc-scroll-anim';
 import React from 'react';
-import { useSiteStyles } from 'src/theme';
 import { useMediaQuery } from '@mantine/hooks';
 
 const Hero = () => {

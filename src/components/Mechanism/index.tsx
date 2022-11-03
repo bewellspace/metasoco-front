@@ -134,7 +134,7 @@ const Mechanism = ({ fifaInfo }) => {
             breakpoints={[{ maxWidth: 860, cols: 1, spacing: 45 }]}
             sx={(theme) => ({
               width: '80%',
-              [theme.fn.smallerThan('xs')]: {
+              [theme.fn.smallerThan('md')]: {
                 width: '100%'
               }
             })}

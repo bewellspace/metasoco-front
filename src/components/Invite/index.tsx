@@ -95,12 +95,15 @@ const Invite = ({ contract }) => {
                     })}>Your invite link:
                     </Text>
                     <Group>
-                      <Text sx={() => ({
+                      <Text sx={(theme) => ({
                         wordBreak: 'break-all',
                         fontSize: '16px',
                         color: '#fbd91e',
                         width: '80%',
                         fontFamily: 'Balthazar-Regular',
+                        [theme.fn.smallerThan('xs')]: {
+                          width: '75%',
+                        }
                       })}>
                         {`${window.location.origin}/${address}`}
                       </Text>
@@ -236,12 +239,7 @@ const Invite = ({ contract }) => {
           transition: 'all .2s ease-in',
         }}
       >
-        <Notification
-          onClose={() => {
-            setCopySuccess(false);
-          }}
-          title='Copy success!'
-        />
+        <Image src='/copy-success.png' width={200} height={52}></Image>
       </div>
     </BackgroundImage>
   )

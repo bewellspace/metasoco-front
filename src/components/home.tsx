@@ -105,7 +105,7 @@ const Vote = () => {
               Vote from our commutity
             </Text>
             <UnstyledButton
-              onClick={() => window.open('http://t.me/theaetheroffic')}
+              onClick={() => window.open('http://t.me/theaetherofficial')}
               sx={(theme) => ({
                 background: 'linear-gradient(#f7c943, #ea6222, #e46a24)',
                 padding: '14px 40px',

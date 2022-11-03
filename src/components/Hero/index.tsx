@@ -24,6 +24,9 @@ const Hero = () => {
           sx={(theme) => ({
             width: '100%',
             paddingTop: '100px',
+            [theme.fn.smallerThan('xs')]: {
+              paddingTop: '160px'
+            }
           })}
         >
           <Box
@@ -47,13 +50,6 @@ const Hero = () => {
               width: '100%',
               minHeight: '700px',
               position: 'relative',
-              marginTop: '-70px',
-              [theme.fn.smallerThan('md')]: {
-                marginTop: '-30px',
-              },
-              [theme.fn.smallerThan('xs')]: {
-                marginTop: '0',
-              }
             })}
           >
             <Text
@@ -67,20 +63,20 @@ const Hero = () => {
                 textShadow: '0px 5px 5px #000000',
               })}
             >
-              Get your NFT team，win the final prize pool!
+              Get your NFT team, win the final prize pool!
             </Text>
             <Text
               align='center'
               color='#FCFAFA'
-              size={16}
+              size={18}
               sx={() => ({
                 padding: '0 20px',
                 fontFamily: 'Balthazar-Regular',
                 lineHeight: 1
               })}
             >
-              Meta-soco is a bridge between football fans and crypto users,
-              Metasoco produces NFTS for 32 World Cup teams
+              Metasoco is a bridge between football fans and crypto users.
+              Metasoco produces NFTs for 32 World Cup teams
             </Text>
             <Box
               sx={(theme) => ({

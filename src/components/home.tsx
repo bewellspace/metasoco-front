@@ -176,9 +176,9 @@ const About = () => {
             to celestial space, where they are given a unique virtual ID. In Aether,
             players can Play, Create, Own, Govern, Social, Earn.
             <br />
-            Meta-Soco, a metaverse platform for football fans under the Aether,
+            Metasoco, a metaverse platform for football fans under the Aether,
             provides a web3 metaverse platform for global football fans to socialize
-            and play games. Meta-Soco is the bridge between soccer lovers and crypto
+            and play games. Metasoco is the bridge between soccer lovers and crypto
             users. There will also be more games and crypto-related features that
             engage our users. We are building a full-stack Metaverse that enables
             players to enter our ecosystem and be rewarded from their NFTs with
@@ -199,14 +199,21 @@ const About = () => {
           <Text align='center' className={classes.heroTitle}>
             Partners ＆Supporters
           </Text>
-          <Center sx={(theme) => ({
-            width: '70%',
-            [theme.fn.smallerThan('xs')]: {
-              width: '100%'
-            }
-          })}>
-            <MImage src='/partner.png'></MImage>
-          </Center>
+          <SimpleGrid cols={3}
+            spacing={20}
+            sx={(theme) => ({
+              width: '70%',
+              [theme.fn.smallerThan('xs')]: {
+                width: '100%'
+              }
+            })}>
+            <MImage src='/partner-1.png'></MImage>
+            <MImage src='/partner-2.png'></MImage>
+            <MImage src='/partner-3.png' sx={() => ({
+              cursor: 'pointer'
+            })} onClick={() => window.open('https://www.aether.place/')}></MImage>
+
+          </SimpleGrid>
 
         </Stack>
       </BackgroundImage>

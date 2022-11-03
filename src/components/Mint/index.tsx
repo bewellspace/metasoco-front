@@ -17,6 +17,8 @@ import {
   Image as MImage,
   Box,
   BackgroundImage,
+  Center,
+  Grid
 } from '@mantine/core';
 import Image from 'next/image';
 import { ethers } from 'ethers';
@@ -233,7 +235,7 @@ const Mint = ({ contract, whiteListData }) => {
               </Text>
             </Stack>
             <Stack
-              spacing={16}
+              spacing={14}
               align='center'
               sx={(theme) => ({
                 maxWidth: '50vw',
@@ -245,77 +247,92 @@ const Mint = ({ contract, whiteListData }) => {
               <Text className={classes.heroTitle} pb={36}>
                 METASOCO MYSTERYBOX
               </Text>
-              <Group>
-                <span>MINTED</span>
-                <span>
-                  {supply}/{totalNumber}
-                </span>
-              </Group>
-              <Group
+              <Grid
+                justify="center"
+                align="center"
+                gutter={10}
                 sx={() => ({
-                  fontSize: '20px',
+                  width: '250px',
+                  position: 'relative',
+                  left: '18px',
+                  marginBottom: '15px'
                 })}
               >
-                <span>PRICE</span>
-                <span>
-                  <span style={{ color: '#f3261f' }}>
-                    {new Decimal(price).mul(value).toFixed()}
-                  </span>{' '}
-                  ETH
-                </span>
-              </Group>
-              <Group>
-                <span>AMOUNT</span>
-                <Group spacing={0}>
-                  <ActionIcon
-                    size={25}
-                    radius='xs'
-                    variant='outline'
-                    sx={() => ({
-                      borderColor: '#000',
-                      borderWidth: '2px',
-                    })}
-                    onClick={() => handlers.current.decrement()}
-                  >
-                    <IconMinus color='#FBF9F9' size={16} />
-                  </ActionIcon>
+                <Grid.Col span={4}>MINTED</Grid.Col>
+                <Grid.Col span={6}>{supply}/{totalNumber}</Grid.Col>
+                <Grid.Col span={4} style={{ textShadow: '2px 2px 6px #000', }}>PRICE</Grid.Col>
+                <Grid.Col span={6}>
+                  <Group spacing={2} style={{ textShadow: '2px 2px 6px #000', }}>
+                    <Text
+                      sx={() => ({
+                        color: '#f3261f',
+                        fontSize: '30px',
+                        textShadow: '2px 2px 6px #000',
+                        paddingRight: '5px',
+                        position: 'relative',
+                        top: '-4px',
+                        fontFamily: 'Balthazar-Regular'
+                      })}
+                    >
+                      {new Decimal(price).mul(value).toFixed()}
+                    </Text>{' '}
+                    ETH
+                  </Group>
+                </Grid.Col>
+                <Grid.Col span={4}>AMOUNT</Grid.Col>
+                <Grid.Col span={6}>
+                  <Group spacing={0}>
+                    <ActionIcon
+                      size={25}
+                      radius='xs'
+                      variant='outline'
+                      sx={() => ({
+                        borderColor: '#000',
+                        borderWidth: '2px',
+                      })}
+                      onClick={() => handlers.current.decrement()}
+                    >
+                      <IconMinus color='#FBF9F9' size={16} />
+                    </ActionIcon>
 
-                  <NumberInput
-                    hideControls
-                    value={value}
-                    onChange={(val) => setValue(val)}
-                    handlersRef={handlers}
-                    max={5}
-                    min={1}
-                    step={1}
-                    styles={{
-                      input: {
-                        width: 30,
-                        textAlign: 'center',
-                        padding: 0,
-                        background: 'transparent',
-                        border: 'none',
-                        color: '#FBF9F9',
-                        fontSize: '20px',
-                        fontFamily: 'Balthazar-Regular',
-                      },
-                    }}
-                  />
+                    <NumberInput
+                      hideControls
+                      value={value}
+                      onChange={(val) => setValue(val)}
+                      handlersRef={handlers}
+                      max={5}
+                      min={1}
+                      step={1}
+                      styles={{
+                        input: {
+                          width: 30,
+                          textAlign: 'center',
+                          padding: 0,
+                          background: 'transparent',
+                          border: 'none',
+                          color: '#FBF9F9',
+                          fontSize: '20px',
+                          fontFamily: 'Balthazar-Regular',
+                        },
+                      }}
+                    />
 
-                  <ActionIcon
-                    size={25}
-                    radius='xs'
-                    variant='outline'
-                    sx={() => ({
-                      borderColor: '#000',
-                      borderWidth: '2px',
-                    })}
-                    onClick={() => handlers.current.increment()}
-                  >
-                    <IconPlus color='#FBF9F9' size={16} />
-                  </ActionIcon>
-                </Group>
-              </Group>
+                    <ActionIcon
+                      size={25}
+                      radius='xs'
+                      variant='outline'
+                      sx={() => ({
+                        borderColor: '#000',
+                        borderWidth: '2px',
+                      })}
+                      onClick={() => handlers.current.increment()}
+                    >
+                      <IconPlus color='#FBF9F9' size={16} />
+                    </ActionIcon>
+                  </Group>
+                </Grid.Col>
+              </Grid>
+
               <Stack spacing={10}>
                 <Button
                   disabled={!isActive || soldOut}
@@ -362,31 +379,26 @@ const Mint = ({ contract, whiteListData }) => {
               size={18}
               sx={(theme) => ({
                 fontFamily: 'Balthazar-Regular',
-                lineHeight: 1,
+                lineHeight: 1.5,
                 [theme.fn.smallerThan('xs')]: {
                   lineHeight: 1.2
                 }
               })}
             >
-              3200 NFT in total according to 32 teams of FIFA World Cup 100 for
-              each team.
+              3200 NFTs in total according to 32 teams of FIFA World Cup 2022.<br />
+              100 for each team.
             </Text>
             <Text
               size={18}
               sx={(theme) => ({
                 fontFamily: 'Balthazar-Regular',
-                lineHeight: 2,
+                lineHeight: 1.5,
                 [theme.fn.smallerThan('xs')]: {
                   lineHeight: 1.2
                 }
               })}
             >
-              The holders of NFTS are rewarded according to the actual
-              performance of each team during the World Cup 2022. The NFT values
-              of all players and teams will fluctuate in real time with each
-              game's performance, and the value of players and teams will
-              directly affect the payoffs to holders, including holding
-              incentives and secondary market trading prices.
+              The holders of NFTs are rewarded according to the actual performance of each team during the FIFA World Cup 2022. The NFT values of all teams will fluctuate in real time with each game's performance, and the value of teams will directly affect the payoffs to holders, including holding incentives and secondary market trading prices.
             </Text>
           </Stack>
 

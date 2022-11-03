@@ -167,6 +167,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
           <Text
             color='#FBF6F6'
             align='center'
+            size={18}
             sx={() => ({
               textShadow: '0px 6px 6px #000000',
               fontFamily: 'Balthazar-Regular',

@@ -88,7 +88,7 @@ const Mechanism = ({ fifaInfo }) => {
           align='center'
           spacing={isBreakpointMd ? 50 : 'sm'}
           sx={(theme) => ({
-            padding: '60px 240px 100px',
+            padding: '60px 20px 100px',
             position: 'relative',
             overflow: 'hidden',
             [theme.fn.smallerThan('md')]: {
@@ -109,7 +109,7 @@ const Mechanism = ({ fifaInfo }) => {
                 fontFamily: 'Balthazar-Regular',
               })}
             >
-              NFTS are the core of meta-universe props and entertainment
+              NFTs are the core of meta-universe props and entertainment
             </Text>
             <Text
               pt={10}
@@ -132,6 +132,12 @@ const Mechanism = ({ fifaInfo }) => {
             cols={2}
             spacing={45}
             breakpoints={[{ maxWidth: 860, cols: 1, spacing: 45 }]}
+            sx={(theme) => ({
+              width: '80%',
+              [theme.fn.smallerThan('xs')]: {
+                width: '100%'
+              }
+            })}
           >
             <Stack
               spacing={20}
@@ -145,10 +151,13 @@ const Mechanism = ({ fifaInfo }) => {
               <Text
                 color='#F8D648'
                 pb={isBreakpointXs ? 0 : 5}
-                sx={() => ({
+                sx={(theme) => ({
                   fontSize: '24px',
                   lineHeight: '56px',
                   fontFamily: 'Balthazar-Regular',
+                  [theme.fn.smallerThan('xs')]: {
+                    textAlign: 'center'
+                  }
                 })}
               >
                 How to play?
@@ -156,40 +165,28 @@ const Mechanism = ({ fifaInfo }) => {
               <Text
                 color='#FCFBF9'
                 sx={(theme) => ({
-                  fontSize: '17px',
-                  lineHeight: '30px',
-                  [theme.fn.largerThan('lg')]: {
-                    // fontSize: '16px',
-                  },
+                  fontSize: '18px',
+                  lineHeight: '30px'
                 })}
                 style={{ fontFamily: 'Balthazar-Regular' }}
               >
-                The project party retains 20% of the sales revenue as operating
-                expenses, and 80% of the total revenue is returned to NFT
-                holders in the form of rewards.
+                The project party retains 20% of the sales revenue as operating expenses, and 80% of the total revenue is returned to NFT holders in the form of prize.
                 <br />
-                There are five stages of the season: 32 into 16, 16 into 8, 8
-                into 4, 4 into 2, the finals.Each winning team NFT will enter
-                the next round of the rewards pool, which will be awarded 5%,
-                10%, 15%, and 20% of the total bonus pool, respectively.The
-                champion team NFT will receive 50% of the total sales revenue.
+                There are five stages of this season: 32 into 16, 16 into 8, 8 into 4, 4 into 2, and the final.
+                The NFT holders of each winning team of these five stages will be awarded 5%, 10%, 15%, 20% and 50% of the total prize pool, respectively.
               </Text>
               <Text
                 color='#FCFBF9'
                 sx={(theme) => ({
-                  fontSize: '17px',
+                  fontSize: '18px',
                   lineHeight: '30px',
-                  fontFamily: 'Balthazar-Regular',
-                  [theme.fn.largerThan('lg')]: {
-                    // fontSize: '16px',
-                  },
+                  fontFamily: 'Balthazar-Regular'
                 })}
               >
-                As a member of NFT holder you recieve:
+                As a member of NFT holder you will receive:
                 <br />
                 <span style={{ color: '#F6DC70' }}>
-                  NFT sales revenue awards, Community access, Airdrops, Regular
-                  giveaways, Metaverse ticket, Much more ...
+                  NFT sales revenue awards, community access, airdrops, regular giveaways, metaverse ticket, and much more ...
                 </span>
               </Text>
             </Stack>
@@ -198,7 +195,7 @@ const Mechanism = ({ fifaInfo }) => {
                 spacing={25}
                 align='center'
                 sx={(theme) => ({
-                  width: '450px',
+                  width: '500px',
                   padding: '45px 0 40px',
                   justifyContent: 'center',
                   margin: '0 auto',

@@ -1,6 +1,6 @@
 .fc-wrapper{
   box-sizing:border-box;
-  perspective:1000px;
+  perspective: 1000px;
   margin: 0 auto;
 }
 .fc-wrapper:hover .fc-inner{

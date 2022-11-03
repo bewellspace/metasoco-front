@@ -23,7 +23,9 @@ const Footer = () => {
         })}
       >
         <Box
+          onClick={() => window.open('https://www.aether.place/')}
           sx={() => ({
+            cursor: 'pointer',
             paddingRight: '40px',
             borderRight: '1px solid rgba(255, 255, 255, 0.5)',
           })}

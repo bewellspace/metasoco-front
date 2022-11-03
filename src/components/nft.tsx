@@ -249,7 +249,6 @@ export default function NFTPage({ contract, whiteListData }) {
             (Include invitation rewards)
           </Text>
         </Stack>
-
         <Box
           sx={(theme) => ({
             width: '86vw',

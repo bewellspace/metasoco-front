@@ -65,7 +65,7 @@ const Footer = () => {
               ></Image>
             </UnstyledButton>
             <UnstyledButton
-              onClick={() => window.open('http://t.me/theaetheroffic')}
+              onClick={() => window.open('http://t.me/theaetherofficial')}
             >
               <Image
                 src='/icon/icon-telegram.png'

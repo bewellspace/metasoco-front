@@ -1,8 +1,7 @@
 .fc-wrapper{
-  width: 200px;
-  height: 260px;
   box-sizing:border-box;
   perspective:1000px;
+  margin: 0 auto;
 }
 .fc-wrapper:hover .fc-inner{
   transform: rotateY(-180deg) translateZ(0);

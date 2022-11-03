@@ -1,12 +1,12 @@
 /* eslint-disable import/no-relative-packages */
 import React, { useEffect, useState } from 'react';
-import { Group, Button, UnstyledButton } from '@mantine/core';
+import { Group, UnstyledButton } from '@mantine/core';
 import { Logo } from '../../Logo/Logo';
 import useStyles from './HeaderDesktop.styles';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { scrollToAnchor } from 'src/common/utils';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import ConnectButtonCustom from 'src/components/ConnectButtonCustom';
 
 export function HeaderDesktop() {
   const { classes } = useStyles();
@@ -97,11 +97,7 @@ export function HeaderDesktop() {
       </Group>
 
       <Group spacing='lg'>
-        <ConnectButton
-          accountStatus='address'
-          chainStatus='icon'
-          showBalance={false}
-        ></ConnectButton>
+        <ConnectButtonCustom />
       </Group>
     </div>
   );

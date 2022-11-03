@@ -5,7 +5,7 @@ import Image from 'next/image';
 const Footer = () => {
   const isPC = useMediaQuery('(min-width: 992px)');
   return (
-    <Box style={{ backgroundColor: '#ccdaf6' }}>
+    <Box style={{ backgroundColor: '#12250b' }}>
       <Group
         sx={(theme) => ({
           padding: '3rem 0rem',
@@ -25,7 +25,7 @@ const Footer = () => {
         <Box
           sx={() => ({
             paddingRight: '40px',
-            borderRight: '1px solid #2F57D9',
+            borderRight: '1px solid rgba(255, 255, 255, 0.5)',
           })}
         >
           <Image

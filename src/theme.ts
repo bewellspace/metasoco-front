@@ -1,4 +1,4 @@
-import { MantineThemeOverride, createStyles } from '@mantine/core';
+import { MantineThemeOverride, createStyles } from '@mantine/core'
 
 const theme: MantineThemeOverride = {
   colorScheme: 'light',
@@ -6,7 +6,7 @@ const theme: MantineThemeOverride = {
     site: ['#EAF557'],
     bg: ['#23203D'],
   },
-};
+}
 
 export const useSiteStyles = createStyles((theme) => {
   return {
@@ -50,31 +50,37 @@ export const useSiteStyles = createStyles((theme) => {
       },
     },
     underLine: {
-      fontSize: '14px',
+      fontSize: '17px',
       lineHeight: 1,
       padding: '5px 0',
-      borderBottom: '1px solid #000',
+      // borderBottom: '1px solid #000',
       fontFamily: 'Balthazar-Regular',
       [theme.fn.largerThan('lg')]: {
-        fontSize: '16px',
+        fontSize: '18px',
       },
     },
     claimButton: {
-      minWidth: '75px',
-      height: '30px',
-      borderRadius: '30px',
+      background: 'linear-gradient(#f59e32, #f22819)',
       textAlign: 'center',
-      color: '#ffffff !important',
-      background: 'linear-gradient(180deg, #f97184, #f06c81 100%)',
+      color: '#F9F9FC !important',
+      borderRadius: '6px',
+      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.66)',
+      transform: 'scale(1)',
+      transition: 'transform 0.1s linear 0s',
       fontFamily: 'Balthazar-Regular',
+      fontSize: '15px',
+      lineHeight: 1,
+      height: '27px',
+      border: 'none',
+      padding: '6px 16px',
       '&:hover': {
-        boxShadow: '2px 2px 2px rgba(9, 2, 4, 0.5)',
+        background: 'linear-gradient(#f36d23, #f22919)',
       },
       '&:before': {
-        borderRadius: '30px !important',
+        borderRadius: '6px !important',
       },
     },
-  };
-});
+  }
+})
 
-export default theme;
+export default theme

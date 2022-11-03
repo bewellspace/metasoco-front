@@ -1,6 +1,6 @@
-import { createStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core'
 
-export const HEADER_HEIGHT = 70;
+export const HEADER_HEIGHT = 70
 
 export default createStyles((theme) => ({
   header: {
@@ -15,7 +15,6 @@ export default createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.08)',
     padding: '0 40px',
     [theme.fn.smallerThan('md')]: {
       display: 'none',
@@ -68,4 +67,4 @@ export default createStyles((theme) => ({
   controls: {
     display: 'flex',
   },
-}));
+}))

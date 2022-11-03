@@ -3,12 +3,11 @@ import {
   useContractWrite,
   useContractRead,
   useAccount,
-  useNetwork,
   useWaitForTransaction,
 } from 'wagmi';
 import { ethers } from 'ethers';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import { Stack, Text, Button, Box, SimpleGrid, Skeleton } from '@mantine/core';
+import { Stack, Text, Button, Box, SimpleGrid, Skeleton, BackgroundImage, Image as MImage, Grid } from '@mantine/core';
 import keccak256 from 'keccak256';
 import { useRouter } from 'next/router';
 import { useSiteStyles } from '../theme';
@@ -40,7 +39,6 @@ export default function NFTPage({ contract, whiteListData }) {
     shareAddress = routerAddr;
   }
 
-  const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
   const isBreakpointXs = useMediaQuery('(max-width: 576px)');
 
   useEffect(() => {
@@ -169,166 +167,198 @@ export default function NFTPage({ contract, whiteListData }) {
   });
 
   return (
-    <Stack
-      align='center'
-      spacing={30}
-      sx={(theme) => ({
-        padding: '150px 80px 80px',
-        background: "url('/nft-bg.png') no-repeat #d8e2f7",
-        backgroundPositionX: 'right',
-        backgroundPositionY: 'bottom',
-        backgroundSize: '370px 410px',
-        [theme.fn.smallerThan('md')]: {
-          padding: '120px 10px',
-        },
-      })}
-    >
-      <Stack align='center' spacing={45}>
-        <Text className={classes.heroTitle}>
-          YOU OWNED {nftNumber} TEAM NFTS
-        </Text>
-        <Text className={classes.modelTips} underline>
-          My NFT reward：
-          {userTotalReward > 0
-            ? userTotalReward.toFixed(8)
-            : userTotalReward}{' '}
-          ETH
-        </Text>
-      </Stack>
-      <Stack align='center'>
-        <Button
-          loading={claimLoading}
-          disabled={!isConnected || userTotalReward <= 0 || !claimActive}
-          onClick={() => handleClaim()}
-          sx={() => ({
-            width: '150px',
-            height: '45px',
-            borderRadius: '45px',
-            textAlign: 'center',
-            color: '#ffffff !important',
-            fontSize: '20px',
-            background: 'linear-gradient(#f68898, #f3546a)',
-            '&:hover': {
-              boxShadow: '6px 6px 10px #9ab4e5',
-            },
-            '&:before': {
-              borderRadius: '45px !important',
-            },
-          })}
-        >
-          Claim
-        </Button>
-        <Text
-          sx={(theme) => ({
-            fontFamily: 'Balthazar-Regular',
-            lineHeight: '28px',
-            fontSize: '14px',
-            [theme.fn.largerThan('lg')]: {
-              fontSize: '16px',
-            },
-          })}
-          align='center'
-        >
-          Total received:{' '}
-          <span style={{ color: '#f3261f' }}>
-            {totalClaimedReward > 0
-              ? totalClaimedReward.toFixed(8)
-              : totalClaimedReward}
-          </span>{' '}
-          ETH
-          <br />
-          (Include invitation rewards)
-        </Text>
-      </Stack>
-
-      <Box
+    <BackgroundImage src='/nft-bg.jpg' sx={() => ({
+      backgroundPosition: 'top left'
+    })}>
+      <Stack
+        align='center'
+        spacing={30}
         sx={(theme) => ({
-          width: '86vw',
-          minHeight: '500px',
-          borderRadius: '4px',
-          marginTop: '30px',
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          padding: '150px 80px 80px',
+          [theme.fn.smallerThan('md')]: {
+            padding: '120px 10px',
+          },
         })}
       >
-        <Skeleton
-          visible={loading}
-          style={{
-            opacity: loading ? 0.8 : 1,
+        <Stack align='center' spacing={45}>
+          <Text className={classes.heroTitle}>
+            YOU OWNED {nftNumber} TEAM NFTS
+          </Text>
+          <Text color='#FCFAFA' sx={() => ({
+            fontSize: '24px',
+            textShadow: '3px 4px 6px #000',
+            fontFamily: 'Balthazar-Regular',
+          })}>
+            My NFT reward:{' '}
+            <span style={{ color: '#EC0F0F', fontSize: '30px' }}>
+              {
+                userTotalReward > 0
+                  ? userTotalReward.toFixed(8)
+                  : userTotalReward
+              }
+            </span>
+            {' '}
+            ETH
+          </Text>
+        </Stack>
+        <Stack align='center'>
+          <Button
+            loading={claimLoading}
+            disabled={!isConnected || userTotalReward <= 0 || !claimActive}
+            onClick={() => handleClaim()}
+            sx={() => ({
+              width: '130px',
+              height: '45px',
+              borderRadius: '10px',
+              textAlign: 'center',
+              color: '#ffffff !important',
+              fontSize: '20px',
+              background: 'linear-gradient(#f7a435, #f51817)',
+              boxShadow: '3px 3px 4px rgba(34, 34, 34, 0.53)',
+              border: 'none',
+              '&:hover': {
+                background: 'linear-gradient(#f67d24, #f51717)',
+              },
+              '&:before': {
+                borderRadius: '10px !important',
+              },
+            })}
+          >
+            Claim
+          </Button>
+          <Text
+            sx={(theme) => ({
+              fontFamily: 'Balthazar-Regular',
+              lineHeight: '28px',
+              fontSize: '14px',
+              color: '#fcfafa',
+              [theme.fn.largerThan('lg')]: {
+                fontSize: '16px',
+              },
+            })}
+            align='center'
+          >
+            Total received:{' '}
+            <span style={{ color: '#f3261f' }}>
+              {totalClaimedReward > 0
+                ? totalClaimedReward.toFixed(8)
+                : totalClaimedReward}
+            </span>{' '}
+            ETH
+            <br />
+            (Include invitation rewards)
+          </Text>
+        </Stack>
+
+        <Box
+          sx={(theme) => ({
+            width: '86vw',
             minHeight: '500px',
-            padding: '50px 70px',
-          }}
+            borderRadius: '10px',
+            marginTop: '30px',
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            [theme.fn.smallerThan('xs')]: {
+              minHeight: '300px'
+            }
+          })}
         >
-          <SimpleGrid
-            cols={isBreakpointXs ? 1 : 4}
-            spacing={isBreakpointXs ? 10 : 40}
+          <Skeleton
+            visible={loading}
+            sx={(theme) => ({
+              opacity: loading ? 0.8 : 1,
+              minHeight: '500px',
+              padding: '50px 70px',
+              [theme.fn.smallerThan('xs')]: {
+                padding: '20px 10px',
+              }
+            })}
           >
             <PhotoProvider maskOpacity={0.8}>
-              {boxNumber > 0 &&
-                new Array(Number(boxNumber)).fill(null).map((item, index) => {
+              <Grid
+                align='center'
+                justify={isBreakpointXs ? 'center' : 'flex-start'}
+                gutter={isBreakpointXs ? 10 : 30}
+              >
+                {boxNumber > 0 &&
+                  new Array(Number(boxNumber)).fill(null).map((item, index) => {
+                    return (
+                      <Grid.Col span={isBreakpointXs ? 12 : 3}>
+                        <PhotoView key={`box_item_${index}`} src='/box-back.png'>
+                          <Box
+                            sx={(theme) => ({
+                              width: '200px',
+                              height: '283px',
+                              [theme.fn.largerThan('lg')]: {
+                                width: '240px',
+                                height: '340px',
+                              },
+                            })}
+                            className='fc-wrapper'
+                          >
+                            <div className='fc-inner'>
+                              <div className='fc-front'>
+                                <img
+                                  className='fc-image'
+                                  src={`/box-card.png`}
+                                ></img>
+                              </div>
+                              <div className='fc-back'>
+                                <img
+                                  className='fc-image'
+                                  src={`/box-back.png`}
+                                ></img>
+                              </div>
+                            </div>
+                          </Box>
+                        </PhotoView>
+                      </Grid.Col>
+                    );
+                  })}
+                {nftList.map((item, index) => {
                   return (
-                    <PhotoView key={`box_item_${index}`} src='/box-back.png'>
-                      <div
-                        className='fc-wrapper'
-                        style={{
-                          width: isBreakpointLg ? '240px' : '200px',
-                          height: isBreakpointLg ? '330px' : '260px',
-                          borderRadius: '8px',
-                        }}
+                    <Grid.Col span={isBreakpointXs ? 12 : 3}>
+                      <PhotoView
+                        key={`nft_${index}`}
+                        src={`/team/${item}-back.png`}
                       >
-                        <div className='fc-inner'>
-                          <div className='fc-front'>
-                            <img
-                              className='fc-image'
-                              src={`/box-card.png`}
-                            ></img>
+                        <Box
+                          className='fc-wrapper'
+                          sx={(theme) => ({
+                            width: '200px',
+                            height: '283px',
+                            [theme.fn.largerThan('lg')]: {
+                              width: '240px',
+                              height: '340px'
+                            },
+
+                          })}
+
+                        >
+                          <div className='fc-inner'>
+                            <div className='fc-front'>
+                              <img
+                                className='fc-image'
+                                src={`/team/${item}.png`}
+                              ></img>
+                            </div>
+                            <div className='fc-back'>
+                              <img
+                                className='fc-image'
+                                src={`/team/${item}-back.png`}
+                              ></img>
+                            </div>
                           </div>
-                          <div className='fc-back'>
-                            <img
-                              className='fc-image'
-                              src={`/box-back.png`}
-                            ></img>
-                          </div>
-                        </div>
-                      </div>
-                    </PhotoView>
+                        </Box>
+                      </PhotoView>
+                    </Grid.Col>
                   );
                 })}
-              {nftList.map((item, index) => {
-                return (
-                  <PhotoView
-                    key={`nft_${index}`}
-                    src={`/team/${item}-back.png`}
-                  >
-                    <div
-                      className='fc-wrapper'
-                      style={{
-                        width: isBreakpointLg ? '240px' : '200px',
-                        height: isBreakpointLg ? '330px' : '260px',
-                        borderRadius: '8px',
-                      }}
-                    >
-                      <div className='fc-inner'>
-                        <div className='fc-front'>
-                          <img
-                            className='fc-image'
-                            src={`/team/${item}.png`}
-                          ></img>
-                        </div>
-                        <div className='fc-back'>
-                          <img
-                            className='fc-image'
-                            src={`/team/${item}-back.png`}
-                          ></img>
-                        </div>
-                      </div>
-                    </div>
-                  </PhotoView>
-                );
-              })}
+              </Grid>
             </PhotoProvider>
-          </SimpleGrid>
-        </Skeleton>
-      </Box>
-    </Stack>
+          </Skeleton>
+        </Box>
+      </Stack>
+    </BackgroundImage >
+
   );
 }

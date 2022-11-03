@@ -1,7 +1,7 @@
 import { createStyles } from '@mantine/core'
 import { HEADER_HEIGHT } from './HeaderDesktop.styles'
 
-export default createStyles(theme => ({
+export default createStyles((theme) => ({
   header: {
     top: 0,
     left: 0,
@@ -9,10 +9,10 @@ export default createStyles(theme => ({
     height: HEADER_HEIGHT,
     zIndex: 6,
     position: 'fixed',
-    backgroundColor: "#f3f7ff",
-    boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.08)",
+    background: 'url("/nav-bg.png") no-repeat transparent',
+    backgroundSize: 'cover',
+    boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.08)',
     paddingRight: 'var(--removed-scroll-width, 0px)',
-
     [theme.fn.largerThan('md')]: {
       display: 'none',
     },
@@ -55,11 +55,11 @@ export default createStyles(theme => ({
       display: 'none',
     },
   },
-  
+
   drawerList: {
     marginTop: '36px',
   },
-  
+
   drawerListItem: {
     display: 'flex',
     alignItems: 'center',
@@ -68,14 +68,13 @@ export default createStyles(theme => ({
     marginTop: '16px',
     width: '100%',
   },
-  
+
   drawerListItemText: {
     fontStyle: 'normal',
     fontWeight: 700,
     fontSize: '16px',
     lineHeight: '24px',
-    color: "#555555",
-    fontFamily: "Balthazar-Regular"
-  }
-
+    color: '#FBFAFA',
+    fontFamily: 'Balthazar-Regular',
+  },
 }))

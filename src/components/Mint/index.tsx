@@ -211,11 +211,14 @@ const Mint = ({ contract, whiteListData }) => {
           >
             <Stack align='center' spacing={20}>
               <Box
-                sx={() => ({
+                sx={(theme) => ({
                   width: '280px',
                   boxShadow: '5px 6px 6px rgba(9, 2, 4, 0.5)',
                   borderRadius: '2px',
                   overflow: 'hidden',
+                  [theme.fn.smallerThan('xs')]: {
+                    width: '200px',
+                  }
                 })}
               >
                 <MImage src='/box-card.png'></MImage>
@@ -232,8 +235,11 @@ const Mint = ({ contract, whiteListData }) => {
             <Stack
               spacing={16}
               align='center'
-              sx={() => ({
+              sx={(theme) => ({
                 maxWidth: '50vw',
+                [theme.fn.smallerThan('xs')]: {
+                  maxWidth: '90vw',
+                }
               })}
             >
               <Text className={classes.heroTitle} pb={36}>
@@ -347,20 +353,33 @@ const Mint = ({ contract, whiteListData }) => {
           </Group>
           <Stack
             spacing={14}
-            sx={() => ({
+            sx={(theme) => ({
               maxWidth: '800px',
+              padding: '0 20px'
             })}
           >
             <Text
               size={18}
-              style={{ fontFamily: 'Balthazar-Regular', lineHeight: 1 }}
+              sx={(theme) => ({
+                fontFamily: 'Balthazar-Regular',
+                lineHeight: 1,
+                [theme.fn.smallerThan('xs')]: {
+                  lineHeight: 1.2
+                }
+              })}
             >
               3200 NFT in total according to 32 teams of FIFA World Cup 100 for
               each team.
             </Text>
             <Text
               size={18}
-              style={{ fontFamily: 'Balthazar-Regular', lineHeight: 2 }}
+              sx={(theme) => ({
+                fontFamily: 'Balthazar-Regular',
+                lineHeight: 2,
+                [theme.fn.smallerThan('xs')]: {
+                  lineHeight: 1.2
+                }
+              })}
             >
               The holders of NFTS are rewarded according to the actual
               performance of each team during the World Cup 2022. The NFT values
@@ -386,12 +405,12 @@ const Mint = ({ contract, whiteListData }) => {
                 transition: 'transform 0.1s linear 0s',
               },
               [theme.fn.smallerThan('md')]: {
-                bottom: '10px',
+                bottom: '20px',
                 right: '20px',
               },
             })}
           >
-            <Image src='/icon/icon-os.png' width={45} height={42}></Image>
+            <Image src='/icon/icon-os.png' width={isBreakpointXs ? 30 : 45} height={isBreakpointXs ? 28 : 42}></Image>
           </UnstyledButton>
         </Stack>
       </BackgroundImage>

@@ -55,6 +55,7 @@ const mechanismList = [
 
 const Mechanism = ({ fifaInfo }) => {
   const { classes } = useSiteStyles();
+  const isBreakpointXs = useMediaQuery('(max-width: 576px)');
   const isBreakpointMd = useMediaQuery('(min-width: 992px)');
 
   const [totalRewardPool, setTotalRewardPool] = useState(0);
@@ -91,7 +92,7 @@ const Mechanism = ({ fifaInfo }) => {
             position: 'relative',
             overflow: 'hidden',
             [theme.fn.smallerThan('md')]: {
-              padding: '60px 20px 40px',
+              padding: '60px 15px 60px',
             },
           })}
         >
@@ -143,7 +144,7 @@ const Mechanism = ({ fifaInfo }) => {
             >
               <Text
                 color='#F8D648'
-                pb={5}
+                pb={isBreakpointXs ? 0 : 5}
                 sx={() => ({
                   fontSize: '24px',
                   lineHeight: '56px',
@@ -200,8 +201,10 @@ const Mechanism = ({ fifaInfo }) => {
                   width: '450px',
                   padding: '45px 0 40px',
                   justifyContent: 'center',
+                  margin: '0 auto',
                   [theme.fn.smallerThan('md')]: {
                     width: '100%',
+                    padding: '25px 0 20px',
                   },
                 })}
               >
@@ -210,10 +213,17 @@ const Mechanism = ({ fifaInfo }) => {
                     sx={(theme) => ({
                       width: '170px',
                       height: '46px',
+                      backgroundColor: '#F8D648',
+                      color: '#10106b',
+                      fontSize: '17px',
+                      boxShadow: '0px 3px 2px 0px rgba(61, 107, 195, 0.51)',
                       opacity: 0,
                       [theme.fn.smallerThan('xs')]: {
+                        fontSize: '12px',
                         width: '100px',
-                      },
+                        height: '30px',
+                        borderRadius: '8px',
+                      }
                     })}
                   >
                     0% of the pool
@@ -247,23 +257,33 @@ const Mechanism = ({ fifaInfo }) => {
                     })}
                   >
                     <Center
-                      sx={() => ({
+                      sx={(theme) => ({
                         width: '102px',
                         height: '40px',
                         borderRadius: '14px',
                         fontSize: '17px',
-                        color: '#10106B',
+                        color: '#fff',
                         backgroundColor: '#F8D648',
-                        boxShadow: '0px 5px 3px 0px rgba(61,107,195,0.51)',
+                        boxShadow: '1px 3px 2px 0px rgba(0, 0, 0, 0.51)',
+                        background: 'linear-gradient(#f6a53d, #f13a25)',
+                        [theme.fn.smallerThan('xs')]: {
+                          fontSize: '14px',
+                          width: '80px',
+                          height: '30px',
+                          borderRadius: '8px',
+                        }
                       })}
                     >
                       32 teams
                     </Center>
 
                     <MImage
-                      sx={() => ({
+                      sx={(theme) => ({
                         position: 'absolute',
                         top: '48px',
+                        [theme.fn.smallerThan('xs')]: {
+                          top: '35px'
+                        }
                       })}
                       src='/icon/icon-down1.png'
                       width={8}
@@ -284,12 +304,15 @@ const Mechanism = ({ fifaInfo }) => {
                           width: '170px',
                           height: '46px',
                           backgroundColor: '#F8D648',
-                          color: '#221785',
+                          color: '#10106b',
                           fontSize: '17px',
-                          boxShadow: '0px 5px 2px 0px rgba(57,108,206,0.46)',
+                          boxShadow: '1px 3px 2px 0px rgba(0, 0, 0, 0.51)',
                           [theme.fn.smallerThan('xs')]: {
+                            fontSize: '14px',
                             width: '100px',
-                          },
+                            height: '30px',
+                            borderRadius: '8px',
+                          }
                         })}
                       >
                         {item.pool}% of the pool
@@ -320,32 +343,36 @@ const Mechanism = ({ fifaInfo }) => {
                         })}
                       >
                         <Center
-                          sx={() => ({
+                          sx={(theme) => ({
                             width: '102px',
                             height: '40px',
                             borderRadius: '14px',
                             fontSize: '17px',
-                            color: '#10106B',
-                            backgroundColor: '#F8D648',
-                            boxShadow: '0px 5px 2px 0px rgba(57,108,206,0.46)',
-                            // backgroundColor: !item.active
-                            //   ? '#F8D648'
-                            //   : '#f7b04d',
+                            boxShadow: '1px 3px 2px 0px rgba(0, 0, 0, 0.51)',
+                            background: !item.active
+                              ? '#F8D648'
+                              : 'linear-gradient(#f6a53d, #f13a25)',
+                            color: item.active ? '#fff' : '#10106b',
+                            [theme.fn.smallerThan('xs')]: {
+                              fontSize: '14px',
+                              width: '80px',
+                              height: '30px',
+                              borderRadius: '8px',
+                            }
                           })}
                         >
                           {item.name}
                         </Center>
                         {item.name !== 'winner' && (
                           <MImage
-                            sx={() => ({
+                            sx={(theme) => ({
                               position: 'absolute',
                               top: '48px',
+                              [theme.fn.smallerThan('xs')]: {
+                                top: '35px'
+                              }
                             })}
-                            src={
-                              !item.active
-                                ? '/icon/icon-down2.png'
-                                : '/icon/icon-down1.png'
-                            }
+                            src='/icon/icon-down1.png'
                             width={8}
                             height={16}
                           ></MImage>

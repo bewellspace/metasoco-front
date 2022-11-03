@@ -27,8 +27,17 @@ const Hero = () => {
           })}
         >
           <Box
-            sx={() => ({
+            sx={(theme) => ({
               width: '55vw',
+              [theme.fn.smallerThan('md')]: {
+                width: '70vw',
+              },
+              [theme.fn.smallerThan('xs')]: {
+                width: '90vw',
+              },
+              [theme.fn.largerThan('lg')]: {
+                width: '45vw'
+              }
             })}
           >
             <MImage src='/hero.png'></MImage>
@@ -39,6 +48,12 @@ const Hero = () => {
               minHeight: '700px',
               position: 'relative',
               marginTop: '-70px',
+              [theme.fn.smallerThan('md')]: {
+                marginTop: '-30px',
+              },
+              [theme.fn.smallerThan('xs')]: {
+                marginTop: '0',
+              }
             })}
           >
             <Text
@@ -46,6 +61,7 @@ const Hero = () => {
               color='#F8D648'
               size={26}
               sx={() => ({
+                padding: '0 20px',
                 lineHeight: 1,
                 fontFamily: 'BalooBhaina',
                 textShadow: '0px 5px 5px #000000',
@@ -57,7 +73,11 @@ const Hero = () => {
               align='center'
               color='#FCFAFA'
               size={16}
-              style={{ fontFamily: 'Balthazar-Regular', lineHeight: 1 }}
+              sx={() => ({
+                padding: '0 20px',
+                fontFamily: 'Balthazar-Regular',
+                lineHeight: 1
+              })}
             >
               Meta-soco is a bridge between football fans and crypto users,
               Metasoco produces NFTS for 32 World Cup teams
@@ -72,6 +92,7 @@ const Hero = () => {
                 [theme.fn.smallerThan('md')]: {
                   padding: '20px 0',
                   height: '550px',
+                  marginTop: '0',
                 },
                 [theme.fn.largerThan('lg')]: {
                   height: '750px',
@@ -136,7 +157,7 @@ const Hero = () => {
           </Stack>
         </Stack>
       </BackgroundImage>
-    </div>
+    </div >
   );
 };
 

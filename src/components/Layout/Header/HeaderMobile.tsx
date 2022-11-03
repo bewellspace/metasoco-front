@@ -4,8 +4,8 @@ import useStyles from "./HeaderMobile.styles";
 import { IconArrowRight } from "@tabler/icons";
 import { scrollToAnchor } from "src/common/utils";
 import React, { useState, useEffect } from "react";
+import ConnectButtonCustom from 'src/components/ConnectButtonCustom';
 import { Burger, Drawer, Group, Divider, UnstyledButton } from "@mantine/core";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 interface HeaderProps {
   navbarOpened: boolean;
@@ -49,10 +49,14 @@ export function HeaderMobile({ navbarOpened, toggleNavbar }: HeaderProps) {
                 setDrawerStatus(false);
               }}
             >
-              <UnstyledButton>
+              <UnstyledButton sx={() => ({
+                ':hover': {
+                  background: 'transparent'
+                }
+              })}>
                 <span className={classes.drawerListItemText}>{listKey}</span>
               </UnstyledButton>
-              <IconArrowRight color="#555" size={24} />
+              <IconArrowRight color="#FBFAFA" size={24} />
             </div>
             <Divider />
           </div>
@@ -69,7 +73,7 @@ export function HeaderMobile({ navbarOpened, toggleNavbar }: HeaderProps) {
             <UnstyledButton>
               <span className={classes.drawerListItemText}>My NFT</span>
             </UnstyledButton>
-            <IconArrowRight color="#555" size={24} />
+            <IconArrowRight color="#FBFAFA" size={24} />
           </div>
           <Divider />
         </div>
@@ -83,12 +87,9 @@ export function HeaderMobile({ navbarOpened, toggleNavbar }: HeaderProps) {
           <Logo />
         </div>
         <Group spacing="lg">
-          <ConnectButton
-            accountStatus="address"
-            chainStatus="icon"
-            showBalance={false}
-          />
+          <ConnectButtonCustom />
           <Burger
+            color='#fff'
             opened={navbarOpened}
             size="sm"
             onClick={() => {
@@ -108,7 +109,7 @@ export function HeaderMobile({ navbarOpened, toggleNavbar }: HeaderProps) {
         padding="xl"
         size="lg"
         position="right"
-        styles={{ drawer: { backgroundColor: "#f3f7ff" } }}
+        styles={{ drawer: { backgroundColor: "rgba(0, 0, 0, 0.8)" } }}
       >
         {generateDrawerListItem()}
       </Drawer>

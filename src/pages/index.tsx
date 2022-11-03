@@ -16,16 +16,16 @@ export const getServerSideProps = async ({ res }: NextPageContext) => {
     fifaInfo = data;
   }
 
-  // const {
-  //   data: { result },
-  // } = await axios.get(process.env.BOARD_API);
-  // const boardList = result;
+  const {
+    data: { result },
+  } = await axios.get(process.env.BOARD_API);
+  const boardList = result;
 
   res.setHeader('Cache-Control', 'no-cache');
 
   return {
     props: {
-      boardList: [], //boardList || [],
+      boardList: boardList || [],
       fifaInfo: fifaInfo || [],
       serviceDate: date || new Date(),
       whiteListData: [

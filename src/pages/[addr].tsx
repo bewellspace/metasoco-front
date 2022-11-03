@@ -25,18 +25,17 @@ export const getServerSideProps = async ({ res }: NextPageContext) => {
   }
 
   let { data: whiteListData } = await axios.get(process.env.WHITE_LIST)
+  let wl = whiteListData.split('\n')
+  wl = wl.filter(item => item !== '')
 
-  res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
+  res.setHeader('Cache-Control', 'no-cache');
 
   return {
     props: {
       boardList: boardList || [],
       fifaInfo: fifaInfo || [],
       serviceDate: date || new Date(),
-      whiteListData: whiteListData
+      whiteListData: wl
     },
   };
 };

@@ -1,4 +1,6 @@
 import {
+  useNetwork,
+  useSwitchNetwork,
   useContractRead,
   useAccount,
   usePrepareContractWrite,
@@ -52,6 +54,8 @@ const Mint = ({ contract, whiteListData }) => {
   const [recommenderAddress, setAddress] = useState(NULL_ADDRESS);
   const handlers = useRef<NumberInputHandlers>();
   const { openConnectModal } = useConnectModal();
+  const { chain } = useNetwork()
+  const { chains, switchNetwork } = useSwitchNetwork()
 
   const isBreakpointXs = useMediaQuery('(max-width: 576px)');
 
@@ -177,8 +181,11 @@ const Mint = ({ contract, whiteListData }) => {
   });
 
   const triggerMint = () => {
+    const agreedChainId = process.env.NEXT_PUBLIC_CHAIN === 'goerli' ? 5 : 1
     if (isConnected) {
-      if (isActive && !soldOut && mintWrite?.write) {
+      if (chain.id !== agreedChainId) {
+        switchNetwork?.(agreedChainId)
+      } else if (isActive && !soldOut && mintWrite?.write) {
         mintWrite?.write();
         setMintLoading(true);
       }

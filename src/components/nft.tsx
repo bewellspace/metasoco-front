@@ -190,7 +190,7 @@ export default function NFTPage({ contract, whiteListData }) {
             fontFamily: 'Balthazar-Regular',
           })}>
             My NFT reward:{' '}
-            <span style={{ color: '#EC0F0F', fontSize: '30px' }}>
+            <span style={{ color: '#EC0F0F', fontSize: '30px', fontFamily: 'BalooBhaina' }}>
               {
                 userTotalReward > 0
                   ? userTotalReward.toFixed(8)
@@ -239,7 +239,7 @@ export default function NFTPage({ contract, whiteListData }) {
             align='center'
           >
             Total received:{' '}
-            <span style={{ color: '#f3261f' }}>
+            <span style={{ color: '#f3261f', fontFamily: 'BalooBhaina' }}>
               {totalClaimedReward > 0
                 ? totalClaimedReward.toFixed(8)
                 : totalClaimedReward}

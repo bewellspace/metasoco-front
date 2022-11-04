@@ -266,7 +266,7 @@ const Mint = ({ contract, whiteListData }) => {
                 })}
               >
                 <Grid.Col span={4}>MINTED</Grid.Col>
-                <Grid.Col span={6}>{supply}/{totalNumber}</Grid.Col>
+                <Grid.Col span={6} style={{ fontFamily: 'BalooBhaina' }}>{supply}/{totalNumber}</Grid.Col>
                 <Grid.Col span={4} style={{ textShadow: '2px 2px 6px #000', }}>PRICE</Grid.Col>
                 <Grid.Col span={6}>
                   <Group spacing={2} style={{ textShadow: '2px 2px 6px #000', }}>
@@ -278,7 +278,7 @@ const Mint = ({ contract, whiteListData }) => {
                         paddingRight: '5px',
                         position: 'relative',
                         top: '-4px',
-                        fontFamily: 'Balthazar-Regular'
+                        fontFamily: 'BalooBhaina'
                       })}
                     >
                       {new Decimal(price).mul(value).toFixed()}
@@ -319,7 +319,7 @@ const Mint = ({ contract, whiteListData }) => {
                           border: 'none',
                           color: '#FBF9F9',
                           fontSize: '20px',
-                          fontFamily: 'Balthazar-Regular',
+                          fontFamily: 'BalooBhaina'
                         },
                       }}
                     />
@@ -370,7 +370,7 @@ const Mint = ({ contract, whiteListData }) => {
                   align='center'
                   style={{ fontFamily: 'Balthazar-Regular' }}
                 >
-                  (Max mint 10x per wallet)
+                  (Max mint <span style={{ fontFamily: 'BalooBhaina' }}>10</span>x per wallet)
                 </Text>
               </Stack>
             </Stack>

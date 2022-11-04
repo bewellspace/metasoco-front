@@ -110,7 +110,7 @@ const Hero = () => {
                       <MImage
                         key={`image_top_${index}`}
                         width={isBreakpointLg ? 180 : 150}
-                        src={`/team-jpg/${index + 1}.jpg`}
+                        src={`/team-thumb/${index + 1}.jpg`}
                         sx={() => ({
                           boxShadow: '7px 6px 6px rgba(0, 0, 0, 0.17)',
                         })}
@@ -137,7 +137,7 @@ const Hero = () => {
                       <MImage
                         key={`image_bottom_${index}`}
                         width={isBreakpointLg ? 180 : 150}
-                        src={`/team-jpg/${index + 17}.jpg`}
+                        src={`/team-thumb/${index + 12}.jpg`}
                         sx={() => ({
                           boxShadow: '7px 6px 6px rgba(0, 0, 0, 0.17)',
                         })}

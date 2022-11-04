@@ -203,7 +203,7 @@ const Invite = ({ contract }) => {
               fontFamily: 'Balthazar-Regular',
             })}>
             Awards for invitations already received :{' '}
-            <span style={{ color: '#f5330c' }}>
+            <span style={{ color: '#f5330c', fontFamily: 'BalooBhaina' }}>
               {recommenderReward > 0
                 ? recommenderReward.toFixed(8)
                 : recommenderReward}

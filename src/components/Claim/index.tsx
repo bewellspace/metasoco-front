@@ -267,7 +267,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             <Center>
               <Text className={classes.underLine}>
                 My NFT Team Amount: {' '}
-                <span style={{ color: '#F51717', paddingLeft: '4px', fontSize: '24px' }}>{nftNumber}</span>
+                <span style={{ color: '#F51717', paddingLeft: '4px', fontSize: '24px', fontFamily: 'BalooBhaina' }}>{nftNumber}</span>
               </Text>
             </Center>
             <div className={classes.claimButton} style={{ opacity: 0 }} />
@@ -276,7 +276,7 @@ const Claim = ({ contract, fifaInfo, boardList }) => {
             <Center>
               <Text className={classes.underLine}>
                 My NFT reward:{' '}
-                <span style={{ color: '#F51717', fontSize: '24px' }}>
+                <span style={{ color: '#F51717', fontSize: '24px', fontFamily: 'BalooBhaina' }}>
                   {userTotalReward > 0
                     ? userTotalReward.toFixed(8)
                     : userTotalReward}

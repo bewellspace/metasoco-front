@@ -124,7 +124,7 @@ const Mechanism = ({ fifaInfo }) => {
               })}
             >
               Current pool:{' '}
-              <span style={{ color: '#FA2823' }}>{totalRewardPool}</span> ETH
+              <span style={{ color: '#FA2823', fontFamily: 'BalooBhaina' }}>{totalRewardPool}</span> ETH
             </Text>
           </Stack>
           <SimpleGrid

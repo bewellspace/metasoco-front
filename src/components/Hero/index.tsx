@@ -6,7 +6,6 @@ import {
   Image as MImage,
   BackgroundImage,
 } from '@mantine/core';
-import Image from 'next/image';
 import { Parallax } from 'rc-scroll-anim';
 import React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
@@ -108,20 +107,14 @@ const Hero = () => {
                 >
                   {new Array(Number(16)).fill(null).map((item, index) => {
                     return (
-                      <div
-                        key={`image_bottom_${index}`}
-                        style={{
-                          height: isBreakpointLg ? 255 : 212,
+                      <MImage
+                        key={`image_top_${index}`}
+                        width={isBreakpointLg ? 180 : 150}
+                        src={`/team-thumb/${index + 1}.jpg`}
+                        sx={() => ({
                           boxShadow: '7px 6px 6px rgba(0, 0, 0, 0.17)',
-                        }}
-                      >
-                        <Image
-                          width={isBreakpointLg ? 180 : 150}
-                          height={isBreakpointLg ? 255 : 212}
-                          layout="fixed"
-                          src={`/team-thumb/${index + 1}.jpg`}
-                        ></Image>
-                      </div>
+                        })}
+                      ></MImage>
                     );
                   })}
                 </Group>
@@ -141,20 +134,14 @@ const Hero = () => {
                 >
                   {new Array(Number(16)).fill(null).map((item, index) => {
                     return (
-                      <div
+                      <MImage
                         key={`image_bottom_${index}`}
-                        style={{
-                          height: isBreakpointLg ? 255 : 212,
+                        width={isBreakpointLg ? 180 : 150}
+                        src={`/team-thumb/${index + 17}.jpg`}
+                        sx={() => ({
                           boxShadow: '7px 6px 6px rgba(0, 0, 0, 0.17)',
-                        }}
-                      >
-                        <Image
-                          width={isBreakpointLg ? 180 : 150}
-                          height={isBreakpointLg ? 255 : 212}
-                          layout="fixed"
-                          src={`/team-thumb/${index + 17}.jpg`}
-                        ></Image>
-                      </div>
+                        })}
+                      ></MImage>
                     );
                   })}
                 </Group>

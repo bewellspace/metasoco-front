@@ -271,8 +271,14 @@ const Mint = ({ contract, whiteListData }) => {
                   style={{ fontFamily: 'BalooBhaina', position: 'relative' }}
                 >
                   {supply}/{totalNumber}
-                  <span style={{fontFamily: 'Balthazar-Regular', paddingLeft: '12px'}}>
-                    (100 limited this round)
+                  <span
+                    style={{
+                      fontFamily: 'Balthazar-Regular',
+                      paddingLeft: '12px',
+                    }}
+                  >
+                    (<span style={{ fontFamily: 'BalooBhaina' }}>100</span>{' '}
+                    limited this round)
                   </span>
                 </Grid.Col>
                 <Grid.Col span={3} style={{ textShadow: '2px 2px 6px #000' }}>

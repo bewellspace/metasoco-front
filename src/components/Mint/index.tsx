@@ -20,7 +20,7 @@ import {
   Box,
   BackgroundImage,
   Center,
-  Grid
+  Grid,
 } from '@mantine/core';
 import Image from 'next/image';
 import { ethers } from 'ethers';
@@ -54,8 +54,8 @@ const Mint = ({ contract, whiteListData }) => {
   const [recommenderAddress, setAddress] = useState(NULL_ADDRESS);
   const handlers = useRef<NumberInputHandlers>();
   const { openConnectModal } = useConnectModal();
-  const { chain } = useNetwork()
-  const { chains, switchNetwork } = useSwitchNetwork()
+  const { chain } = useNetwork();
+  const { chains, switchNetwork } = useSwitchNetwork();
 
   const isBreakpointXs = useMediaQuery('(max-width: 576px)');
 
@@ -181,10 +181,10 @@ const Mint = ({ contract, whiteListData }) => {
   });
 
   const triggerMint = () => {
-    const agreedChainId = process.env.NEXT_PUBLIC_CHAIN === 'goerli' ? 5 : 1
+    const agreedChainId = process.env.NEXT_PUBLIC_CHAIN === 'goerli' ? 5 : 1;
     if (isConnected) {
       if (chain.id !== agreedChainId) {
-        switchNetwork?.(agreedChainId)
+        switchNetwork?.(agreedChainId);
       } else if (isActive && !soldOut && mintWrite?.write) {
         mintWrite?.write();
         setMintLoading(true);
@@ -227,7 +227,7 @@ const Mint = ({ contract, whiteListData }) => {
                   overflow: 'hidden',
                   [theme.fn.smallerThan('xs')]: {
                     width: '200px',
-                  }
+                  },
                 })}
               >
                 <MImage src='/box-card.png'></MImage>
@@ -248,28 +248,38 @@ const Mint = ({ contract, whiteListData }) => {
                 maxWidth: '50vw',
                 [theme.fn.smallerThan('xs')]: {
                   maxWidth: '90vw',
-                }
+                },
               })}
             >
               <Text className={classes.heroTitle} pb={36}>
                 METASOCO MYSTERYBOX
               </Text>
               <Grid
-                justify="center"
-                align="center"
+                justify='center'
+                align='center'
                 gutter={10}
                 sx={() => ({
-                  width: '250px',
+                  width: '320px',
                   position: 'relative',
-                  left: '18px',
-                  marginBottom: '15px'
+                  left: '70px',
+                  marginBottom: '15px',
                 })}
               >
-                <Grid.Col span={4}>MINTED</Grid.Col>
-                <Grid.Col span={6} style={{ fontFamily: 'BalooBhaina' }}>{supply}/{totalNumber}</Grid.Col>
-                <Grid.Col span={4} style={{ textShadow: '2px 2px 6px #000', }}>PRICE</Grid.Col>
-                <Grid.Col span={6}>
-                  <Group spacing={2} style={{ textShadow: '2px 2px 6px #000', }}>
+                <Grid.Col span={3}>MINTED</Grid.Col>
+                <Grid.Col
+                  span={9}
+                  style={{ fontFamily: 'BalooBhaina', position: 'relative' }}
+                >
+                  {supply}/{totalNumber}
+                  <span style={{fontFamily: 'Balthazar-Regular', paddingLeft: '12px'}}>
+                    (100 limited this round)
+                  </span>
+                </Grid.Col>
+                <Grid.Col span={3} style={{ textShadow: '2px 2px 6px #000' }}>
+                  PRICE
+                </Grid.Col>
+                <Grid.Col span={9}>
+                  <Group spacing={2} style={{ textShadow: '2px 2px 6px #000' }}>
                     <Text
                       sx={() => ({
                         color: '#f3261f',
@@ -278,7 +288,7 @@ const Mint = ({ contract, whiteListData }) => {
                         paddingRight: '5px',
                         position: 'relative',
                         top: '-4px',
-                        fontFamily: 'BalooBhaina'
+                        fontFamily: 'BalooBhaina',
                       })}
                     >
                       {new Decimal(price).mul(value).toFixed()}
@@ -286,8 +296,8 @@ const Mint = ({ contract, whiteListData }) => {
                     ETH
                   </Group>
                 </Grid.Col>
-                <Grid.Col span={4}>AMOUNT</Grid.Col>
-                <Grid.Col span={6}>
+                <Grid.Col span={3}>AMOUNT</Grid.Col>
+                <Grid.Col span={9}>
                   <Group spacing={0}>
                     <ActionIcon
                       size={25}
@@ -319,7 +329,7 @@ const Mint = ({ contract, whiteListData }) => {
                           border: 'none',
                           color: '#FBF9F9',
                           fontSize: '20px',
-                          fontFamily: 'BalooBhaina'
+                          fontFamily: 'BalooBhaina',
                         },
                       }}
                     />
@@ -370,7 +380,9 @@ const Mint = ({ contract, whiteListData }) => {
                   align='center'
                   style={{ fontFamily: 'Balthazar-Regular' }}
                 >
-                  (Max mint <span style={{ fontFamily: 'BalooBhaina' }}>10</span>x per wallet)
+                  (Max mint{' '}
+                  <span style={{ fontFamily: 'BalooBhaina' }}>10</span>x per
+                  wallet)
                 </Text>
               </Stack>
             </Stack>
@@ -379,7 +391,7 @@ const Mint = ({ contract, whiteListData }) => {
             spacing={14}
             sx={(theme) => ({
               maxWidth: '800px',
-              padding: '0 20px'
+              padding: '0 20px',
             })}
           >
             <Text
@@ -388,11 +400,12 @@ const Mint = ({ contract, whiteListData }) => {
                 fontFamily: 'Balthazar-Regular',
                 lineHeight: 1.5,
                 [theme.fn.smallerThan('xs')]: {
-                  lineHeight: 1.2
-                }
+                  lineHeight: 1.2,
+                },
               })}
             >
-              3200 NFTs in total according to 32 teams of FIFA World Cup 2022.<br />
+              3200 NFTs in total according to 32 teams of FIFA World Cup 2022.
+              <br />
               100 for each team.
             </Text>
             <Text
@@ -401,11 +414,16 @@ const Mint = ({ contract, whiteListData }) => {
                 fontFamily: 'Balthazar-Regular',
                 lineHeight: 1.5,
                 [theme.fn.smallerThan('xs')]: {
-                  lineHeight: 1.2
-                }
+                  lineHeight: 1.2,
+                },
               })}
             >
-              The holders of NFTs are rewarded according to the actual performance of each team during the FIFA World Cup 2022. The NFT values of all teams will fluctuate in real time with each game's performance, and the value of teams will directly affect the payoffs to holders, including holding incentives and secondary market trading prices.
+              The holders of NFTs are rewarded according to the actual
+              performance of each team during the FIFA World Cup 2022. The NFT
+              values of all teams will fluctuate in real time with each game's
+              performance, and the value of teams will directly affect the
+              payoffs to holders, including holding incentives and secondary
+              market trading prices.
             </Text>
           </Stack>
 
@@ -429,7 +447,11 @@ const Mint = ({ contract, whiteListData }) => {
               },
             })}
           >
-            <Image src='/icon/icon-os.png' width={isBreakpointXs ? 30 : 45} height={isBreakpointXs ? 28 : 42}></Image>
+            <Image
+              src='/icon/icon-os.png'
+              width={isBreakpointXs ? 30 : 45}
+              height={isBreakpointXs ? 28 : 42}
+            ></Image>
           </UnstyledButton>
         </Stack>
       </BackgroundImage>

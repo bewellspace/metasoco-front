@@ -105,7 +105,7 @@ const Hero = () => {
                     flexWrap: 'nowrap',
                   })}
                 >
-                  {new Array(Number(12)).fill(null).map((item, index) => {
+                  {new Array(Number(16)).fill(null).map((item, index) => {
                     return (
                       <MImage
                         key={`image_top_${index}`}
@@ -132,12 +132,12 @@ const Hero = () => {
                     flexWrap: 'nowrap',
                   })}
                 >
-                  {new Array(Number(12)).fill(null).map((item, index) => {
+                  {new Array(Number(16)).fill(null).map((item, index) => {
                     return (
                       <MImage
                         key={`image_bottom_${index}`}
                         width={isBreakpointLg ? 180 : 150}
-                        src={`/team-thumb/${index + 12}.jpg`}
+                        src={`/team-thumb/${index + 17}.jpg`}
                         sx={() => ({
                           boxShadow: '7px 6px 6px rgba(0, 0, 0, 0.17)',
                         })}

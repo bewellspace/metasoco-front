@@ -58,6 +58,9 @@ const Vote = () => {
             spacing={isBreakpointXs ? 10 : isBreakpointLg ? 60 : 30}
             sx={(theme) => ({
               width: '100%',
+              [theme.fn.largerThan('lg')]: {
+                width: '80%'
+              }
             })}
           >
             {voteList.map((item, index) => {
@@ -71,7 +74,7 @@ const Vote = () => {
                     '&:hover': {
                       transform: 'scale(1.02)',
                       transition: 'transform 0.1s linear 0s',
-                    }
+                    },
                   })}
                 >
                   <MImage src={`/vote/vote-${item}.png`}></MImage>

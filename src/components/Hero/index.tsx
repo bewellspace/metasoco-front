@@ -14,7 +14,7 @@ const Hero = () => {
   const isBreakpointLg = useMediaQuery('(min-width: 1201px)');
   return (
     <div id='home'>
-      <BackgroundImage src='/hero-bg.png'>
+      <BackgroundImage src='/hero-bg.jpg'>
         <Stack
           align='center'
           spacing={0}
@@ -110,7 +110,7 @@ const Hero = () => {
                       <MImage
                         key={`image_top_${index}`}
                         width={isBreakpointLg ? 180 : 150}
-                        src={`/team/${index + 1}.png`}
+                        src={`/team-thumb/${index + 1}.jpg`}
                         sx={() => ({
                           boxShadow: '7px 6px 6px rgba(0, 0, 0, 0.17)',
                         })}
@@ -137,7 +137,7 @@ const Hero = () => {
                       <MImage
                         key={`image_bottom_${index}`}
                         width={isBreakpointLg ? 180 : 150}
-                        src={`/team/${index + 17}.png`}
+                        src={`/team-thumb/${index + 17}.jpg`}
                         sx={() => ({
                           boxShadow: '7px 6px 6px rgba(0, 0, 0, 0.17)',
                         })}

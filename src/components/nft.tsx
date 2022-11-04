@@ -282,7 +282,7 @@ export default function NFTPage({ contract, whiteListData }) {
                   new Array(Number(boxNumber)).fill(null).map((item, index) => {
                     return (
                       <Grid.Col span={isBreakpointXs ? 12 : 3}>
-                        <PhotoView key={`box_item_${index}`} src='/box-back.png'>
+                        <PhotoView key={`box_item_${index}`} src='/box-back.jpg'>
                           <Box
                             sx={(theme) => ({
                               width: '200px',
@@ -304,7 +304,7 @@ export default function NFTPage({ contract, whiteListData }) {
                               <div className='fc-back'>
                                 <img
                                   className='fc-image'
-                                  src={`/box-back.png`}
+                                  src={`/box-back.jpg`}
                                 ></img>
                               </div>
                             </div>
@@ -318,7 +318,7 @@ export default function NFTPage({ contract, whiteListData }) {
                     <Grid.Col span={isBreakpointXs ? 12 : 3}>
                       <PhotoView
                         key={`nft_${index}`}
-                        src={`/team/${item}-back.png`}
+                        src={`/team-jpg/${item}-back.jpg`}
                       >
                         <Box
                           className='fc-wrapper'
@@ -337,13 +337,13 @@ export default function NFTPage({ contract, whiteListData }) {
                             <div className='fc-front'>
                               <img
                                 className='fc-image'
-                                src={`/team/${item}.png`}
+                                src={`/team-jpg/${item}.jpg`}
                               ></img>
                             </div>
                             <div className='fc-back'>
                               <img
                                 className='fc-image'
-                                src={`/team/${item}-back.png`}
+                                src={`/team-jpg/${item}-back.jpg`}
                               ></img>
                             </div>
                           </div>

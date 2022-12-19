@@ -48,7 +48,7 @@ const mechanismList = [
     name: 'winner',
     pool: 50,
     iconScale: 1.65,
-    active: false,
+    active: true,
     key: 0,
   },
 ];
@@ -62,12 +62,12 @@ const Mechanism = ({ fifaInfo }) => {
 
   useEffect(() => {
     if (fifaInfo) {
-      mechanismList.map((item) => {
-        if (item.key >= fifaInfo.type) {
-          item.active = true;
-        }
-        return item;
-      });
+      // mechanismList.map((item) => {
+      //   if (item.key >= fifaInfo.type) {
+      //     item.active = true;
+      //   }
+      //   return item;
+      // });
     }
   }, [fifaInfo]);
 
@@ -259,10 +259,9 @@ const Mechanism = ({ fifaInfo }) => {
                         height: '40px',
                         borderRadius: '14px',
                         fontSize: '17px',
-                        color: '#fff',
-                        backgroundColor: '#F8D648',
+                        background: '#F8D648',
+                        color: '#10106b',
                         boxShadow: '1px 3px 2px 0px rgba(0, 0, 0, 0.51)',
-                        background: 'linear-gradient(#f6a53d, #f13a25)',
                         [theme.fn.smallerThan('xs')]: {
                           fontSize: '14px',
                           width: '80px',
